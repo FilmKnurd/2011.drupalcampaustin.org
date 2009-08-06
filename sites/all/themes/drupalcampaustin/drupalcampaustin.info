@@ -1,0 +1,44 @@
+name        = DrupalCamp Austin
+description = DrupalCamp Austin for Drupal 6
+screenshot  = drupalcampaustin-preview.png
+version     = 0.0 dev
+core        = 6.x
+engine      = phptemplate
+
+; this is a subtheme of ninesixty
+base theme = ninesixty
+
+; override ninesixty's stylesheets by adding empty files
+; stylesheets[all][] = reset.css
+stylesheets[all][] = text.css
+; stylesheets[all][] = 960.css
+stylesheets[all][] = debug.css
+stylesheets[all][] = styles/styles.css
+
+; stylesheets
+stylesheets[all][]   = style.css
+; stylesheets[print][] = style-print.css
+
+; regions
+regions[right]         = "Right column"
+regions[header]        = "Header"
+regions[content_above] = "Content: Above"
+regions[content]       = "Content"
+regions[content_below] = "Content: Below"
+regions[footer_1]   = "Footer: 1"
+regions[footer_2]   = "Footer: 2"
+regions[footer_3]   = "Footer: 3"
+regions[footer_4]   = "Footer: 4"
+
+; enabled features
+features[] = name
+features[] = slogan
+features[] = breadcrumb
+features[] = favicon
+features[] = node_user_picture
+features[] = comment_user_picture
+features[] = search
+features[] = primary_links
+
+; disabled features (uncomment to activate)
+; features[] = secondary_links
