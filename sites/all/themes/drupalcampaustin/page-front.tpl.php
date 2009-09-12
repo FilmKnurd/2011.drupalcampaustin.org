@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php print $language->language ?>" lang="<?php print $language->language ?>" dir="<?php print $language->dir ?>">
 
 <head>
-  <title>DrupalCamp Austin | Tentative: October 10-11 (Saturday-Sunday), 2009</title>
+  <title>DrupalCamp Austin | Tentative: October 24-25 (Saturday-Sunday), 2009</title>
   <?php print $head; ?>
   <?php print $styles; ?>
   <?php print $scripts; ?>
@@ -19,7 +19,7 @@
 
     <div id="main">
       <p>DrupalCamp Austin is tentatively scheduled for</p>
-      <p><strong>October 10-11 (Saturday-Sunday), 2009</strong></p>
+      <p><strong>October 24-25 (Saturday-Sunday), 2009</strong></p>
     </div>
 
   </div>
