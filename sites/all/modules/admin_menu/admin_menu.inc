@@ -1,5 +1,5 @@
 <?php
-// $Id: admin_menu.inc,v 1.11.2.20.2.21 2009/07/29 15:50:50 sun Exp $
+// $Id: admin_menu.inc,v 1.11.2.20.2.23 2009/08/14 12:19:10 sun Exp $
 
 /**
  * @file
@@ -28,6 +28,8 @@ function admin_menu_links_menu($tree) {
     }
     // Omit alias lookups.
     $data['link']['localized_options']['alias'] = TRUE;
+    // Remove description to prevent mouseover tooltip clashes.
+    unset($data['link']['localized_options']['attributes']['title']);
 
     $links[$data['link']['mlid']] = array(
       '#title' => $data['link']['title'],
@@ -365,6 +367,7 @@ function _admin_menu_developer_modules() {
     'imagecache_ui',
     'journal',
     'rules_admin',
+    'stringoverrides',
     'trace',
     'upgrade_status',
     'user_display_ui',

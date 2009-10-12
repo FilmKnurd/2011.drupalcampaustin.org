@@ -1,5 +1,5 @@
 <?php
-// $Id: admin_menu.install,v 1.4.2.6.2.6 2009/07/11 20:57:46 sun Exp $
+// $Id: admin_menu.install,v 1.4.2.6.2.7 2009/08/16 21:11:11 sun Exp $
 
 /**
  * Implementation of hook_schema().
@@ -18,6 +18,9 @@ function admin_menu_install() {
   _admin_menu_install_menu();
   // Create cache table.
   drupal_install_schema('admin_menu');
+  // Increase the module weight, so admin_menu catches any alterations made by
+  // other modules in hook_menu_alter().
+  db_query("UPDATE {system} SET weight = 100 WHERE name = 'admin_menu'");
 }
 
 /**
@@ -104,3 +107,15 @@ function admin_menu_form_update_script_selection_form_alter(&$form, $form_state)
   }
 }
 */
+
+/**
+ * Increase the module weight.
+ *
+ * @see admin_menu_install()
+ */
+function admin_menu_update_6302() {
+  $ret = array();
+  $ret[] = update_sql("UPDATE {system} SET weight = 100 WHERE name = 'admin_menu'");
+  return $ret;
+}
+

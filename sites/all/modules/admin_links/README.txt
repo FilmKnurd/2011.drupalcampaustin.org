@@ -16,9 +16,10 @@ INTRODUCTION
 Current Maintainer: Dave Reid <http://drupal.org/user/53892>
 Project Page: http://drupal.org/project/admin_links
 
-This is a very simple module that adds useful edit and delete shortcuts to
-lists of nodes. It also makes the 'Delete' link show up as a tab in the
-individual node view just like the 'Edit' and 'View' tabs (Drupal 6+ only).
+This is a very simple module that adds the content local tabs (Edit, Delete,
+Revisions, etc.) as links to teasers/lists of nodes. It also makes the Delete
+link show up as a tab in the individual node view just like the Edit and View
+tabs (Drupal 6+ only).
 
 This module also provides support for the Universal Edit Button, a green pencil
 icon in the address bar that indicates a web page is editable. It is similar to
@@ -59,7 +60,7 @@ HOW CAN YOU CONTRIBUTE?
   http://drupalmodules.com/module/admin-links
 
 - Help translate this module.
-  http://project.davereid.net/translate/projects/admin_links
+  http://localize.drupal.org/translate/projects/admin_links
 
 - Report any bugs, feature requests, etc. in the issue tracker.
   http://drupal.org/project/issues/admin_links

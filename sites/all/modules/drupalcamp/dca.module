@@ -1,0 +1,26 @@
+<?php
+
+/*
+function dca_menu_alter(&$items) {
+  foreach (content_profile_get_types('names', 'edit_tab', 'sub') as $type => $type_name) {
+    unset($items['node/add/' . $type]);
+  }
+}
+*/
+
+/*
+function dca_form_alter(&$form, $form_state, $form_id) {
+  print $form_id;
+}
+*/
+
+function dca_form_profile_node_form_alter(&$form, &$form_state) {
+  // Hide the extraneous "Name" field
+  $form['title']['#type'] = 'hidden';
+  // Add a validation function that will fill in the value of the "Name" field
+  $form['#validate'][] = 'dca_profile_node_form_validate';
+}
+
+function dca_profile_node_form_validate($form, &$form_state) {
+  $form_state['values']['title'] = $form_state['values']['field_profile_firstname'][0]['value'] . ' ' . $form_state['values']['field_profile_lastname'][0]['value'];
+}

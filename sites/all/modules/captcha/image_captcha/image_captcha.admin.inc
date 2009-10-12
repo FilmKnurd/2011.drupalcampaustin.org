@@ -1,20 +1,33 @@
 <?php
-// $Id: image_captcha.admin.inc,v 1.3.2.1 2008/04/06 15:27:27 soxofaan Exp $
+// $Id: image_captcha.admin.inc,v 1.28 2009/09/23 21:23:00 soxofaan Exp $
+
+/**
+ * @file
+ * Functions for administration/settings interface.
+ */
 
 /**
  * function to get a list of available fonts
  */
 function _image_captcha_available_fonts() {
-  $available_fonts = array('BUILTIN' => t('Built-in font'));
+  // List of folders to search through for TrueType fonts.
   $fontsdirectories = array(
     drupal_get_path('module', 'image_captcha') .'/fonts',
     file_directory_path(),
+    'sites/all/libraries/fonts',
+    conf_path() .'/libraries/fonts',
   );
+  // Search through the folders and build a list of available fonts.
+  $available_fonts = array();
   foreach ($fontsdirectories as $fontsdirectory) {
     foreach (file_scan_directory($fontsdirectory, '\.[tT][tT][fF]$') as $filename => $font) {
       $available_fonts[$filename] = "{$font->basename} ($filename)";
     }
   }
+
+  // Append the PHP built-in font at the end.
+  $available_fonts['BUILTIN'] = t('Built-in font');
+
   return $available_fonts;
 }
 
@@ -22,10 +35,35 @@ function _image_captcha_available_fonts() {
  * Configuration form for image_captcha
  */
 function image_captcha_settings_form() {
-  if (!function_exists('imagejpeg')) {
-    drupal_set_message(t('Images cannot be generated, because your PHP installation\'s GD library has no JPEG support.'), 'error');
-  }
+
+  // Use javascript for some added usability on admin form.
+  drupal_add_js(drupal_get_path('module', 'image_captcha') .'/image_captcha.js');
+
   $form = array();
+
+  // First some error checking.
+  $image_captcha_setup_errno = _image_captcha_check_setup();
+  if ($image_captcha_setup_errno & IMAGE_CAPTCHA_ERROR_NO_GDLIB_WITH_JPEG) {
+    drupal_set_message(t(
+      'The Image CAPTCHA module can not generate images because your PHP setup does not support it (no <a href="!gdlib">GD library</a> with JPEG support).',
+      array('!gdlib' => 'http://php.net/manual/en/book.image.php')
+    ), 'error');
+    // It is no use to continue building the rest of the settings form.
+    return $form;
+  }
+
+  $form['image_captcha_example'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Example'),
+    '#description' => t('Presolved image CAPTCHA example, generated with the current settings.'),
+  );
+  $form['image_captcha_example']['image'] = array(
+    '#type' => 'captcha',
+    '#captcha_type' => 'image_captcha/Image',
+    '#captcha_admin_mode' => TRUE,
+  );
+
+  // General code settings.
   $form['image_captcha_code_settings'] = array(
     '#type' => 'fieldset',
     '#title' => t('Code settings'),
@@ -49,14 +87,20 @@ function image_captcha_settings_form() {
     '#title' => t('Font settings'),
   );
   $available_fonts = _image_captcha_available_fonts();
-  list($default_font, $errmsg, $errvar) = _image_captcha_get_font();
+  list($default_font, $errno) = _image_captcha_get_font();
   $form['image_captcha_font_settings']['image_captcha_font'] = array(
     '#type' => 'select',
     '#title' => t('Font'),
     '#default_value' => $default_font,
-    '#description' => t('The TrueType font (.ttf) to use for the text in the image CAPTCHA.'),
+    '#description' => t('Select the font to use for the text in the image CAPTCHA. Apart from the provided defaults, you can also use your own TrueType fonts (filename extension .ttf) by putting them in the Drupal "files" directory (directory %filesdir), %fonts_library_general or %fonts_library_specific.',
+      array('%filesdir' => file_directory_path(),
+        '%fonts_library_general' => 'sites/all/libraries/fonts',
+        '%fonts_library_specific' => conf_path() .'/libraries/fonts',
+      )
+    ),
     '#options' => $available_fonts,
   );
+
   // add a prerender procedure for checking that a font should be set.
   $form['#pre_render'] = array('image_captcha_settings_form_pre_render');
   // font size
@@ -65,15 +109,25 @@ function image_captcha_settings_form() {
       '#type' => 'select',
       '#title' => t('Font size'),
       '#options' => array(
-        12 => t('tiny'),
-        20 => t('small'),
-        30 => t('normal'),
-        40 => t('large'),
+        9 => '9 pt - ' . t('tiny'),
+        12 => '12 pt - ' . t('small'),
+        18 => '18 pt',
+        24 => '24 pt - ' . t('normal'),
+        30 => '30 pt',
+        36 => '36 pt - ' . t('large'),
+        48 => '48 pt',
+        64 => '64 pt - ' . t('extra large'),
       ),
       '#default_value' => (int) variable_get('image_captcha_font_size', 30),
       '#description' => t('The font size influences the size of the image. Note that larger values make the image generation more CPU intensive.'),
     );
   }
+  // Disable some options when there is no TTF support
+  if ($image_captcha_setup_errno & IMAGE_CAPTCHA_ERROR_NO_TTF_SUPPORT) {
+    $form['image_captcha_font_settings']['image_captcha_font']['#disabled'] = TRUE;
+    $form['image_captcha_font_settings']['image_captcha_font']['#default_value'] = 'BUILTIN';
+  }
+
   // character spacing
   $form['image_captcha_font_settings']['image_captcha_character_spacing'] = array(
     '#type' => 'select',
@@ -81,22 +135,23 @@ function image_captcha_settings_form() {
     '#description' => t('Define the average spacing between characters. Note that larger values make the image generation more CPU intensive.'),
     '#default_value' => variable_get('image_captcha_character_spacing', '1.2'),
     '#options' => array(
-      '1' => t('small'),
-      '1.2' => t('normal'),
-      '1.5' => t('large'),
+      '0.75' => t('tight'),
+      '1' => t('normal'),
+      '1.2' => t('wide'),
+      '1.5' => t('extra wide'),
     ),
   );
 
-    // color settings
+    // Color and file format settings.
   $form['image_captcha_color_settings'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Color settings'),
-    '#description' => t('Configuration of the background and text colors in the image CAPTCHA.'),
+    '#title' => t('Color and image settings'),
+    '#description' => t('Configuration of the background, text colors and file format of the image CAPTCHA.'),
   );
   $form['image_captcha_color_settings']['image_captcha_background_color'] = array(
     '#type' => 'textfield',
     '#title' => t('Background color'),
-    '#description' => t('Enter the hexadecimal code for the background color (e.g. #FFF or #FFCE90).'),
+    '#description' => t('Enter the hexadecimal code for the background color (e.g. #FFF or #FFCE90). When using the PNG file format with transparent background, it is recommended to set this close to the underlying background color.'),
     '#default_value' => variable_get('image_captcha_background_color', '#ffffff'),
     '#maxlength' => 7,
     '#size' => 8,
@@ -122,7 +177,17 @@ function image_captcha_settings_form() {
     '#default_value' => (int) variable_get('image_captcha_foreground_color_randomness', 100),
     '#description' => t('The different characters will have randomized colors in the specified range around the text color.'),
   );
-
+  $form['image_captcha_color_settings']['image_captcha_file_format'] = array(
+    '#type' => 'select',
+    '#title' => t('File format'),
+    '#description' => t('Select the file format for the image. JPEG usually results in smaller files, PNG allows tranparency.'),
+    '#default_value' => variable_get('image_captcha_file_format', IMAGE_CAPTCHA_FILE_FORMAT_JPG),
+    '#options' => array(
+      IMAGE_CAPTCHA_FILE_FORMAT_JPG => t('JPEG'),
+      IMAGE_CAPTCHA_FILE_FORMAT_PNG => t('PNG'),
+      IMAGE_CAPTCHA_FILE_FORMAT_TRANSPARENT_PNG => t('PNG with transparent background'),
+    ),
+  );
 
   // distortion and noise settings
   $form['image_captcha_distortion_and_noise'] = array(
@@ -135,33 +200,31 @@ function image_captcha_settings_form() {
     '#type' => 'select',
     '#title' => t('Distortion level'),
     '#options' => array(
-      0 => t('none'),
-      2 => t('low'),
-      4 => t('moderate'),
-      6 => t('normal'),
-      8 => t('high'),
-      10 => t('severe'),
+      0 => t('@level - no distortion', array('@level' => '0')),
+      1 => t('@level - low', array('@level' => '1')),
+      2 => '2',
+      3 => '3',
+      4 => '4',
+      5 => t('@level - medium', array('@level' => '5')),
+      6 => '6',
+      7 => '7',
+      8 => '8',
+      9 => '9',
+      10 => t('@level - high', array('@level' => '10')),
     ),
-    '#default_value' => (int) variable_get('image_captcha_distortion_amplitude', 6),
+    '#default_value' => (int) variable_get('image_captcha_distortion_amplitude', 0),
     '#description' => t('Set the degree of wave distortion in the image.'),
   );
-  $form['image_captcha_distortion_and_noise']['image_captcha_bilinair_interpolation'] = array(
+  $form['image_captcha_distortion_and_noise']['image_captcha_bilinear_interpolation'] = array(
     '#type' => 'checkbox',
     '#title' => t('Smooth distortion'),
-    '#default_value' => variable_get('image_captcha_bilinair_interpolation', FALSE),
-    '#description' => t('This option enables bilineair interpolation of the distortion which makes the image look smoother, but it is more CPU intensive.'),
-  );
-  //double vision
-  $form['image_captcha_distortion_and_noise']['image_captcha_double_vision'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Double vision'),
-    '#default_value' => variable_get('image_captcha_double_vision', 0),
-    '#description' => t('When enabled, characters appear twice in the image, overlayed onto each other.'),
+    '#default_value' => variable_get('image_captcha_bilinear_interpolation', FALSE),
+    '#description' => t('This option enables bilinear interpolation of the distortion which makes the image look smoother, but it is more CPU intensive.'),
   );
   // noise
   $form['image_captcha_distortion_and_noise']['image_captcha_dot_noise'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Add salt and peper noise'),
+    '#title' => t('Add salt and pepper noise'),
     '#default_value' => variable_get('image_captcha_dot_noise', 0),
     '#description' => t('This option adds randomly colored point noise.'),
   );
@@ -175,10 +238,13 @@ function image_captcha_settings_form() {
     '#type' => 'select',
     '#title' => t('Noise level'),
     '#options' => array(
-      2 => t('low'),
-      5 => t('normal'),
-      7 => t('high'),
-      10 => t('severe'),
+      1 => '1 - '. t('low'),
+      2 => '2',
+      3 => '3 - '. t('medium'),
+      4 => '4',
+      5 => '5 - '. t('high'),
+      7 => '7',
+      10 => '10 - '. t('severe'),
     ),
     '#default_value' => (int) variable_get('image_captcha_noise_level', 5),
   );
@@ -187,13 +253,19 @@ function image_captcha_settings_form() {
 }
 
 /**
- * Pre render function for image_captcha_settings_form
+ * Pre render function for image_captcha_settings_form for providing
+ * extra info about TTF fonts.
  */
 function image_captcha_settings_form_pre_render($form) {
-  if (count($form['image_captcha_font_settings']['image_captcha_font']['#options']) == 1) {
-    drupal_set_message(t('The image captcha module works best with a TrueType font file (TTF) for generating the images, but because of licencing issues it is not allowed to package fonts with the module. A simple built-in bitmap font is provided as default instead. You can install TrueType fonts yourself by putting them in the fonts directory of the image captcha module (directory "%fontsdir") or by uploading them to your Drupal file system (directory "%filesdir") with for example the upload module.', array('%fontsdir' => drupal_get_path('module', 'image_captcha') .'/fonts', '%filesdir' => file_directory_path())), 'warning');
+  $errno = _image_captcha_check_setup();
+
+  if ($errno & IMAGE_CAPTCHA_ERROR_NO_TTF_SUPPORT) {
+    drupal_set_message(
+      t('The Image CAPTCHA module can not use TrueType fonts because your PHP setup does not support it. You can only use a low quality built-in bitmap font.'),
+      'warning'
+    );
   }
-  if ($form['image_captcha_font_settings']['image_captcha_font']['#default_value'] == 'BUILTIN') {
+  elseif ($form['image_captcha_font_settings']['image_captcha_font']['#default_value'] == 'BUILTIN') {
     drupal_set_message(t('The usage of the built-in bitmap font it is not recommended because of its small size and missing UTF-8 support.'), 'warning');
   }
   return $form;
@@ -203,24 +275,30 @@ function image_captcha_settings_form_pre_render($form) {
  * Validation function for image_captcha configuration form
  */
 function image_captcha_settings_form_validate($form, &$form_state) {
-  // check image_captcha_image_allowed_chars for spaces
+  // Check image_captcha_image_allowed_chars for spaces.
   if (preg_match('/\s/', $form_state['values']['image_captcha_image_allowed_chars'])) {
     form_set_error('image_captcha_image_allowed_chars', t('The list of characters to use should not contain spaces.'));
   }
-  // check font
+  // Check font.
   $font = $form_state['values']['image_captcha_font'];
   if ($font == '0') {
     form_set_error('image_captcha_font', t('You need to select a font'));
+  }
+  elseif ($font == 'BUILTIN') {
+    // With the built in font, only latin2 characters should be used.
+    if (preg_match('/[^a-zA-Z0-9]/', $form_state['values']['image_captcha_image_allowed_chars'])) {
+      form_set_error('image_captcha_image_allowed_chars', t('The built-in font only supports Latin2 characters. Only use "a" to "z" and numbers.'));
+    }
   }
   elseif ($font != 'BUILTIN' && (!is_file($font) || !is_readable($font))) {
     form_set_error('image_captcha_font', t('Font does not exist or is not readable.'));
   }
 
   // check color settings
- if (!preg_match('/^#([0-9a-fA-F]{3}){1,2}$/', $form_state['values']['image_captcha_background_color'])){
-  form_set_error('image_captcha_background_color', t('Background color is not a valid hexadecimal color value.'));
+  if (!preg_match('/^#([0-9a-fA-F]{3}){1,2}$/', $form_state['values']['image_captcha_background_color'])) {
+    form_set_error('image_captcha_background_color', t('Background color is not a valid hexadecimal color value.'));
   }
-  if (!preg_match('/^#([0-9a-fA-F]{3}){1,2}$/', $form_state['values']['image_captcha_foreground_color'])){
+  if (!preg_match('/^#([0-9a-fA-F]{3}){1,2}$/', $form_state['values']['image_captcha_foreground_color'])) {
     form_set_error('image_captcha_foreground_color', t('Text color is not a valid hexadecimal color value.'));
   }
 }

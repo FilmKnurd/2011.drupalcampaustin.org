@@ -20,15 +20,12 @@ stylesheets[all][]   = style.css
 ; stylesheets[print][] = style-print.css
 
 ; regions
-regions[right]         = "Right column"
+regions[sidebar_1]     = "Sidebar 1"
+regions[sidebar_2]     = "Sidebar 2"
 regions[header]        = "Header"
-regions[content_above] = "Content: Above"
 regions[content]       = "Content"
-regions[content_below] = "Content: Below"
-regions[footer_1]   = "Footer: 1"
-regions[footer_2]   = "Footer: 2"
-regions[footer_3]   = "Footer: 3"
-regions[footer_4]   = "Footer: 4"
+regions[preface_left]  = "Preface: Left"
+regions[preface_right] = "Preface: Right"
 
 ; enabled features
 features[] = name
@@ -39,6 +36,6 @@ features[] = node_user_picture
 features[] = comment_user_picture
 features[] = search
 features[] = primary_links
+features[] = secondary_links
 
 ; disabled features (uncomment to activate)
-; features[] = secondary_links

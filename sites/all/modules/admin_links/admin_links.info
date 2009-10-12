@@ -4,9 +4,9 @@ description = Adds edit and delete links to node lists, and adds support for the
 core = 6.x
 recommends[] = fasttoggle
 
-; Information added by drupal.org packaging script on 2009-06-27
-version = "6.x-1.7-beta1"
+; Information added by drupal.org packaging script on 2009-09-01
+version = "6.x-1.7"
 core = "6.x"
 project = "admin_links"
-datestamp = "1246134304"
+datestamp = "1251770103"
 

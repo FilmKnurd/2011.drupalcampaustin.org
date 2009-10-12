@@ -1,0 +1,4 @@
+name = DrupalCamp LA
+description = "Customizations for DrupalCamp LA."
+core = 6.x
+package = DrupalCamp

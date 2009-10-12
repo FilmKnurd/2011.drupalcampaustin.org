@@ -1,16 +1,20 @@
 # -------------------------------------------------------------------------
-# DrupalCamp Austin/Texas redirects
+# DrupalCamp Austin redirects
 # -------------------------------------------------------------------------
+
 RewriteEngine on
 RewriteCond %{HTTP_HOST} ^(www\.)?(austincamp|austindrupalcamp)\.(org|com|net)$ [NC]
 RewriteRule ^(.*)$ http://drupalcampaustin.org/ [L,R=307]
 RewriteCond %{HTTP_HOST} ^(www\.)?drupalcampaustin\.com$ [NC]
 RewriteRule ^(.*)$ http://drupalcampaustin.org/ [L,R=301]
+RewriteCond %{HTTP_HOST} ^www.drupalcampaustin.org$ [NC]
+RewriteRule ^(.*)$ http://drupalcampaustin.org/$1 [L,R=301]
 RewriteEngine off
 
 # -------------------------------------------------------------------------
 # Authenticate the dev site
 # -------------------------------------------------------------------------
+
 # Set PRODUCTION_SITE for production sites.
 SetEnvIfNoCase Host .+ PRODUCTION_SITE
 SetEnvIfNoCase Host fkbuild\.com$ !PRODUCTION_SITE

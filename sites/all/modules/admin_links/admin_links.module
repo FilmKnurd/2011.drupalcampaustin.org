@@ -1,5 +1,5 @@
 <?php
-// $Id: admin_links.module,v 1.1.2.13 2009/06/27 08:02:55 davereid Exp $
+// $Id: admin_links.module,v 1.1.2.14 2009/06/27 20:04:41 davereid Exp $
 
 /**
  * @file
@@ -38,6 +38,7 @@ function admin_links_menu_alter(&$callbacks) {
  */
 function admin_links_link($type, $node = NULL, $teaser = FALSE) {
   $links = array();
+  $destination = drupal_get_destination();
 
   if ($type == 'node') {
     if (!admin_links_is_node_page($node->nid)) {
@@ -49,15 +50,16 @@ function admin_links_link($type, $node = NULL, $teaser = FALSE) {
         $links[$link_key] = array(
           'title' => $local_task['title'],
           'href' => $local_task['href'],
+          'query' => $destination,
         );
         $links[$link_key] += $local_task['localized_options'];
       }
     }
     if (admin_links_var('link_new') && user_access('create ' . $node->type . ' content')) {
       $links['admin_links_new'] = array(
-        'title' => t('New @type', array('@type' => node_get_types('name', $node))),
+        'title' => t('New @type', array('@type' => drupal_strtolower(node_get_types('name', $node)))),
         'href' => 'node/add/' . str_replace('_', '-', $node->type),
-        'query' => drupal_get_destination(),
+        'query' => $destination,
       );
     }
     if (admin_links_is_node_page($node->nid) && admin_links_var('universaledit') && node_access('update', $node)) {
@@ -107,9 +109,6 @@ function admin_links_get_local_tasks($path, $map = array()) {
     $local_tasks[$path] = array();
     foreach ($router_items[$path_item['tab_root']] as $item) {
       _menu_translate($item, $map, TRUE);
-      //if (preg_match($excludes, $item['path'])) {
-      //  $item['access'] = FALSE;
-      //}
       if ($item['access']) {
         // Merge some default options for l() to be used later.
         $item['localized_options'] += array(
