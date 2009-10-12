@@ -1,9 +1,9 @@
 <?php
-// $Id: archive.inc,v 1.1.2.1 2009/03/10 04:36:45 dalin Exp $
+// $Id: archive.inc,v 1.1.2.4 2009/09/28 22:02:40 aaron Exp $
 
 /**
  * @file
- *  This is an archive.orh provider include file for Embedded Media Video.
+ *  This is an archive.org provider include file for Embedded Media Video.
  */
 
 /**
@@ -143,6 +143,13 @@ function emvideo_archive_extract($parse = '') {
 }
 
 /**
+ *  Implement hook emvideo_PROVIDER_data_version().
+ */
+function emvideo_archive_data_version() {
+  return EMVIDEO_ARCHIVE_DATA_VERSION;
+}
+
+/**
  *  hook emvideo_PROVIDER_data
  *
  *  Provides an array to be serialised and made available with $item elsewhere.
@@ -159,20 +166,20 @@ function emvideo_archive_data($field, $item, $error_field = '') {
   // down the road, we can respect older content. If allowed by Embedded Media
   // Field, any older content will automatically update this array as needed.
   // In any case, you should account for the version if you increment it.
-  $data['emvideo_archive_version'] = EMVIDEO_ARCHIVE_DATA_VERSION;
+  $data['emvideo_archive_version'] = $data['emvideo_data_version'] = EMVIDEO_ARCHIVE_DATA_VERSION;
 
-  // Add the thumbnail data. 
+  // Add the thumbnail data.
   $data['thumbnail'] = 'http://www.archive.org/download/'. $item['value'] .'/format=Thumbnail?.jpg';
 
   // Get the path to media files and XML files.
   // This is real kludgy, but without a real API there's no other way.
-  // First we need to get the user facing HTML page.  
+  // First we need to get the user facing HTML page.
   $html_page = drupal_http_request('http://www.archive.org/details/'. $item['value']);
   if ($html_page->error || $html_page->code != 200) {
     form_set_error($error_field, 'The HTML page for the item at archive.org could not be retrieved: ', $html_page->code .': '. $html_page->error);
     return $data;
   }
-  
+
   // Scrape this page and find the path to the data directory.
   // A regex expert would be able to do all this with a single regex statement, but that stuff is dark arts.
   $html_chunks = explode('All Files: ', $html_page->data);
@@ -184,11 +191,11 @@ function emvideo_archive_data($field, $item, $error_field = '') {
     return $data;
   }
   $data_url = rtrim($matches[0], '"');
-  
+
   // In this directory should be two XML files, one for the list of files, one for metadata.
   $xml_files_url = $data_url .'/'. $item['value'] . '_files.xml';
   $xml_meta_url = $data_url .'/'. $item['value'] . '_meta.xml';
-  
+
   // Retreive the XML files.
   $xml_files = emfield_request_xml('archive', $xml_files_url, array(), TRUE, TRUE, $item['value'] . '_files');
   $xml_meta = emfield_request_xml('archive', $xml_meta_url, array(), TRUE, TRUE, $item['value'] . '_meta');
@@ -202,8 +209,8 @@ function emvideo_archive_data($field, $item, $error_field = '') {
     form_set_error($error_field, 'The list of files for the item at archive.org could not be retrieved.  The video can not be displayed.');
     return $data;
   }
-  
-  // There are a tonne of useless thumbnails in this list that we don't want.  
+
+  // There are a tonne of useless thumbnails in this list that we don't want.
   // We also need to sort through the available derivitives and choose the best one.
   $derivative_files = array('mp4' => '', 'ogv' => '', 'mov' => '');
   foreach($xml_files as $file_name => $file_data) {
@@ -220,6 +227,21 @@ function emvideo_archive_data($field, $item, $error_field = '') {
   }
 
   return $data;
+}
+
+/**
+ * hook emvideo_PROVIDER_duration($item)
+ * Returns the duration of the video in seconds.
+ *  @param $item
+ *    The video item itself, which needs the $data array.
+ *  @return
+ *    The duration of the video in seconds.
+ */
+function emvideo_archive_duration($item) {
+  if (!isset($item['data']['emvideo_archive_version'])) {
+    $item['data'] = emvideo_archive_data(NULL, $item);
+  }
+  return isset($item['data']['metadata']['RUNTIME'][0]) ? emvideo_convert_to_seconds($item['data']['metadata']['RUNTIME'][0]) : 0;
 }
 
 /**
@@ -254,8 +276,8 @@ function theme_emvideo_archive_flash($item, $width, $height, $autoplay) {
   $output = '';
   if ($item['embed']) {
     $output = <<<EOD
-      <embed type="application/x-shockwave-flash" width="$width"   height="$height"  allowfullscreen="true"  
-        allowscriptaccess="always"  src="http://www.archive.org/flow/flowplayer.commercial-3.0.5.swf"   
+      <embed type="application/x-shockwave-flash" width="$width"   height="$height"  allowfullscreen="true"
+        allowscriptaccess="always"  src="http://www.archive.org/flow/flowplayer.commercial-3.0.5.swf"
         w3c="true"  flashvars='config={
           "key":"#\$b6eb72a0f2f1e29f3d4",
           "playlist":[
@@ -388,5 +410,16 @@ function emvideo_archive_emfield_subtheme() {
         )
     );
     return $themes;
+}
 
+/**
+ *  Implement hook_emvideo_PROVIDER_content_generate().
+ */
+function emvideo_archive_content_generate() {
+  return array(
+    'http://www.archive.org/details/DrupalconDc2009-DrupalMultimedia',
+    'http://www.archive.org/details/DrupalconBoston2008-DrupalMultimedia',
+    'http://www.archive.org/details/drupal_song_dcamp_pune_09',
+    'http://www.archive.org/details/Drupal.Peru_DrupalSong20090718',
+  );
 }

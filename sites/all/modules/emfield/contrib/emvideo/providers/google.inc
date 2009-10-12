@@ -1,5 +1,5 @@
 <?php
-// $Id: google.inc,v 1.1.2.11 2008/12/19 18:17:14 aaron Exp $
+// $Id: google.inc,v 1.1.2.12 2009/09/28 22:29:27 aaron Exp $
 
 /**
  * @file
@@ -9,12 +9,14 @@
 define('EMVIDEO_GOOGLE_MAIN_URL', 'http://video.google.com/');
 define('EMVIDEO_GOOGLE_XML', 'http://video.google.com/videofeed');
 define('EMVIDEO_GOOGLE_DOMAIN_DEFAULT', 'com');
+define('EMVIDEO_GOOGLE_DATA_VERSION', 1);
 
 function emvideo_google_info() {
   $features = array(
     array(t('Autoplay'), t('Yes'), ''),
     array(t('RSS Attachment'), t('Yes'), ''),
     array(t('Thumbnails'), t('Yes'), ''),
+    array(t('Duration'), t('Yes'), ''),
   );
   return array(
     'provider' => 'google',
@@ -88,14 +90,22 @@ function theme_emvideo_google_flash($embed, $width, $height, $autoplay) {
 }
 
 /**
+ *  Implement hook emvideo_PROVIDER_data_version().
+ */
+function emvideo_google_data_version() {
+  return EMVIDEO_GOOGLE_DATA_VERSION;
+}
+
+/**
  * hook emfield_PROVIDER_data
  *
  * provides an array to be serialised and made available with $item elsewhere
  */
 function emvideo_google_data($field, $item) {
   $data = array();
-  // create some 'field' version control
-  //$data['emvideo_google_version'] = 1;
+
+  // Create some 'field' version control.
+  $data['emvideo_data_version'] = EMVIDEO_GOOGLE_DATA_VERSION;
 
   $rss = emvideo_google_request($item['value']);
 
@@ -149,9 +159,24 @@ function emvideo_google_data($field, $item) {
   return $data;
 }
 
+/**
+ * hook emvideo_PROVIDER_duration($item)
+ * Returns the duration of the video in seconds.
+ *  @param $item
+ *    The video item itself, which needs the $data array.
+ *  @return
+ *    The duration of the video in seconds.
+ */
+function emvideo_google_duration($item) {
+  if (!isset($item['data']['emvideo_data_version'])) {
+    $item['data'] = emvideo_google_data(NULL, $item);
+  }
+  return isset($item['data']['duration']) ? $item['data']['duration'] : 0;
+}
+
 function emvideo_google_rss($item, $teaser) {
   if ($item['value']) {
-    if ($item['data']['emvideo_google_data_version'] >= 1000000) {
+    if (isset($item['data']['emvideo_data_version'])) {
       $data = $item['data'];
     }
     else {
@@ -163,7 +188,7 @@ function emvideo_google_rss($item, $teaser) {
 }
 
 function emvideo_google_thumbnail($field, $item, $formatter, $node, $width, $height) {
-  if ($item['data']['emvideo_google_data_version'] >= 1) {
+  if (isset($item['data']['emvideo_data_version'])) {
     $data = $item['data'];
   }
   else {
@@ -194,5 +219,17 @@ function emvideo_google_emfield_subtheme() {
       'arguments' => array('embed' => NULL, 'width' => NULL, 'height' => NULL, 'autoplay' => NULL),
       'file' => 'providers/google.inc'
     )
+  );
+}
+
+/**
+ *  Implement hook_emvideo_PROVIDER_content_generate().
+ */
+function emvideo_google_content_generate() {
+  return array(
+    'http://video.google.com/videoplay?docid=-3401332494586334627&ei=EzXBSr7ZDILkrALR8tTJBg&q=drupal&hl=en&emb=1',
+    'http://video.google.com/videoplay?docid=3803572165737229287&ei=kDXBSobXK4jUqQK6zcHqBg&q=drupal&hl=en&emb=1',
+    'http://video.google.com/videoplay?docid=3883642707114931305&ei=kDXBSobXK4jUqQK6zcHqBg&q=drupal&hl=en&emb=1',
+    'http://video.google.com/videoplay?docid=-6482735792871677056&ei=5DXBSvOEBIyQqALuyvXXBg&q=drupal&hl=en&emb=1',
   );
 }

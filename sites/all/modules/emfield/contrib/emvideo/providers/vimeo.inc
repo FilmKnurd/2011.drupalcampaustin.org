@@ -1,5 +1,5 @@
 <?php
-// $Id: vimeo.inc,v 1.1.2.8 2009/04/19 22:01:06 alexua Exp $
+// $Id: vimeo.inc,v 1.1.2.9 2009/09/28 23:15:49 aaron Exp $
 
 /**
  * @file
@@ -232,3 +232,16 @@ function emvideo_vimeo_emfield_subtheme() {
     ),
   );
 }
+
+/**
+ *  Implement hook_emvideo_PROVIDER_content_generate().
+ */
+function emvideo_vimeo_content_generate() {
+  return array(
+    'http://vimeo.com/1408463',
+    'http://vimeo.com/1040532',
+    'http://vimeo.com/709081',
+    'http://vimeo.com/5565562',
+  );
+}
+

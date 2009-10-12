@@ -1,5 +1,5 @@
 <?php
-// $Id: photobucket.inc,v 1.1.2.5 2009/05/10 00:31:20 alexua Exp $
+// $Id: photobucket.inc,v 1.1.2.6 2009/09/29 19:52:05 aaron Exp $
 
 /**
  * @file
@@ -7,6 +7,7 @@
  */
 
 define('EMIMAGE_PHOTOBUCKET_MAIN_URL', 'http://www.photobucket.com/');
+define('EMIMAGE_PHOTOBUCKET_DATA_VERSION', 1);
 
 /**
  * hook emimage_PROVIDER_info
@@ -31,6 +32,13 @@ function emimage_photobucket_info() {
   );
 }
 
+/**
+ *  Implement hook emvideo_PROVIDER_data_version().
+ */
+function emimage_photobucket_data_version() {
+  return EMIMAGE_PHOTOBUCKET_DATA_VERSION;
+}
+
 function emimage_photobucket_data($field, $item) {
   $data = array();
 
@@ -42,6 +50,7 @@ function emimage_photobucket_data($field, $item) {
       'file' => $matches[5],
     );
     $data['title'] = emimage_photobucket_image_title($data['file'], $data);
+    $data['emimage_data_version'] = EMIMAGE_PHOTOBUCKET_DATA_VERSION;
   }
   return $data;
 }

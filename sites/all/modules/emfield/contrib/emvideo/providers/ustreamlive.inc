@@ -1,12 +1,10 @@
 <?php
-// $Id: ustreamlive.inc,v 1.1.2.1 2009/02/04 23:29:49 aaron Exp $
+// $Id: ustreamlive.inc,v 1.1.2.2 2009/09/29 19:52:05 aaron Exp $
 
 define('EMVIDEO_USTREAMLIVE_MAIN_URL', 'http://www.ustream.tv/');
 define('EMVIDEO_USTREAMLIVE_API_INFO', 'http://developer.ustream.tv/');
 define('EMVIDEO_USTREAMLIVE_API_APPLICATION_URL', 'http://developer.ustream.tv/apps/register');
-// define('EMVIDEO_USTREAMLIVE_REST_ENDPOINT', 'http://www.ustream.tv/api2_rest');
-// define('EMVIDEO_USTREAMLIVE_COLOR1_DEFAULT', '#FFFFFF');
-// define('EMVIDEO_USTREAMLIVE_COLOR2_DEFAULT', '#CCCCCC');
+define('EMVIDEO_USTREAMLIVE_DATA_VERSION', 1);
 
 /**
  * hook emvideo_PROVIDER_info
@@ -69,13 +67,20 @@ function emvideo_ustreamlive_request($code = '', $cached = TRUE) {
 }
 
 /**
+ *  Implement hook emvideo_PROVIDER_data_version().
+ */
+function emvideo_ustreamlive_data_version() {
+  return EMVIDEO_USTREAMLIVE_DATA_VERSION;
+}
+
+/**
  * hook emfield_PROVIDER_data
  *
  * provides an array to be serialised and made available with $item elsewhere
  */
 function emvideo_ustreamlive_data($field, $item) {
   $data = emvideo_ustreamlive_request($item['value']);
-  $data['ustreamlive_api_version'] = 1;
+  $data['ustreamlive_api_version'] = $data['emvideo_data_version'] = EMVIDEO_USTREAMLIVE_DATA_VERSION;;
   return $data;
 }
 

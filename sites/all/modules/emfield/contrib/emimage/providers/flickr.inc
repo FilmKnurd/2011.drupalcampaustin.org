@@ -1,5 +1,5 @@
 <?php
-// $Id: flickr.inc,v 1.1.2.9 2009/05/29 01:59:57 aaron Exp $
+// $Id: flickr.inc,v 1.1.2.10 2009/09/29 19:52:05 aaron Exp $
 
 /**
  * @file
@@ -10,6 +10,8 @@ define('EMIMAGE_FLICKR_MAIN_URL', 'http://www.flickr.com/');
 define('EMIMAGE_FLICKR_API_INFO', 'http://flickr.com/services/api');
 define('EMIMAGE_FLICKR_API_APPLICATION_URL', 'http://www.flickr.com/services/api/keys');
 define('EMIMAGE_FLICKR_REST_ENDPOINT', 'http://api.flickr.com/services/rest/');
+
+define('EMIMAGE_FLICKR_DATA_VERSION', 1);
 
 /**
  * hook emimage_PROVIDER_info
@@ -107,7 +109,6 @@ function emimage_flickr_settings() {
   return $form;
 }
 
-
 /**
  * this is a wrapper for emimage_request_xml that includes flickr's api key
  */
@@ -124,6 +125,13 @@ function emimage_flickr_request($method, $args = array(), $cached = TRUE) {
 
   $xml = module_invoke('emfield', 'request_xml', 'flickr', EMIMAGE_FLICKR_REST_ENDPOINT, $args, $cached, FALSE, FALSE, TRUE);
   return $xml;
+}
+
+/**
+ *  Implement hook emvideo_PROVIDER_data_version().
+ */
+function emimage_flickr_data_version() {
+  return EMIMAGE_FLICKR_DATA_VERSION;
 }
 
 function emimage_flickr_data($field, $item) {
@@ -159,6 +167,8 @@ function emimage_flickr_data($field, $item) {
     $data['width'] = $width ;
     $data['height'] = $height ;
   }
+
+  $data['emimage_data_version'] = EMIMAGE_FLICKR_DATA_VERSION;
   return $data;
 }
 

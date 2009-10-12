@@ -1,5 +1,5 @@
 <?php
-// $Id: podomatic.inc,v 1.1.4.10 2009/04/19 22:01:06 alexua Exp $
+// $Id: podomatic.inc,v 1.1.4.11 2009/09/29 19:52:05 aaron Exp $
 
 /**
  * @file
@@ -82,12 +82,12 @@ function emaudio_podomatic_embedded_link($audio_code) {
  * hook theme_emaudio_PROVIDER_flash
  * the embedded flash displaying the podomatic audio
  */
- 
+
 function theme_emaudio_podomatic_flash($embed, $width, $height, $autoplay) {
   // <object width="320" height="315"><param name="movie" value="http://www.podOmatic.com/flash/flashcatcher.swf"></param><embed type="application/x-shockwave-flash" src="http://www.podOmatic.com/flash/flashcatcher.swf" width="320" height="315" flashvars="playlist_url=http://funkylondon.podOmatic.com/xspf.xspf" ></embed></object><br /><a href="http://www.podOmatic.com/podcast/embed/funkylondon" style="text-decoration: none"><font size="1" face="Verdana, Arial, Helvetica, sans-serif" color="#0033ff"><strong>Click here to get your own player.</strong></font></a><br><br>
 
    if ($embed) {
-   /*    
+   /*
     if ($autoplay) {
       $autoplay_value = '&autostart=1';
     }

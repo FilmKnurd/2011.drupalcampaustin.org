@@ -1,5 +1,5 @@
 <?php
-// $Id: emvideo.module,v 1.1.2.18 2009/08/25 02:45:50 aaron Exp $
+// $Id: emvideo.module,v 1.1.2.29 2009/09/30 15:56:48 aaron Exp $
 
 /**
  * @file
@@ -22,8 +22,8 @@ define('EMVIDEO_DEFAULT_THUMBNAIL_HEIGHT', 90);
 function emvideo_menu() {
   $items = module_invoke('emfield', 'provider_menus', 'emvideo');
 
-  $items['emvideo/thickbox'] = array(
-    'page callback' => 'emvideo_thickbox',
+  $items['emvideo/modal'] = array(
+    'page callback' => 'emvideo_modal',
     'access arguments' => array('access content'),
     'type' => MENU_CALLBACK,
   );
@@ -75,15 +75,51 @@ function emvideo_theme() {
       'arguments' => array('field' => NULL, 'item' => NULL, 'formatter' => NULL, 'node' => NULL, 'options' => array()),
       'file' => 'emvideo.theme.inc',
     ),
-    'emvideo_thickbox' => array(
+    'emvideo_video_link' => array(
       'arguments' => array('field' => NULL, 'item' => NULL, 'formatter' => NULL, 'node' => NULL, 'options' => array()),
       'file' => 'emvideo.theme.inc',
+    ),
+    'emvideo_video_url' => array(
+      'arguments' => array('field' => NULL, 'item' => NULL, 'formatter' => NULL, 'node' => NULL, 'options' => array()),
+      'file' => 'emvideo.theme.inc',
+    ),
+    'emvideo_video_duration' => array(
+      'arguments' => array('field' => NULL, 'item' => NULL, 'formatter' => NULL, 'node' => NULL, 'options' => array()),
+      'file' => 'emvideo.theme.inc',
+    ),
+    'emvideo_modal_generic' => array(
+        'arguments' => array('field' => NULL, 'item' => NULL, 'formatter' => NULL, 'node' => NULL, 'options' => array()),
+        'file' => 'emvideo.theme.inc'
+    ),
+    'emvideo_thickbox' => array(
+        'arguments' => array('field' => NULL, 'item' => NULL, 'formatter' => NULL, 'node' => NULL, 'options' => array()),
+        'file' => 'emvideo.theme.inc'
+    ),
+    'emvideo_lightbox2' => array(
+        'arguments' => array('field' => NULL, 'item' => NULL, 'formatter' => NULL, 'node' => NULL, 'options' => array()),
+        'file' => 'emvideo.theme.inc'
+    ),
+    'emvideo_shadowbox' => array(
+        'arguments' => array('field' => NULL, 'item' => NULL, 'formatter' => NULL, 'node' => NULL, 'options' => array()),
+        'file' => 'emvideo.theme.inc'
     ),
     'emvideo_formatter_video_video' => array(
         'arguments' => array('element' => NULL),
         'file' => 'emvideo.theme.inc'
     ),
     'emvideo_formatter_video_thumbnail' => array(
+        'arguments' => array('element' => NULL),
+        'file' => 'emvideo.theme.inc'
+    ),
+    'emvideo_formatter_video_link' => array(
+        'arguments' => array('element' => NULL),
+        'file' => 'emvideo.theme.inc'
+    ),
+    'emvideo_formatter_video_url' => array(
+        'arguments' => array('element' => NULL),
+        'file' => 'emvideo.theme.inc'
+    ),
+    'emvideo_formatter_video_duration' => array(
         'arguments' => array('element' => NULL),
         'file' => 'emvideo.theme.inc'
     ),
@@ -103,6 +139,14 @@ function emvideo_theme() {
         'arguments' => array('element' => NULL),
         'file' => 'emvideo.theme.inc'
     ),
+    'emvideo_formatter_lightbox2' => array(
+        'arguments' => array('element' => NULL),
+        'file' => 'emvideo.theme.inc'
+    ),
+    'emvideo_formatter_shadowbox' => array(
+        'arguments' => array('element' => NULL),
+        'file' => 'emvideo.theme.inc'
+    ),
     'emvideo_formatter_video_replace' => array(
         'arguments' => array('element' => NULL),
         'file' => 'emvideo.theme.inc'
@@ -110,6 +154,14 @@ function emvideo_theme() {
     'emvideo_formatter_video_replace_preview' => array(
         'arguments' => array('element' => NULL),
         'file' => 'emvideo.theme.inc'
+    ),
+    'emvideo_modal_iframe' => array(
+        'arguments' => array('content' => ''),
+        'file' => 'emvideo.theme.inc',
+        'template' => 'emvideo_modal_iframe',
+    ),
+    'emvideo_handler_field_duration' => array(
+      'arguments' => array('item' => NULL, 'field' => NULL, 'node' => NULL, 'values' => NULL, 'format' => NULL),
     ),
   );
 
@@ -123,7 +175,7 @@ function emvideo_theme() {
  * Implementation of hook_emfield_settings().
  *
  * This would be to add any extra settings (besides providers) to the emfield
- * settings configuration page. Video CCK doesn't require anything at the moment.
+ * settings configuration page.
  */
 function emvideo_emfield_settings() {
   $form = array();
@@ -150,12 +202,44 @@ function emvideo_field_info() {
 }
 
 /**
- *  Implementation of hook_field_settings
+ *  Implementation of hook_field_settings().
  */
 function emvideo_field_settings($op, $field) {
   switch ($op) {
+    case 'views data':
+      $data = emfield_emfield_field_settings($op, $field);
+      $table_alias = content_views_tablename($field);
+      $field_duration = $field['field_name'] .'_duration';
+      $data[$table_alias][$field_duration] = $data[$table_alias][$field['field_name'] .'_embed'];
+      $data[$table_alias][$field_duration]['title'] .= t(' - Duration');
+      $data[$table_alias][$field_duration]['field']['title'] = $data[$table_alias][$field_duration]['title'];
+      $data[$table_alias][$field_duration]['title short'] = t('Duration');
+      $data[$table_alias][$field_duration]['field']['title short'] = $data[$table_alias][$field_duration]['title short'];
+      $data[$table_alias][$field_duration]['field']['field'] = $field_duration;
+      $data[$table_alias][$field_duration]['field']['handler'] = 'emvideo_handler_field_duration';
+      $data[$table_alias][$field_duration]['argument']['field'] = $field_duration;
+      $data[$table_alias][$field_duration]['argument']['handler'] = 'emvideo_handler_argument_duration';
+      $data[$table_alias][$field_duration]['filter']['field'] = $field_duration;
+      $data[$table_alias][$field_duration]['filter']['handler'] = 'content_handler_filter_numeric';
+      $data[$table_alias][$field_duration]['sort']['field'] = $field_duration;
+      return $data;
     case 'database columns':
-      return module_invoke('emfield', 'field_columns', $field);
+      $columns = emfield_emfield_field_settings($op, $field);
+      // Store duration in its own column for views.
+      $columns = array_merge(
+        $columns,
+        array('duration' =>
+          array(
+            'description' => t('Store the duration of a video in seconds.'),
+            'type' => 'int',
+            'unsigned' => TRUE,
+            'not null' => TRUE,
+            'default' => 0),
+          )
+      );
+      return $columns;
+    default:
+      return emfield_emfield_field_settings($op, $field);
   }
 }
 
@@ -163,23 +247,28 @@ function emvideo_field_settings($op, $field) {
  * Implementation of hook_content_is_empty().
  */
 function emvideo_content_is_empty($item, $field) {
-  return module_invoke('emfield', 'emfield_content_is_empty', $item, $field);
+  return emfield_emfield_content_is_empty($item, $field);
 }
 
 /**
  * Implementation of hook_field().
  */
 function emvideo_field($op, &$node, $field, &$items, $teaser, $page) {
-  if (module_hook('emfield', 'emfield_field')) {
-    return emfield_emfield_field($op, $node, $field, $items, $teaser, $page, 'emvideo');
+  $ret = emfield_emfield_field($op, $node, $field, $items, $teaser, $page, 'emvideo');
+  if ($op == 'presave') {
+    foreach ($items as $delta => $item) {
+      $duration = emfield_include_invoke('emvideo', $item['provider'], 'duration', $item);
+      $items[$delta]['duration'] = $duration ? $duration : 0;
+    }
   }
+  return $ret;
 }
 
 /**
  * Implementation of hook_field_formatter_info()
  */
 function emvideo_field_formatter_info() {
-  $types = array('emvideo', );
+  $types = array('emvideo');
   $formats = array(
     'default' => array(
       'label' => t('Default'),
@@ -197,6 +286,18 @@ function emvideo_field_formatter_info() {
       'label' => t('Image Thumbnail'),
       'field types' => $types,
     ),
+    'video_link' => array(
+      'label' => t('Link to original video'),
+      'field types' => $types,
+    ),
+    'video_url' => array(
+      'label' => t('URL to original video'),
+      'field types' => $types,
+    ),
+    'video_duration' => array(
+      'label' => t('Video duration'),
+      'field types' => $types,
+    ),
     'video_embed' => array(
       'label' => t('Embed Code'),
       'field types' => $types,
@@ -212,11 +313,23 @@ function emvideo_field_formatter_info() {
   );
 
   // Add thickbox formatter if thickbox module exists.
-  if (module_exists('thickbox') || module_exists('lightbox2')) {
+  if (module_exists('thickbox')) {
     $formats['thickbox'] = array(
-      'label' => t('Thickbox/Lightbox2: Image Thumbnail -> Full Size Video'),
+      'label' => t('Thickbox: Image Thumbnail -> Full Size Video'),
       'field types' => $types,
       );
+  }
+  if (module_exists('lightbox2')) {
+    $formats['lightbox2'] = array(
+      'label' => t('Lightbox2: Image Thumbnail -> Full Size Video'),
+      'field types' => $types,
+    );
+  }
+  if (module_exists('shadowbox')) {
+    $formats['shadowbox'] = array(
+      'label' => t('Shadowbox: Image Thumbnail -> Full Size Video'),
+      'field types' => $types,
+    );
   }
 
   return $formats;
@@ -440,12 +553,14 @@ function emvideo_emfield_rss($node, $items = array(), $teaser = NULL) {
 }
 
 function emvideo_handler_arg_provider($op, &$query, $argtype, $arg = '') {
-  return _emfield_handler_arg_provider($op, $query, $argtype, $arg, 'emvideo');
+  $ret = _emfield_handler_arg_provider($op, $query, $argtype, $arg, 'emvideo');
+  return $ret;
 }
 
 /**
- * Page callback for emvideo/thickbox.
- * This will display our video in a modal window defined by the thickbox module.
+ * Page callback for emvideo/thickbox/shadowbox.
+ * This will display our video in a modal window defined by the corresponding
+ * modal module.
  * As it's a direct callback, it displays no HTML other than the video.
  *  @param $nid
  *    The video node's nid.
@@ -462,7 +577,7 @@ function emvideo_handler_arg_provider($op, &$query, $argtype, $arg = '') {
  *  @param $extra
  *    Some video codes have a '/' character, so we have to accomodate in the URL.
  */
-function emvideo_thickbox($nid, $width, $height, $field_name, $provider, $code, $extra = NULL) {
+function emvideo_modal($nid, $width, $height, $field_name, $provider, $code, $extra = NULL) {
   $field = array();
   $field['widget']['video_width'] = $width;
   $field['widget']['video_height'] = $height;
@@ -471,7 +586,8 @@ function emvideo_thickbox($nid, $width, $height, $field_name, $provider, $code, 
   $node = node_load($nid);
 
   // If the URL has an extra bit, then append that to the video code.
-  if (isset($extra)) {
+  // This broke shadowbox, which needs index.php to register as iFrame.
+  if (isset($extra) && ($extra != 'index.php')) {
     $code .= '/'. $extra;
   }
   foreach ($node->{$field_name} as $video) {
@@ -479,5 +595,33 @@ function emvideo_thickbox($nid, $width, $height, $field_name, $provider, $code, 
       $item = $video;
     }
   }
-  print theme('emvideo_video_video', $field, $item, 'video_video', $node);
+
+  // Suppress the Admin Menu, if that module/fuction exists.
+  if (function_exists('admin_menu_suppress')) {
+    admin_menu_suppress();
+  }
+
+  $output = theme('emvideo_video_video', $field, $item, 'video_video', $node, array('iframe' => TRUE));
+  print theme('emvideo_modal_iframe', $output);
 }
+
+function emvideo_convert_to_seconds($time) {
+  module_load_include('inc', 'emvideo', 'emvideo.theme');
+  return _emvideo_convert_to_seconds($time);
+}
+
+function emvideo_seconds_to_time($time) {
+  module_load_include('inc', 'emvideo', 'emvideo.theme');
+  return _emvideo_seconds_to_time($time);
+}
+
+/**
+ * Implementation of hook_views_api().
+ */
+function emvideo_views_api() {
+  return array(
+    'api' => 2,
+    'path' => drupal_get_path('module', 'emvideo') . '/includes/views',
+  );
+}
+

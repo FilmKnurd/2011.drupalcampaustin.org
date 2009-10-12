@@ -1,5 +1,5 @@
 <?php
-// $Id: podcastalley.inc,v 1.1.4.7 2008/12/16 16:12:57 aaron Exp $
+// $Id: podcastalley.inc,v 1.1.4.8 2009/09/29 19:52:05 aaron Exp $
 
 /**
  * @file
@@ -7,6 +7,7 @@
  */
 
 define('EMAUDIO_PODCASTALLEY_MAIN_URL', 'http://www.podcastalley.com');
+
 /**
  * Implementation of hook emaudio_podcastalley_info().
  *
@@ -114,7 +115,7 @@ function theme_emaudio_podcastalley_flash($embed, $width, $height, $autoplay) {
  *   A URL pointing to the thumbnail.
  */
 function emaudio_podcastalley_thumbnail($field, $item, $formatter, $node, $width, $height) {
-  return $tn;
+  return '';
 }
 
 /**

@@ -1,5 +1,5 @@
 <?php
-// $Id: odeo.inc,v 1.1.4.8 2009/04/15 16:31:40 kleinmp Exp $
+// $Id: odeo.inc,v 1.1.4.9 2009/09/29 19:52:05 aaron Exp $
 
 /**
  * @file
@@ -105,7 +105,7 @@ function theme_emaudio_odeo_flash($embed, $width, $height, $autoplay) {
  *   A URL pointing to the thumbnail.
  */
 function emaudio_odeo_thumbnail($field, $item, $formatter, $node, $width, $height) {
-  return $tn;
+  return '';
 }
 
 /**

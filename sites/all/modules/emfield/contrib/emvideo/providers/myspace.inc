@@ -1,4 +1,5 @@
 <?php
+// $Id: myspace.inc,v 1.1.2.11 2009/09/28 22:47:12 aaron Exp $
 
 /**
  * @file
@@ -9,12 +10,12 @@ define('EMVIDEO_MYSPACE_MAIN_URL', 'http://vids.myspace.com/');
 define('EMVIDEO_MYSPACE_API_URL', 'http://developer.myspace.com/community/');
 define('EMVIDEO_MYSPACE_DATA_VERSION', 1);
 
-
 function emvideo_myspace_info() {
   $features = array(
     array(t('Autoplay'), t('No'), ''),
     array(t('RSS Attachment'), t('No'), ''),
     array(t('Thumbnails'), t('Yes'), ''),
+    array(t('Duration'), t('Yes'), ''),
   );
   return array(
     'provider' => 'myspace',
@@ -28,6 +29,13 @@ function emvideo_myspace_info() {
 function emvideo_myspace_settings() {
   $form = array();
   return $form;
+}
+
+/**
+ *  Implement hook emvideo_PROVIDER_data_version().
+ */
+function emvideo_myspace_data_version() {
+  return EMVIDEO_MYSPACE_DATA_VERSION;
 }
 
 /**
@@ -52,8 +60,8 @@ function emvideo_myspace_data($field, $item) {
   // down the road, we can respect older content. If allowed by Embedded Media
   // Field, any older content will automatically update this array as needed.
   // In any case, you should account for the version if you increment it.
-  $data['emvideo_myspace_version'] = EMVIDEO_MYSPACE_DATA_VERSION;
-  
+  $data['emvideo_data_version'] = $data['emvideo_myspace_version'] = EMVIDEO_MYSPACE_DATA_VERSION;
+
   $data['emvideo_myspace_thumbnail'] = $data['ITEM']['MEDIA:THUMBNAIL'][1]['URL'];
   // This stores a URL to the video's thumbnail.
 
@@ -64,7 +72,7 @@ function emvideo_myspace_data($field, $item) {
  *  Implements emvideo_PROVIDER_extract().
  */
 function emvideo_myspace_extract($url) {
- 
+
  return array(
     '@src="myspace\.com/index.cfm\?fuseaction=vids\.individual&amp;videoid=([^&"]+)@i',
     '@myspace\.com/index\.cfm\?fuseaction=vids\.individual&amp;videoid=([^&"]+)@i',
@@ -85,6 +93,21 @@ function emvideo_myspace_extract($url) {
  */
 function emvideo_myspace_embedded_link($video_code) {
   return 'http://vids.myspace.com/index.cfm?fuseaction=vids.individual&videoid='. $video_code;
+}
+
+/**
+ * hook emvideo_PROVIDER_duration($item)
+ * Returns the duration of the video in seconds.
+ *  @param $item
+ *    The video item itself, which needs the $data array.
+ *  @return
+ *    The duration of the video in seconds.
+ */
+function emvideo_myspace_duration($item) {
+  if (!isset($item['data']['emvideo_myspace_version'])) {
+    $item['data'] = emvideo_myspace_data(NULL, $item);
+  }
+  return isset($item['data']['ITEM']['MEDIA:CONTENT'][1]['DURATION']) ? $item['data']['ITEM']['MEDIA:CONTENT'][1]['DURATION'] : 0;
 }
 
 function theme_emvideo_myspace_flash($embed, $width, $height) {
@@ -128,5 +151,16 @@ function emvideo_myspace_emfield_subtheme() {
       'arguments' => array('embed' => NULL, 'width' => NULL, 'height' => NULL, 'autoplay' => NULL),
       'file' => 'providers/myspace.inc'
     )
+  );
+}
+
+/**
+ *  Implement hook_emvideo_PROVIDER_content_generate().
+ */
+function emvideo_myspace_content_generate() {
+  return array(
+    'http://vids.myspace.com/index.cfm?fuseaction=vids.individual&videoid=62472581&searchid=ea1f646c-39df-4963-b93d-f916b019f1a1',
+    'http://vids.myspace.com/index.cfm?fuseaction=vids.individual&videoid=62472739&searchid=ea1f646c-39df-4963-b93d-f916b019f1a1',
+    'http://vids.myspace.com/index.cfm?fuseaction=vids.individual&videoid=62473325&searchid=ea1f646c-39df-4963-b93d-f916b019f1a1',
   );
 }

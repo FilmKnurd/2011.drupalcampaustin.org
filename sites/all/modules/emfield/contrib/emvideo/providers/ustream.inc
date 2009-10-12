@@ -1,12 +1,10 @@
 <?php
-// $Id: ustream.inc,v 1.1.2.1 2009/02/04 23:29:49 aaron Exp $
+// $Id: ustream.inc,v 1.1.2.2 2009/09/28 23:05:47 aaron Exp $
 
 define('EMVIDEO_USTREAM_MAIN_URL', 'http://www.ustream.tv/');
 define('EMVIDEO_USTREAM_API_INFO', 'http://developer.ustream.tv/');
 define('EMVIDEO_USTREAM_API_APPLICATION_URL', 'http://developer.ustream.tv/apps/register');
-// define('EMVIDEO_USTREAM_REST_ENDPOINT', 'http://www.ustream.tv/api2_rest');
-// define('EMVIDEO_USTREAM_COLOR1_DEFAULT', '#FFFFFF');
-// define('EMVIDEO_USTREAM_COLOR2_DEFAULT', '#CCCCCC');
+define('EMVIDEO_USTREAM_DATA_VERSION', 1);
 
 /**
  * hook emvideo_PROVIDER_info
@@ -69,13 +67,20 @@ function emvideo_ustream_request($code = '', $cached = TRUE) {
 }
 
 /**
+ *  Implement hook emvideo_PROVIDER_data_version().
+ */
+function emvideo_ustream_data_version() {
+  return EMVIDEO_USTREAM_DATA_VERSION;
+}
+
+/**
  * hook emfield_PROVIDER_data
  *
  * provides an array to be serialised and made available with $item elsewhere
  */
 function emvideo_ustream_data($field, $item) {
   $data = emvideo_ustream_request($item['value']);
-  $data['ustream_api_version'] = 1;
+  $data['ustream_api_version'] = $data['emvideo_data_version'] = EMVIDEO_USTREAM_DATA_VERSION;
   return $data;
 }
 
@@ -94,6 +99,21 @@ function emvideo_ustream_extract($embed = '') {
   return array(
     '@ustream\.tv/recorded/([^"\&\?]+)@i',
   );
+}
+
+/**
+ * hook emvideo_PROVIDER_duration($item)
+ * Returns the duration of the video in seconds.
+ *  @param $item
+ *    The video item itself, which needs the $data array.
+ *  @return
+ *    The duration of the video in seconds.
+ */
+function emvideo_ustream_duration($item) {
+  if (!isset($item['data']['ustream_api_version'])) {
+    $item['data'] = emvideo_ustream_data(NULL, $item);
+  }
+  return isset($item['data']['results']['lengthInSecond']) ? intval($item['data']['results']['lengthInSecond']) : 0;
 }
 
 /**
@@ -204,4 +224,15 @@ function emvideo_ustream_emfield_subtheme() {
             'file' => 'providers/ustream.inc'
         )
     );
+}
+
+/**
+ *  Implement hook_emvideo_PROVIDER_content_generate().
+ */
+function emvideo_ustream_content_generate() {
+  return array(
+    'http://www.ustream.tv/recorded/1448530',
+    'http://www.ustream.tv/recorded/1448057',
+    'http://www.ustream.tv/recorded/1726952',
+  );
 }

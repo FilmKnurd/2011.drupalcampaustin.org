@@ -1,5 +1,5 @@
 <?php
-// $Id: picasa.inc,v 1.1.2.5 2009/05/10 00:31:20 alexua Exp $
+// $Id: picasa.inc,v 1.1.2.11 2009/09/29 19:52:05 aaron Exp $
 
 /**
  * @file
@@ -9,6 +9,8 @@
 define('EMIMAGE_PICASA_MAIN_URL', 'http://picasaweb.google.com/');
 define('EMIMAGE_PICASA_API_INFO', 'http://code.google.com/apis/picasaweb/developers_guide_protocol.html');
 define('EMIMAGE_PICASA_REST_ENDPOINT', 'http://picasaweb.google.com/data/feed/api/user/');
+
+define('EMIMAGE_PICASA_DATA_VERSION', 1);
 
 /**
  * hook emimage_PROVIDER_info
@@ -46,9 +48,23 @@ function emimage_picasa_request($data = array(), $kind = '', $cached = TRUE) {
   return $xml;
 }
 
+/**
+ *  Implement hook emvideo_PROVIDER_data_version().
+ */
+function emimage_picasa_data_version() {
+  return EMIMAGE_PICASA_DATA_VERSION;
+}
+
 function emimage_picasa_data($field, $item) {
   $data = array();
-  if (preg_match('!picasaweb\.google\.com/([^/]*)/([^/]*)/photo\#(.*)!i', $item['embed'], $matches)) {
+  if (preg_match('@picasaweb\.google\.com/([^/]+)/([^/]+)/photo.*?#(.*)@i', $item['embed'], $matches)) {
+    $data = array(
+      'userid' => $matches[1],
+      'album' => $matches[2],
+      'photoid' => $matches[3],
+    );
+  }
+  elseif (preg_match('@picasaweb\.google\.com/([^/]+)/([^/\?]+).*?#([^\&]+)@i', $item['embed'], $matches)) {
     $data = array(
       'userid' => $matches[1],
       'album' => $matches[2],
@@ -67,16 +83,32 @@ function emimage_picasa_data($field, $item) {
   $data['width'] = $xml['MEDIA:GROUP']['MEDIA:THUMBNAIL'][5][WIDTH];
   $data['height'] = $xml['MEDIA:GROUP']['MEDIA:THUMBNAIL'][5][HEIGHT];
 
+  $data['emimage_data_version'] = EMIMAGE_PICASA_DATA_VERSION;
+
   return $data;
 }
 
+function emimage_picasa_validate($value, $error_field) {
+  if ($value == 'PICASA_ERROR_USER') {
+    form_set_error($error_field, t("This URL does not contain enough information to access Picasa's current API. Please find the photo through this user's gallery and link its URL here."));
+  }
+}
+
 function emimage_picasa_extract($embed = '') {
-  // http://picasaweb.google.com/kaos777/YearlyKos/photo#5119063656501095090
-  if (preg_match('!picasaweb\.google\.com/([^/]*)/([^/]*)/photo\#(.*)!i', $embed, $matches)) {
-    return $matches[3];
+  // Note that the API doesn't seem to support calls that don't include at
+  // least the User (though the Album seems to be optional).
+  // http://picasaweb.google.com/lh/photo/oVr_uf6LoEhUWOMOujA_lQ?feat=directlink
+  if (preg_match('@picasaweb\.google\.com/lh/(.+)@i', $embed, $matches)) {
+    return 'PICASA_ERROR_USER';
   }
 
-  return array();
+  // http://picasaweb.google.com/kaos777/YearlyKos/photo#5119063656501095090
+  // http://picasaweb.google.com/irina1005/qdihmG#5298825003004278162
+  // http://picasaweb.google.com/eugene.martov/1508?feat=featured#5381754383516490642
+  return array(
+    '@picasaweb\.google\.com/[^/]+/[^/]+/photo.*?#([^\&]+)@i',
+    '@picasaweb\.google\.com/[^/]+/[^/\?]+.*?#([^\&]+)@i',
+  );
 }
 
 /**

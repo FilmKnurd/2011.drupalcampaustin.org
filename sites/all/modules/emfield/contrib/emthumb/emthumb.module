@@ -1,5 +1,5 @@
 <?php
-// $Id: emthumb.module,v 1.7.2.27 2009/08/25 02:24:29 aaron Exp $
+// $Id: emthumb.module,v 1.7.2.30 2009/09/25 17:07:21 aaron Exp $
 
 /**
  *  @file
@@ -12,7 +12,9 @@
  */
 function emthumb_emfield_field_extra($op, &$node, $field, &$items, $teaser, $page, $module) {
   switch ($op) {
-    case 'submit':
+    case 'presave':
+    case 'update':
+    case 'insert':
     case 'validate':
       if ($field['multiple']) {
         foreach ($items as $delta => $item) {
@@ -134,7 +136,7 @@ function emthumb_widget_element_process($element, $form_state) {
     }
   }
 
-  // Seperate from tree becase of that silly things won't be
+  // Separate from tree becase of that silly things won't be
   // displayed if they are a child of '#type' = form issue
   $element[$fieldname .'_upload'] = array(
     '#type'  => 'file',
@@ -153,21 +155,16 @@ function emthumb_widget_element_process($element, $form_state) {
   );
 
   // Store the file data object to be carried on.
-  $file = isset($file) ? $file : (isset($items[$delta]['data']['emthumb']) ? $items[$delta]['data']['emthumb'] : array());
+  $file = !empty($file) ? $file : (isset($items[$delta]['data']['emthumb']) ? $items[$delta]['data']['emthumb'] : array());
 
   // If we have no current file, and have been told to store a local thumbnail,
   // then fetch it now.
-  if (empty($file) && isset($field['widget']['emthumb_store_local_thumbnail'])) { // was variable_get('emthumb_store_local_thumbnail', TRUE)) {
+  if (empty($file) && !empty($field['widget']['emthumb_store_local_thumbnail'])) {
     $item = $items[$delta];
-    if (empty($item['value'])) {
-      // @TODO: We need to get the info somehow.
-      // Unfortunately, it's not given by the element on submission.
-    }
     if (!empty($item['value'])) {
       $file = emthumb_fetch_remote_thumbnail($item, $field);
     }
   }
-
   // If we have one, display the current thumbnail and a delete checkbox.
   if (isset($file['filepath']) && !isset($file['flags']['delete'])) {
     $element['#title'] = t('Replace');
@@ -279,15 +276,6 @@ function emthumb_widget_element_validate($element, $form_state) {
 }
 
 /**
- * Submit callback for emthumb_widget element.
- *  @TODO: This does nothing, and is never called.
- */
-function emthumb_widget_element_submit($form, $form_state) {
-  // @TODO: This function does not even exist.
-//   emthumb_save_upload($element);
-}
-
-/**
 * Implementation of hook_elements().
 */
 function emthumb_elements() {
@@ -296,8 +284,6 @@ function emthumb_elements() {
     '#input' => TRUE,
     '#process' => array('emthumb_widget_element_process'),
     '#element_validate' => array('emthumb_widget_element_validate'),
-    // @TODO: The following is extraneous; remove it.
-//     '#submit' => array('emthumb_widget_element_submit'),
   );
   return $elements;
 }
@@ -640,7 +626,7 @@ function emthumb_fetch_remote_thumbnail($item, $field) {
           return 0;
         }
         // If we made it this far it's safe to record this file in the database.
-        $file->status = FILE_STATUS_TEMPORARY;
+        $file->status = FILE_STATUS_PERMANENT;
         $file->timestamp = time();
         drupal_write_record('files', $file);
 

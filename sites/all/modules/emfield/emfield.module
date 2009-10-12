@@ -1,5 +1,5 @@
 <?php
-// $Id: emfield.module,v 1.12.4.39 2009/08/25 02:45:49 aaron Exp $
+// $Id: emfield.module,v 1.12.4.44 2009/10/05 19:05:10 aaron Exp $
 
 /**
  * @file
@@ -174,8 +174,11 @@ function _emfield_field_validate_id($field, $item, $error_field, $module, $delta
   // Load the provider info.
   $item = _emfield_field_submit_id($field, $item, $module, $error_field);
   // Ensure we have proper provider info.
-  if ($item['embed'] && !$item['value']) {
+  if ($item['embed'] && !$item['provider']) {
     form_set_error($error_field, t('You have specified an invalid media URL or embed code.'));
+  }
+  else {
+    emfield_include_invoke($module, $item['provider'], 'validate', $item['value'], $error_field);
   }
 
   return $item;
@@ -187,7 +190,7 @@ function _emfield_field_validate_id($field, $item, $error_field, $module, $delta
  */
 function _emfield_field_submit_id($field, $item, $module) {
 
-  // TODO Find the right fix for this.
+  // @TODO Find the right fix for this.
   // When the embedded media field is used in the default value widget
   // when editing field settings, the $item has no value for 'provider',
   // causing an error message.
@@ -200,6 +203,7 @@ function _emfield_field_submit_id($field, $item, $module) {
   }
   $item = array_merge($item, emfield_parse_embed($field, $item['embed'], $module));
   $item['data'] = (array)emfield_include_invoke($module, $item['provider'], 'data', $field, $item);
+  $item['version'] = intval(emfield_include_invoke($module, $item['provider'], 'data_version', $field, $item));
 
   return $item;
 }
@@ -782,4 +786,60 @@ function emfield_imagerotator_url($reset = FALSE) {
   }
 
   return $path;
+}
+
+/**
+ * Implementation of Devel module's hook_content_generate().
+ */
+function emfield_content_generate($node, $field) {
+  $item = $urls = array();
+  $module = $field['module'];
+  foreach (emfield_allowed_providers($field, $module) as $provider) {
+    $provider_urls = emfield_include_invoke($module, $provider->name, 'content_generate', $node, $field);
+    if (is_array($provider_urls)) {
+      $urls[$provider->name] = $provider_urls;
+    }
+  }
+  if (!empty($urls)) {
+    $provider = array_rand($urls);
+    $item['provider'] = $provider;
+    $key = array_rand($urls[$provider]);
+    $item['embed'] = $urls[$provider][$key];
+    $item = _emfield_field_submit_id($field, $item, $module);
+  }
+  return $item;
+}
+
+/**
+ *  Helper function for hook_field_settings().
+ */
+function emfield_emfield_field_settings($op, $field) {
+  module_load_include('inc', 'emfield', 'emfield.cck');
+  return _emfield_emfield_field_settings($op, $field);
+}
+
+/**
+ * Implementation of hook_views_api().
+ */
+function emfield_views_api() {
+  return array(
+    'api' => 2,
+    'path' => drupal_get_path('module', 'emfield') . '/includes/views',
+  );
+}
+
+/**
+ * Implementation of hook_theme().
+ */
+function emfield_theme() {
+  return array(
+    'emfield_handler_field_provider' => array(
+      'arguments' => array('item' => NULL, 'field' => NULL, 'node' => NULL, 'values' => NULL, 'format' => NULL),
+    ),
+    'emfield_swfobject' =>array(
+      'arguments' => array("url" => NULL, '$div_id' => NULL, 'width' => NULL, 'height' => NULL, 'version' => "8"),
+      'path' => drupal_get_path('module', 'emfield') . '/includes/themes',
+      'file' => 'emfield.themes.inc',
+    ),
+  );
 }

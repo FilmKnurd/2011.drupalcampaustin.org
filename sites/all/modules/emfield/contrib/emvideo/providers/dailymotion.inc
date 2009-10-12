@@ -1,5 +1,5 @@
 <?php
-// $Id: dailymotion.inc,v 1.1.2.11 2009/07/23 19:21:44 robloach Exp $
+// $Id: dailymotion.inc,v 1.1.2.12 2009/09/28 22:11:27 aaron Exp $
 
 /**
  * @file
@@ -177,5 +177,16 @@ function emvideo_dailymotion_emfield_subtheme() {
       'arguments' => array('embed' => NULL, 'width' => NULL, 'height' => NULL, 'autoplay' => NULL),
       'file' => 'providers/dailymotion.inc'
     )
+  );
+}
+
+/**
+ *  Implement hook_emvideo_PROVIDER_content_generate().
+ */
+function emvideo_dailymotion_content_generate() {
+  return array(
+    'http://www.dailymotion.com/relevance/search/drupal/video/x4gfqu_introduction-to-drupal_tech',
+    'http://www.dailymotion.com/relevance/search/drupal/video/x57pyj_drupal-6-hot-new-themes_tech',
+    'http://www.dailymotion.com/relevance/search/drupal/video/x76hya_host-color-we-like-drupal_tech',
   );
 }

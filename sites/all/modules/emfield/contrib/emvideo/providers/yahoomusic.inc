@@ -1,5 +1,5 @@
 <?php
-// $Id: yahoomusic.inc,v 1.1.2.2 2009/02/10 17:58:21 alexua Exp $
+// $Id: yahoomusic.inc,v 1.1.2.3 2009/09/28 23:23:21 aaron Exp $
 
 /**
  * @file
@@ -10,6 +10,7 @@ define('EMVIDEO_YAHOOMUSIC_MAIN_URL', 'http://new.music.yahoo.com/');
 define('EMVIDEO_YAHOOMUSIC_API_INFO', 'http://developer.yahoo.com/music/api_guide/');
 define('EMVIDEO_YAHOOMUSIC_API_APPLICATION_URL', 'http://developer.yahoo.com/music/');
 define('EMVIDEO_YAHOOMUSIC_BGCOLOR_DEFAULT', '#000000');
+define('EMVIDEO_YAHOOMUSIC_DATA_VERSION', 1);
 
 /**
  * hook emvideo_PROVIDER_info
@@ -63,7 +64,7 @@ function emvideo_yahoomusic_settings() {
     '#default_value' => variable_get('emvideo_yahoomusic_locale','us'),
     '#options' => array(
       'us' => t('United States'),
-      'e1' => t('United States (Espanol)'),
+      'e1' => t('United States (EspaÃ±ol)'),
       'ca' => t('Canada'),
       'mx' => t('Mexico'),
       'au' => t('Australia'),
@@ -152,6 +153,13 @@ function emvideo_yahoomusic_settings() {
 }
 
 /**
+ *  Implement hook emvideo_PROVIDER_data_version().
+ */
+function emvideo_yahoomusic_data_version() {
+  return EMVIDEO_YAHOOMUSIC_DATA_VERSION;
+}
+
+/**
  * hook emfield_PROVIDER_data
  *
  * provides an array to be serialised and made available with $item elsewhere
@@ -159,7 +167,7 @@ function emvideo_yahoomusic_settings() {
 function emvideo_yahoomusic_data($field, $item) {
   $data = array();
   // create some 'field' version control
-  $data['emvideo_yahoomusic_version'] = 1;
+  $data['emvideo_yahoomusic_version'] = $data['emvideo_data_version'] = EMVIDEO_YAHOOMUSIC_DATA_VERSION;
   return $data;
 }
 
@@ -203,10 +211,10 @@ function emvideo_yahoomusic_embedded_link($video_code) {
 }
 
 function _emvideo_yahoomusic_locale_lookup($value = 'code') {
-// Taken from http://developer.yahoo.com/music/api_guide/GettingStartedLocales.html 
+// Taken from http://developer.yahoo.com/music/api_guide/GettingStartedLocales.html
 //  Locale                    API Hostname            eID       ympsc       lang
 //  United States             us.music.yahooapis.com  1301797   4195351     en
-//  United States (Español)   e1.music.yahooapis.com  1307666   559940629   es
+//  United States (Espaï¿½ol)   e1.music.yahooapis.com  1307666   559940629   es
 //  Canada                    ca.music.yahooapis.com  1307409   642778131   en
 //  Mexico                    mx.music.yahooapis.com  8257040   640680961   es
 //  Australia                 au.music.yahooapis.com  1307669   638583826   en
@@ -218,9 +226,9 @@ function _emvideo_yahoomusic_locale_lookup($value = 'code') {
 //  France                    fr.music.yahooapis.com  1307665   536871959   fr
 
   static $locales = array();
-  
+
   $code = variable_get('emvideo_yahoomusic_locale','us');
-  
+
   switch ($code) {
     case 'us':
       $locales[$code] = array('name' => 'United States', 'eid' => 1301797, 'ympsc' => 4195351, 'lang' => 'en');
@@ -260,7 +268,7 @@ function _emvideo_yahoomusic_locale_lookup($value = 'code') {
       $locales[$code] = array('name' => 'United States', 'eid' => 1301797, 'ympsc' => 4195351, 'lang' => 'en');
   }
   $locales[$code]['hostname'] = $code . '.music.yahooapis.com';
-  
+
   switch ($value) {
     case 'code':
       return $code;
@@ -298,24 +306,24 @@ function theme_emvideo_yahoomusic_flash($embed, $width, $height, $autoplay, $opt
     $variables['eID'] = _emvideo_yahoomusic_locale_lookup('eid');
     $variables['ympsc'] = _emvideo_yahoomusic_locale_lookup('ympsc');
     $variables['lang'] = _emvideo_yahoomusic_locale_lookup('lang');
- 
+
     $fullscreen = variable_get('emvideo_yahoomusic_full_screen', 1);
     $fullscreen_value = $fullscreen ? "true" : "false";
     $variables['enableFullScreen'] = $fullscreen ? "1" : "0";
     $variables['autoStart'] = $autoplay ? '1' : '0';
-    
+
     $variables['bw'] = variable_get('emvideo_yahoomusic_bandwidth', '');
     $variables['eh'] = variable_get('emvideo_yahoomusic_event_handler', '');
     $variables['closeEnable'] = variable_get('emvideo_yahoomusic_close_enable', 0);
     $variables['controlsEnable'] = variable_get('emvideo_yahoomusic_controls_enable', 1);
     $variables['infoEnable'] = variable_get('emvideo_yahoomusic_info_enable', 1);
-    
+
     $variables['nowplayingEnable'] = variable_get('emvideo_yahoomusic_now_playing_enable', 1);
     $variables['postpanelEnable'] = variable_get('emvideo_yahoomusic_post_panel_enable', 1);
     $variables['prepanelEnable'] = variable_get('emvideo_yahoomusic_pre_panel_enable', 1);
     $variables['shareEnable'] = variable_get('emvideo_yahoomusic_share_enable', 1);
     $bgcolor = variable_get('emvideo_yahoomusic_bgcolor', EMVIDEO_YAHOOMUSIC_BGCOLOR_DEFAULT);
-    
+
     foreach ($variables as $name => $value) {
       if ($value !== '') {
         // Add to flashvars string.
@@ -335,7 +343,7 @@ function theme_emvideo_yahoomusic_flash($embed, $width, $height, $autoplay, $opt
     $id = isset($options['id']) ? $options['id'] : 'video-cck-yahoomusic-flash-'. (++$count);
     $div_id = isset($options['div_id']) ? $options['div_id'] : 'video-cck-yahoomusic-flash-wrapper-'. $count;
     $url = "http://d.yimg.com/cosmos.bcst.yahoo.com/up/fop/embedflv/swf/fop.swf";
-    
+
     if (variable_get('emfield_swfobject', FALSE) && (module_exists('swfobject_api') || variable_get('emfield_swfobject_location', ''))) {
       if (module_exists('swfobject_api')) {
         $params['width'] = $width;

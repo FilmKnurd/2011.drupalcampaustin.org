@@ -1,5 +1,5 @@
 <?php
-// $Id: emvideo.install,v 1.1.2.17 2009/08/25 02:32:04 aaron Exp $
+// $Id: emvideo.install,v 1.1.2.29 2009/09/30 21:05:09 aaron Exp $
 
 /**
  * @file
@@ -160,13 +160,6 @@ function emvideo_update_2() {
   return $ret;
 }
 
-function _emvideo_update_reset_cache() {
-  $ret = _emvideo_update_reset_cache_views();
-  $ret[] = update_sql("DELETE FROM {cache_content}");
-
-  return $ret;
-}
-
 /**
  * Since we made our engine dependent on emfield, we need to change some variables accordingly.
  */
@@ -256,12 +249,264 @@ function emvideo_update_6002() {
 }
 
 /**
- * I'd like this to be conditional, so it only runs if they don't have Views
- * installed. However, module_exists doesn't actually work in the update scripts.
+ *  Add new formatters for Lightbox2 & Shadowbox, and new menu callback.
+ */
+function emvideo_update_6003() {
+  // Change the menu callback for emvideo/modal.
+  menu_rebuild();
+
+  return _emvideo_update_add_new_formatters();
+}
+
+/**
+ *  Add new formatters for link and duration.
+ */
+function emvideo_update_6004() {
+  $ret = _emvideo_update_add_new_formatters();
+  return $ret;
+}
+
+/**
+ *  Redo for new formatters for link and duration.
+ */
+function emvideo_update_6005() {
+  $ret = _emvideo_update_add_new_formatters();
+
+  // We no longer need the YouTube API secret key, which no longer exists.
+  $ret[] = update_sql("DELETE FROM {variable} WHERE name='emvideo_youtube_api_secret'");
+
+  return $ret;
+}
+
+/**
+ *  Add new formatters for link and duration.
+ */
+function emvideo_update_6006() {
+  $ret = _emvideo_update_add_new_formatters(t('Rebuilt the theme for modal iframes.'));
+  return $ret;
+}
+
+/**
+ *  Add a duration column to existing fields.
+ */
+function emvideo_update_6007() {
+  // This update was originally malformed, and did not always work properly.
+  // It's now redone in 6010.
+  $ret = array();
+  return $ret;
+}
+
+/**
+ *  Add a duration column to existing fields.
+ */
+function emvideo_update_6008() {
+  // The previous update, upon which this depended, was originally malformed,
+  // and did not always work properly. It's now redone in 6011.
+  $ret = array();
+  return $ret;
+}
+
+/**
+ *  Add new formatters for link and duration.
+ */
+function emvideo_update_6009() {
+  $ret = _emvideo_update_add_new_formatters(t('Rebuilt the theme for modal iframes.'));
+  return $ret;
+}
+
+/**
+ *  Botched update_6007, redo at 6013.
+ */
+function emvideo_update_6010() {
+  $ret = array();
+  return $ret;
+}
+
+/**
+ *  Botched update, redo at 6014.
+ */
+function emvideo_update_6011() {
+  $ret = array();
+  return $ret;
+}
+
+/**
+ *  Rebuild themes and views.
+ */
+function emvideo_update_6012() {
+  drupal_rebuild_theme_registry();
+  return _emvideo_update_reset_cache_views();
+}
+
+/**
+ *  Add a duration column to existing fields.
+ */
+function emvideo_update_6013() {
+  $ret = _emvideo_update_reset_cache();
+
+  include_once(drupal_get_path('module', 'content') .'/includes/content.admin.inc');
+
+  content_clear_type_cache(TRUE);
+
+  // Build a list of fields that need data updating.
+  $fields = array();
+  foreach (content_types_install() as $type_name => $type_fields) {
+    foreach ($type_fields as $field) {
+      if ($field['module'] == 'emvideo') {
+        // We only process a given field once.
+        $fields[$field['field_name']] = $field;
+      }
+    }
+  }
+
+  // Update database storage (add data column, remove description, set NOT NULL).
+  foreach ($fields as $field) {
+    $new_field = $field;
+
+    unset($field['duration']);
+    content_alter_db($field, $new_field);
+
+    $ret[] = array(
+      'query' => t('Added duration to the %field field.', array('%field' => $field['field_name'])),
+      'success' => TRUE,
+    );
+  }
+
+  content_associate_fields('emvideo');
+
+  $ret[] = update_sql("DELETE FROM {cache}");
+
+  return $ret;
+}
+
+/**
+ *  Add a duration column to existing fields.
+ */
+function emvideo_update_6014() {
+  $ret = array();
+
+  // Build a list of fields that need data updating.
+  $fields = array();
+  foreach (content_types_install() as $type_name => $type_fields) {
+    foreach ($type_fields as $field) {
+      if ($field['type'] == 'emvideo') {
+        // We only process a given field once.
+        $fields[$field['field_name']] = $field;
+      }
+    }
+  }
+
+  // Build a batch that grabs the duration for each video field.
+  $batch = array(
+    'title' => t('Importing duration.'),
+    'operations' => array(),
+    'file' => drupal_get_path('module', 'emvideo') .'/emvideo.install',
+  );
+  foreach ($fields as $field_name => $field) {
+    $batch['operations'][] = array('_emvideo_update_get_duration', array($field));
+    $ret[] = array(
+      'query' => t('Saved available video durations for the %field field.', array('%field' => $field['field_name'])),
+      'success' => TRUE,
+    );
+  }
+  batch_set($batch);
+
+  // Clear caches.
+  cache_clear_all('*', content_cache_tablename(), TRUE);
+  cache_clear_all('*', 'cache', TRUE);
+  return $ret;
+}
+
+/**
+ *  Batch function to grab the duration for each video field.
+ */
+function _emvideo_update_get_duration($field, &$context) {
+  // Setup the first through
+  if (!isset($context['sandbox']['progress'])) {
+    $db_info = content_database_info($field);
+    $context['sandbox']['db_info'] = $db_info;
+    $context['sandbox']['table'] = $db_info['table'];
+    $context['sandbox']['col_embed'] = $db_info['columns']['embed']['column'];
+    $context['sandbox']['col_value'] = $db_info['columns']['value']['column'];
+    $context['sandbox']['col_provider'] = $db_info['columns']['provider']['column'];
+    $context['sandbox']['col_data'] = $db_info['columns']['data']['column'];
+    $context['sandbox']['col_duration'] = $db_info['columns']['duration']['column'];
+    $context['sandbox']['max'] = db_result(db_query("SELECT COUNT(*) FROM {". $db_info['table'] ."} WHERE {$context['sandbox']['col_duration']} = 0"));
+    $context['sandbox']['progress'] = 0;
+    $context['sandbox']['current_node'] = 0;
+  }
+
+  // Work our way through the field values 50 rows at a time.
+  $limit = 50;
+  $result = db_query_range("SELECT * FROM {{$context['sandbox']['table']}} WHERE vid > %d AND {$context['sandbox']['col_duration']} = 0 ORDER BY nid ASC", $context['sandbox']['current_node'], 0, $limit);
+  while ($row = db_fetch_array($result)) {
+    // Fetch the duration from the provider.
+    $item = array(
+      'embed' => $row[$context['sandbox']['col_embed']],
+      'value' => $row[$context['sandbox']['col_value']],
+      'provider' => $row[$context['sandbox']['col_provider']],
+      'data' => unserialize($row[$context['sandbox']['col_data']]),
+      'duration' => $row[$context['sandbox']['col_duration']],
+    );
+    if ($item['provider'] && empty($item['duration'])) {
+      $duration = emfield_include_invoke('emvideo', $item['provider'], 'duration', $item);
+      if ($duration) {
+        db_query("UPDATE {{$context['sandbox']['table']}} SET {$context['sandbox']['col_duration']} = %d WHERE vid = %d", $duration, $row['vid']);
+      }
+    }
+
+    // Update our progress information.
+    $context['sandbox']['progress']++;
+    $context['sandbox']['current_node'] = $row['vid'];
+  }
+
+  // Inform the batch engine that we are not finished,
+  // and provide an estimation of the completion level we reached.
+  if ($context['sandbox']['progress'] != $context['sandbox']['max']) {
+    $context['finished'] = $context['sandbox']['progress'] / $context['sandbox']['max'];
+  }
+}
+
+/**
+ *  Rebuild the theme for new formatters.
+ */
+function _emvideo_update_add_new_formatters($message = NULL) {
+  if (!isset($output)) {
+    $output = t('Rebuilt the theme to accommodate new formatters.');
+  }
+
+  // Adding new formatters, so need to rebuild the theme.
+  drupal_rebuild_theme_registry();
+
+  // Also need to make sure we grab the new formatters themselves.
+  $ret = _emvideo_update_reset_cache();
+
+  $ret[] = array(
+    'query' => $message,
+    'success' => TRUE,
+  );
+
+  return $ret;
+}
+
+/**
+ * Clear the Views cache.
  */
 function _emvideo_update_reset_cache_views() {
   $ret = array();
-  $ret[] = update_sql("DELETE FROM {cache_views}");
+  if (module_exists('views')) {
+    $ret[] = update_sql("DELETE FROM {cache_views}");
+  }
+
+  return $ret;
+}
+
+/**
+ *  Clear the content and views caches.
+ */
+function _emvideo_update_reset_cache() {
+  $ret = _emvideo_update_reset_cache_views();
+  $ret[] = update_sql("DELETE FROM {cache_content}");
 
   return $ret;
 }
