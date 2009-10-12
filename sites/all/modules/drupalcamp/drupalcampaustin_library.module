@@ -1,0 +1,87 @@
+<?php
+
+function drupalcampaustin_library_block($op = 'list', $delta = 0, $edit = array()) {
+  if ($op == 'list') {
+    $blocks['user_links'] = array(
+      'info' => t('DCA: User links'),
+      'weight' => 0,
+      'status' => 1,
+    );
+    return $blocks;
+  }
+  else if ($op == 'view') {
+    switch($delta) {
+      case 'user_links':
+        $block = array(
+          'content' => drupalcampaustin_library_block_user_links()
+        );
+        break;
+    }
+    return $block;
+  }
+}
+
+function drupalcampaustin_library_block_user_links() {
+  global $user;
+  $output = array();
+
+  if ($user->uid != 0) {
+    $output[] = l(t('My account'), 'user/' . $user->uid);
+
+    $profile_page = drupalcampaustin_library_user_profile_page($user->uid);
+    if ($profile_page != FALSE) {
+      // See drupal_get_destination() if we want to add a destination query
+      // http://api.drupal.org/api/function/drupal_get_destination/6
+      $output[] = l(t('My profile page'), 'node/' . $profile_page);
+    }
+    else {
+      $output[] = l(t('Create my profile page'), 'node/add/profile');
+    }
+
+    $output[] = l(t('Log out'), 'logout');
+  }
+  else {
+    $output[] = l(t('Log in'), 'user');
+    $output[] = l(t('Create an account'), 'user/register');
+  }
+
+  return implode(' | ', $output);
+}
+
+function drupalcampaustin_library_user_profile_page($uid) {
+  if ($uid != 0) {
+    $profile_node = content_profile_load('profile', $uid);
+    if ($profile_node != FALSE) {
+      return $profile_node->nid;
+    }
+  }
+  return FALSE;
+}
+
+/*
+function drupalcampaustin_library_menu_alter(&$items) {
+  foreach (content_profile_get_types('names', 'edit_tab', 'sub') as $type => $type_name) {
+    unset($items['node/add/' . $type]);
+  }
+}
+*/
+
+/*
+function drupalcampaustin_library_form_alter(&$form, $form_state, $form_id) {
+  print $form_id;
+}
+*/
+
+function drupalcampaustin_library_form_profile_node_form_alter(&$form, &$form_state) {
+  // Hide the extraneous title ("Name") field
+  $form['title']['#type'] = 'hidden';
+  // Add placeholder for #value
+  $form['title']['#value'] = NULL;
+  // Add a validation function that will fill in the value of the title ("Name") field
+  $form['#validate'][] = 'drupalcampaustin_library_profile_node_form_validate';
+}
+
+function drupalcampaustin_library_profile_node_form_validate($form, &$form_state) {
+  $name = $form_state['values']['field_profile_firstname'][0]['value'] . ' ' . $form_state['values']['field_profile_lastname'][0]['value'];
+  form_set_value($form['title'], $name, $form_state);
+}
