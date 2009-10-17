@@ -1,5 +1,5 @@
 <?php
-// $Id: simple_access.admin.inc,v 1.1.2.2 2008/12/07 22:38:38 gordon Exp $
+// $Id: simple_access.admin.inc,v 1.1.2.3 2009/09/16 07:17:00 gordon Exp $
 
 /**
  * @file
@@ -248,57 +248,6 @@ function simple_access_settings_page() {
     '#description' => 'This is useful when you want to have a user be able to make content viewable by themselves and a higher privileged group (e.g. students sharing work with faculty)',
     );
   return system_settings_form($form);
-}
-
-/**
-  * List hidden, editable, and deletable nodes
-  */
-function simple_access_nodes() {
-  switch (arg(3)) {
-    case 'edit':
-      drupal_set_title(t('Items With Edit Access Set'));
-      $output = '<div>'. t('These nodes have been set as "additionally editable by" certain Simple Access <a href="!url">groups</a>. ', array('!url' => url('admin/user/simple_access'))) .'</div><br />';
-      $sql = "SELECT DISTINCT n.title, na.nid FROM {node} n INNER JOIN {node_access} na ON n.nid = na.nid WHERE na.realm='simple_access' AND na.gid > 0 AND na.grant_update = 1";
-      break;
-    case 'delete':
-      drupal_set_title(t('Items With Delete Access Set'));
-      $output = '<div>'. t('These nodes have been set as "additionally deletable by" certain Simple Access <a href="!url">groups</a>. ', array('!url' => url('admin/user/simple_access'))) .'</div><br />';
-      $sql = "SELECT DISTINCT n.title, na.nid FROM {node} n INNER JOIN {node_access} na ON n.nid = na.nid WHERE na.realm='simple_access' AND na.gid > 0 AND na.grant_delete = 1";
-      break;
-    case 'view':
-    default:
-      drupal_set_title(t('Items With View Access Set'));
-      $output = '<div>'. t('These nodes have been set as "only viewable by" certain Simple Access <a href="!url">groups</a>.', array('!url' => url('admin/user/simple_access'))) .'</div><br />';
-      $sql = "SELECT DISTINCT n.title, na.nid FROM {node} n INNER JOIN {node_access} na ON n.nid = na.nid WHERE na.realm='simple_access' AND na.gid > 0 AND na.grant_view = 1";
-      break;
-  }
-  $header = array(
-    array('data' => t('ID'), 'field' => 'n.nid', 'sort' => 'desc'),
-    array('data' => t('Title'), 'field' => 'n.title'),
-    array('data' => '&nbsp;')
-  );
-  $sql .= tablesort_sql($header);
-  $result = pager_query($sql, 50);
-  $groups_info = simple_access_get_groups();
-  while ($r = db_fetch_object($result)) {
-    $groups = array();
-    $rs2 = db_query('SELECT na.gid, na.grant_view, na.grant_update, na.grant_delete FROM {node_access} na WHERE na.nid = %d AND na.realm = \'simple_access\'', $r->nid);
-    while ($r2 = db_fetch_object($rs2)) {
-      $groups[] = $groups_info[$r2->gid]['name'];
-    }
-    $rows[$r->nid]['nid'] = array('data' => $r->nid, 'style' => 'vertical-align:top');
-    $info = '<div>'. $r->title .'</div><div style="font-size:xx-small">'. implode(', ', $groups) .'</div>';
-    $rows[$r->nid]['title'] = array('data' => $info, 'style' => 'vertical-align:top');
-    $rows[$r->nid]['ops'] = array('data' => l(t('view'), 'node/'. $r->nid) .' '. l(t('edit'), 'node/'. $r->nid .'/edit', array(), drupal_get_destination()), 'style' => 'vertical-align:top');
-  }
-  if ($rows) {
-    $output .= theme('table', $header, $rows, array('style' => 'width:100%'));
-    $output .= theme('pager', array(), 50);
-  }
-  else {
-    $output .= '<div>'. t('No nodes match this criteria.') .'</div>';
-  }
-  return $output;
 }
 
 function simple_access_profile_delete_confirm(&$form_state, $pid = NULL) {

@@ -1,5 +1,5 @@
 <?php
-// $Id: simple_access.install,v 1.10.2.7 2009/07/17 06:13:57 gordon Exp $
+// $Id: simple_access.install,v 1.10.2.9 2009/09/16 06:56:03 gordon Exp $
 
 /**
  * @file
@@ -11,6 +11,8 @@
  */
 function simple_access_install() {
   drupal_install_schema('simple_access');
+  db_query("UPDATE {system} SET weight = 9 WHERE name = '%s'", 'simple_access');
+  
   drupal_set_message(t('simple access has created the required tables.'));
 }
 
@@ -189,58 +191,71 @@ function simple_access_update_7() {
 function simple_access_update_6200() {
   $ret = array();
   
-  db_create_table($ret, 'simple_access_profiles', array(
-    'fields' => array(
-      'pid' => array(
-        'type' => 'serial', 'not null' => TRUE, 'disp-width' => '11'
+  if (!db_table_exists('simple_access_profiles')) {
+    db_create_table($ret, 'simple_access_profiles', array(
+      'fields' => array(
+        'pid' => array(
+          'type' => 'serial', 'not null' => TRUE, 'disp-width' => '11'
+        ),
+        'name' => array(
+          'type' => 'varchar', 'length' => 50, 'not null' => TRUE,
+        ),
+        'weight' => array(
+          'type' => 'int', 'size' => 'tiny', 'not null' => TRUE, 'default' => 0,
+        ),
       ),
-      'name' => array(
-        'type' => 'varchar', 'length' => 50, 'not null' => TRUE,
+      'primary key' => array('pid'),
+    ));
+    db_create_table($ret, 'simple_access_profiles_access', array(
+      'fields' => array(
+        'pid' => array(
+          'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE,
+          'default' => 0,
+        ),
+        'gid' => array(
+          'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE,
+          'default' => 0,
+        ),
+        'sa_view' => array(
+          'type' => 'int', 'size' => 'tiny', 'unsigned' => TRUE,
+          'not null' => TRUE, 'default' => 0,
+        ),
+        'sa_update' => array(
+          'type' => 'int', 'size' => 'tiny', 'unsigned' => TRUE,
+          'not null' => TRUE, 'default' => 0,
+        ),
+        'sa_delete' => array(
+          'type' => 'int', 'size' => 'tiny', 'unsigned' => TRUE,
+          'not null' => TRUE, 'default' => 0,
+        ),
       ),
-      'weight' => array(
-        'type' => 'int', 'size' => 'tiny', 'not null' => TRUE, 'default' => 0,
+      'primary key' =>  array('pid', 'gid'),
+    ));
+    db_create_table($ret, 'simple_access_profiles_node', array(
+      'fields' => array(
+        'nid' => array(
+          'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE,
+          'default' => 0,
+        ),
+        'pid' => array(
+          'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE,
+          'default' => 0,
+        ),
       ),
-    ),
-    'primary key' => array('pid'),
-  ));
-  db_create_table($ret, 'simple_access_profiles_access', array(
-    'fields' => array(
-      'pid' => array(
-        'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE,
-        'default' => 0,
-      ),
-      'gid' => array(
-        'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE,
-        'default' => 0,
-      ),
-      'sa_view' => array(
-        'type' => 'int', 'size' => 'tiny', 'unsigned' => TRUE,
-        'not null' => TRUE, 'default' => 0,
-      ),
-      'sa_update' => array(
-        'type' => 'int', 'size' => 'tiny', 'unsigned' => TRUE,
-        'not null' => TRUE, 'default' => 0,
-      ),
-      'sa_delete' => array(
-        'type' => 'int', 'size' => 'tiny', 'unsigned' => TRUE,
-        'not null' => TRUE, 'default' => 0,
-      ),
-    ),
-    'primary key' =>  array('pid', 'gid'),
-  ));
-  db_create_table($ret, 'simple_access_profiles_node', array(
-    'fields' => array(
-      'nid' => array(
-        'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE,
-        'default' => 0,
-      ),
-      'pid' => array(
-        'type' => 'int', 'unsigned' => TRUE, 'not null' => TRUE,
-        'default' => 0,
-      ),
-    ),
-    'primary keys' => array('nid', 'pid'),
-  ));
+      'primary keys' => array('nid', 'pid'),
+    ));
+  }
+  
+  return $ret;
+}
+
+/**
+ * Change weight of simple access to after other modules like og
+ */
+function simple_access_update_6201() {
+  $ret = array();
+  
+  $ret[] = update_sql("UPDATE {system} SET weight = 9 WHERE name = 'simple_access'");
   
   return $ret;
 }

@@ -4,9 +4,9 @@ description = Provides simple hide/view access for nodes.
 core = 6.x
 package = Node Access
 
-; Information added by drupal.org packaging script on 2009-08-02
-version = "6.x-2.0-rc4"
+; Information added by drupal.org packaging script on 2009-09-17
+version = "6.x-2.0-rc6"
 core = "6.x"
 project = "simple_access"
-datestamp = "1249179945"
+datestamp = "1253189548"
 

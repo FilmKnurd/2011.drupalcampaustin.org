@@ -1,5 +1,5 @@
 <?php
-// $Id: simple_access.module,v 1.40.2.33 2009/07/15 00:17:58 gordon Exp $
+// $Id: simple_access.module,v 1.40.2.41 2009/09/17 12:04:19 gordon Exp $
 
 
 /**
@@ -102,43 +102,6 @@ function simple_access_menu() {
     'description' => 'Configure which kinds of access (view, edit, delete) users with permission to use Simple Access can define for each node.',
     'file' => 'simple_access.admin.inc',
   );
-
-  $items['admin/content/simple_access'] = array(
-    'title' => 'Simple Access',
-    'access callback' => 'user_access',
-    'access arguments' => array('administer nodes'),
-    'page callback' => 'simple_access_nodes',
-    'type' => MENU_NORMAL_ITEM,
-    'description' => 'View node access which has been set up via Simple Access.',
-    'file' => 'simple_access.admin.inc',
-  );
-  $items['admin/content/simple_access/view'] = array(
-    'title' => 'View',
-    'page callback' => 'simple_access_nodes',
-    'access callback' => 'user_access',
-    'access arguments' => array('administer nodes'),
-    'type' => MENU_DEFAULT_LOCAL_TASK,
-    'weight' => -5,
-    'file' => 'simple_access.admin.inc',
-  );
-  $items['admin/content/simple_access/edit'] = array(
-    'title' => 'Edit Access',
-    'page callback' => 'simple_access_nodes',
-    'access callback' => 'user_access',
-    'access arguments' => array('administer nodes'),
-    'type' => MENU_CALLBACK,
-    'weight' => -4,
-    'file' => 'simple_access.admin.inc',
-  );
-  $items['admin/content/simple_access/delete'] = array(
-    'title' => 'Delete Access',
-    'page callback' => 'simple_access_nodes',
-    'access callback' => 'user_access',
-    'access arguments' => array('administer nodes'),
-    'type' => MENU_CALLBACK,
-    'weight' => -3,
-    'file' => 'simple_access.admin.inc',
-  );
   $items['admin/user/sa_profiles/%/edit'] = array(
     'title' => 'Edit Profile',
     'page callback' => 'drupal_get_form',
@@ -173,7 +136,13 @@ function simple_access_perm() {
 function simple_access_nodeapi(&$node, $op) {
   switch ($op) {
     case 'prepare':
-      $defaults = variable_get('simple_access_'. $node->type, array('simple_access' => array(), 'simple_access_profiles' => array(), 'simple_access_owner' => array()));
+      // Only use the defaults if this is a new node.
+      if (empty($node->nid)) {
+        $defaults = variable_get('simple_access_'. $node->type, array('simple_access' => array(), 'simple_access_profiles' => array(), 'simple_access_owner' => array()));
+      }
+      else {
+        $defaults = array('simple_access' => array(), 'simple_access_profiles' => array(), 'simple_access_owner' => array());
+      }
       foreach ($defaults as $key => $value) {
         if (!isset($node->{$key})) {
           $node->{$key} = $value;
@@ -213,6 +182,9 @@ function simple_access_nodeapi(&$node, $op) {
           drupal_write_record('simple_access_owner', $node->simple_access_owner);
         }
       }
+      else {
+        db_query('DELETE FROM {simple_access_owner} WHERE nid = %d', $node->nid);
+      }
       db_query('DELETE FROM {simple_access_node} WHERE nid = %d', $node->nid);
       if (isset($node->simple_access)) {
         foreach ($node->simple_access as $gid => $access) {
@@ -224,8 +196,7 @@ function simple_access_nodeapi(&$node, $op) {
         }
       }
 
-     db_query('DELETE FROM {simple_access_profiles_node} WHERE nid = %d', $node->nid);
-
+      db_query('DELETE FROM {simple_access_profiles_node} WHERE nid = %d', $node->nid);
       if (isset($node->simple_access_profiles)) {
         foreach (array_filter($node->simple_access_profiles) as $pid) {
           $data = array(
@@ -259,7 +230,7 @@ function simple_access_node_access_records($node) {
         'grant_view' => 1,
         'grant_update' => 1,
         'grant_delete' => 1,
-        'priority' => 1,
+        'priority' => 0,
       );
     }
   }
@@ -276,7 +247,7 @@ function simple_access_node_access_records($node) {
           'grant_view' => $access['sa_view'],
           'grant_update' => $access['sa_update'],
           'grant_delete' => $access['sa_delete'],
-          'priority' => 1,
+          'priority' => 0,
         );
       }
     }
@@ -288,7 +259,7 @@ function simple_access_node_access_records($node) {
       'grant_view' => $node->simple_access_owner['sa_view'],
       'grant_update' => $node->simple_access_owner['sa_update'],
       'grant_delete' => $node->simple_access_owner['sa_delete'],
-      'priority' => 1,
+      'priority' => 0,
     );
   }
   return $records;
@@ -432,6 +403,7 @@ function simple_access_form($node, $admin = FALSE) {
     '#attributes' => array(
       'class' => 'simple-access-settings',
     ),
+    '#weight' => (module_exists('content') && isset($form['type'])) ? content_extra_field_weight($form['type']['#value'], 'sa') : 20,
   );
   if (!empty($profiles)) {
     $form['sa']['simple_access_profiles'] = array(
@@ -594,7 +566,7 @@ function simple_access_group_select() {
     if (!$default_access) {
     // return just groups for which user is a member
       $roles = array_keys($user->roles);
-      $result = db_query('SELECT DISTINCT(g.gid) FROM {simple_access_groups} g INNER JOIN {simple_access_roles} r ON g.gid = r.gid WHERE r.rid IN ('. implode(',', array_fill(0, count($roles), '%d')) .') ORDER BY g.weight, g.name', $roles);
+      $result = db_query('SELECT g.gid FROM {simple_access_groups} g INNER JOIN {simple_access_roles} r ON g.gid = r.gid WHERE r.rid IN ('. implode(',', array_fill(0, count($roles), '%d')) .') GROUP BY g.gid', $roles);
       while ($group = db_fetch_array($result)) {
         $groups[$group['gid']]['access'] = TRUE;
       }
@@ -991,4 +963,17 @@ function simple_access_profile_disable($node, $conf) {
  */
 function simple_access_views_api() {
   return array('api' => 2.0);
+}
+
+/**
+ * Implementation of hook_content_extra_fields().
+ */
+function simple_access_content_extra_fields($type_name) {
+  $fields['simple_access'] = array(
+    'label' => t('Simple Access'),
+    'description' => t('Simple Access module form.'),
+    'weight' => 20,
+  );
+
+  return $fields;
 }
