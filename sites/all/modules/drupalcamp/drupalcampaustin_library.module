@@ -58,19 +58,41 @@ function drupalcampaustin_library_user_profile_page($uid) {
   return FALSE;
 }
 
-/*
+/**
+ * Implementation of hook_menu().
+function drupalcampaustin_library_menu() {
+}
+ */
+
+/**
+ * Implementation of hook_menu_alter().
 function drupalcampaustin_library_menu_alter(&$items) {
-  foreach (content_profile_get_types('names', 'edit_tab', 'sub') as $type => $type_name) {
-    unset($items['node/add/' . $type]);
-  }
 }
 */
 
 /*
-function drupalcampaustin_library_form_alter(&$form, $form_state, $form_id) {
-  print $form_id;
-}
 */
+function drupalcampaustin_library_form_alter(&$form, $form_state, $form_id) {
+//  print $form_id;
+
+  // Content Profile wants to redirect the form to the user's account page.
+  // This has to be done here (instead of hook_form_FORM_ID_alter()) below
+  // because Content Profile uses form_alter(), which runs *after* the
+  // FORM_ID version.
+  if ($form_id == 'profile_node_form') {
+    unset($form['#redirect']);
+  }
+}
+
+function drupalcampaustin_library_form_contact_mail_user_alter(&$form, &$form_state) {
+  $profile_page = drupalcampaustin_library_user_profile_page(arg(1));
+  if ($profile_page != FALSE) {
+    $form['#redirect'] = 'node/' . $profile_page;
+  }
+  else {
+    $form['#redirect'] = '<front>';
+  }
+}
 
 function drupalcampaustin_library_form_profile_node_form_alter(&$form, &$form_state) {
   // Hide the extraneous title ("Name") field
@@ -79,6 +101,10 @@ function drupalcampaustin_library_form_profile_node_form_alter(&$form, &$form_st
   $form['title']['#value'] = NULL;
   // Add a validation function that will fill in the value of the title ("Name") field
   $form['#validate'][] = 'drupalcampaustin_library_profile_node_form_validate';
+
+  $form['revision_information']['#type'] = 'hidden';
+
+//  print_r($form);
 }
 
 function drupalcampaustin_library_profile_node_form_validate($form, &$form_state) {

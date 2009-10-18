@@ -1,0 +1,15 @@
+<?php
+
+function drupalcampaustin_library_install() {
+  drupalcampaustin_library_install_change_weight();
+}
+
+function drupalcampaustin_library_install_change_weight() {
+  $weight = (int) db_result(db_query("SELECT weight FROM {system} WHERE name = 'content_profile'"));
+  db_query("UPDATE {system} SET weight = %d WHERE name = 'drupalcampaustin_library'", $weight + 1);
+}
+
+function drupalcampaustin_library_update_6001(&$sandbox = NULL) {
+  drupalcampaustin_library_install_change_weight();
+  return array();
+}

@@ -21,7 +21,7 @@
       <div id="header-container" class="container-17">
 
         <div id="logo" class="grid-4">
-          <a href="<?php print $front_page; ?>" title="DrupalCamp Austin" rel="home nofollow"><img src="<?php print $base_path . $directory; ?>/images/DCA_logo.png" alt="DrupalCamp Austin" /></a>
+         <a href="<?php print $front_page; ?>" title="DrupalCamp Austin" rel="home nofollow"><img src="<?php print $base_path . $directory; ?>/images/DCA_logo.png" alt="DrupalCamp Austin" /></a>
         </div><!-- /#logo -->
 
         <div id="header" class="grid-7">
@@ -48,11 +48,10 @@
     </div> <!-- /#header-wrapper -->
 
 
-
     <div id="main-wrapper" class="clearfix">
       <div id="main-container" class="container-17">
 
-        <div id="main" class="column grid-10 clearfix">
+        <div id="main" class="column clearfix">
           <?php print $breadcrumb; ?>
 
           <?php if ($title): ?>
@@ -72,18 +71,6 @@
 
           <?php print $feed_icons; ?>
         </div> <!-- /#main -->
-
-        <?php if ($sidebar_1): ?>
-          <div id="sidebar-1" class="column sidebar region grid-4 clearfix">
-            <?php print $sidebar_1; ?>
-          </div> <!-- /#sidebar-1 -->
-        <?php endif; ?>
-
-        <?php if ($sidebar_2): ?>
-          <div id="sidebar-2" class="column sidebar region grid-3 clearfix">
-            <?php print $sidebar_2; ?>
-          </div> <!-- /#sidebar-2 -->
-        <?php endif; ?>
 
       </div> <!-- /#main-container -->
     </div> <!-- /#main-wrapper -->

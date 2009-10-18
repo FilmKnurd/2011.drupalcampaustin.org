@@ -1,0 +1,506 @@
+/* =====================================
+ * Colors
+ * -------------------------------------
+
+   dark blue            rgb(65,110,146)
+   med blue             rgb(166,205,237)
+   green                rgb(105,169,97)
+   
+   black 90%            rgb(26,26,26)
+   black 80%            rgb(51,51,51)    body text
+   black 70%            rgb(77,77,77)
+   black 60%            rgb(102,102,102) body text (light)
+   black 50%            rgb(128,128,128)
+   black 40%            rgb(153,153,153)
+   black 30%            rgb(179,179,179)
+   black 20%            rgb(204,204,204)
+   black 10%            rgb(230,230,230)
+   black 5%             rgb(242,242,242)
+
+   -------------------------------------
+   Help, messages, and warnings
+   -------------------------------------
+   Help:
+     Blue border    -->   blue light
+     Blue BG        -->   blue xxlight
+
+   Status, success, OK:
+     Green border   -->   green light
+     Green BG       -->   green xxlight
+
+   Warning:
+     Yellow border  -->   yellow light
+     Yellow BG      -->   yellow xxlight
+
+   Error, fail:
+     Red border     -->   red light
+     Red BG         -->   red xxlight
+
+ * -------------------------------------
+ * end Colors
+ * ===================================== */
+
+
+
+/* =====================================
+ * Positioning classes
+ * ------------------------------------- */
+
+/**
+ * How To Clear Floats Without Structural Markup
+ * http://www.positioniseverything.net/easyclearing.html
+ */
+.clearfix:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+  font-size: 0; /* NEW! See http://drupal.org/node/281106#comment-1345134 */
+  }
+/* IE Mac/Win fixes below */
+.clearfix {
+  display: inline-block; /* For IE/Mac */
+  }
+/* Hides from IE/Mac \*/
+* html .clearfix { height: 1%; }
+.clearfix { display: block; }
+/* End hide from IE/Mac */
+
+/* Clear classes */
+.clearleft { clear: left; }
+.clearright { clear: right; }
+.clear { clear: both; }
+
+/* Float classes */
+.floatleft { float: left; margin: 0 15px 10px 0 !important; }
+.floatright { float: right; margin: 0 0 10px 15px !important; }
+
+/* Alignment classes */
+.aligncenter { display: block; margin-left: auto; margin-right: auto; }
+.aligntop { vertical-align: top; }
+.alignmiddle { vertical-align: middle; }
+.alignbottom { vertical-align: text-bottom; }
+
+/* Text alignment classes */
+.textleft { text-align: left; }
+.textright { text-align: right; }
+.textcenter, .center { text-align: center; }
+
+/* -------------------------------------
+ * end Positioning classes
+ * ===================================== */
+
+
+
+/* =====================================
+ * Typography
+ * ------------------------------------- */
+
+body {
+  color: rgb(51,51,51); /* black 80%; body text */
+  font-size: 10px;
+  font-family: "Helvetica Neue", Arial, Verdana, sans-serif;
+  }
+
+a {
+  color: rgb(65,110,146);
+  }
+
+h2, h3, h4 {
+  margin-bottom: 10px;
+}
+
+h1 {
+  font-size: 2.4em;
+  }
+h2 {
+  font-size: 1.8em;
+  }
+h3 {
+  font-size: 1.6em;
+  }
+
+
+
+.text-standard {
+  font-size: 1.3em;
+  line-height: 1.3em;
+  }
+
+#main {
+  }
+
+  #main-content p,
+  #main-content ul,
+  #main-content ol,
+  #main-content blockquote {
+    font-size: 1.3em;
+    line-height: 1.3em;
+    margin-bottom: 1.3em;
+    }
+
+/* -------------------------------------
+ * end Typography
+ * ===================================== */
+
+
+
+/* =====================================
+ * Global styles
+ * ------------------------------------- */
+
+body {
+  background: white;
+  }
+
+  #page {
+    }
+
+    #header-wrapper {
+      height: 240px;
+      background: #F1E4BC url(../images/DCA_header_wrapper_bg2.png) top center repeat-x scroll;
+      }
+      #header-container {
+        height: 240px;
+        background: url(../images/DCA_header_wrapper_bg.jpg) top center no-repeat;
+        }
+
+        #logo {
+          margin-top: 10px;
+          height: 190px; /* Total height: 200px */
+          } 
+        #header {
+          margin-top: 10px;
+          height: 190px; /* Total height: 200px */
+          } 
+        #register {
+          height: 200px;
+          background: url(../images/register-sign.png) top right no-repeat;
+          }
+
+        #menu {
+          background: url(../images/DCA_header_menu_bg.png) top center no-repeat;
+          }
+
+	#preface-wrapper {
+	  background: rgb(204,204,204);
+	  height: 300px;
+	  }
+	  #preface-left {
+	    height: 300px;
+	    }
+	  #preface-right {
+	    height: 300px;
+	    }
+		
+	
+    #main-wrapper {
+      min-height: 600px;
+      margin-top: 20px;
+      margin-bottom: 40px;
+      }
+
+    #footer-wrapper {
+      height: 178px;
+      background: #F7F7F7 url(../images/DCA_footer_bg.png) repeat scroll 0 0;
+      }
+
+/* -------------------------------------
+ * end Global styles
+ * ===================================== */
+
+
+
+/* =====================================
+ * Help, messages, and warnings
+ * ------------------------------------- */
+
+div.help, div.messages, div.warning {
+  min-height: 1em;  /* prevents divs from cutting off the icon (rare) */
+  padding: 1em 1em 1em 3em;
+  }
+  div.help a, div.messages a, div.warning a {
+    font-weight: bold;
+    }
+
+  /* lists may only appear in help and messages (but not sure) */
+  div.help ul, div.messages ul {
+    margin-left: 0;
+    margin-bottom: 1em;
+    }
+    div.help ul li, div.messages ul li {
+      margin-bottom: .25em;
+      }
+
+div.help {
+  margin-bottom: 20px;
+  padding-bottom: 0;
+  background: rgb(209,228,241) url(../images/icon-help.png) 10px 12px no-repeat; /* blue xxlight */ /* TODO: add sprite */
+  border: 1px solid rgb(142,189,222); /* blue light */
+  }
+  div.help a {
+    color: rgb(86,156,205); /* blue */
+    }
+  div.help a:hover, div.help a:focus {
+    color: rgb(51,51,51); /* black 80%; body text */
+    }
+  div.help ul li {
+    list-style-image: url(../images/bullet-dot-blue.png);
+    }
+  div.more-help-link {
+    margin-bottom: .5em;
+    }
+
+div.messages, div.warning {
+  margin-bottom: 10px;
+  }
+
+  /* number of messages */
+  div.messages-multiple {
+    padding-left: 4em;
+    padding-bottom: 0;
+    }
+
+  /* types of messages */
+  div.messages-status {
+    background: rgb(213,234,212) url(../images/icon-success.png) 10px 12px no-repeat; /* green xxlight */ /* TODO: add sprite */
+    border: 1px solid rgb(153,204,149); /* green light */
+    }
+    div.messages-status ul li {
+      list-style-image: url(../images/bullet-dot-green.png); /* TODO: add sprite */
+      }
+  div.messages-warning, div.warning {
+    background: rgb(248,244,211) url(../images/icon-warning.png) 10px 12px no-repeat; /* yellow xxlight */
+    border: 1px solid rgb(238,228,146); /* yellow light */
+    }
+    div.messages-warning ul li {
+      list-style-image: url(../images/bullet-dot-yellow.png); /* TODO: add sprite */
+      }
+  div.messages-error {
+    background: rgb(235,194,194) url(../images/icon-error.png) 10px 12px no-repeat; /* red xxlight */ /* TODO: add sprite */
+    border: 1px solid rgb(205,105,105); /* red light */
+    }
+    div.messages-error ul li {
+      list-style-image: url(../images/bullet-dot-red.png); /* TODO: add sprite */
+      }
+    div.messages-error a {
+      color: rgb(180,30,30); /* red */
+      }
+    div.messages-error a:hover, div.messages-error a:focus {
+      color: rgb(51,51,51); /* black 80%; body text */
+      }
+
+/* Appears at bottom of forms */
+div.warning {
+  margin-top: 20px;
+  }
+
+/* Asterisk */
+span.warning {
+  margin-left: .5em;
+  color: rgb(227,144,27); /* orange */
+  }
+div.warning span.warning {
+  display: none; /* hide asterisk inside warning div (redundant) */
+  }
+
+/* Changed draggable rows (usually constains <span class="warning">) */
+tr.drag-previous {
+  background: rgb(248,244,211); /* yellow xxlight */
+  }
+
+/* -------------------------------------
+ * end Help, messages, and warnings
+ * ===================================== */
+
+
+
+/* =====================================
+ * Primary/secondary links
+ * ------------------------------------- */
+
+#menu a {
+  text-decoration: none;
+  }
+
+#menu ul.main-menu {
+  height: 25px;
+  padding-top: 15px;
+  font-size: 2em;
+  }
+  #menu ul.main-menu li {
+    padding: 0 40px;
+    }
+  #menu ul.main-menu a:hover {        
+    color: #406D91;
+    }
+
+/*
+  ul.main-menu {
+    margin: 0 auto;
+    height: 22px;
+    padding-top: 8px;
+    font-size: 1.6em;
+    width: 940px;
+    text-align: center;
+    }
+    ul.main-menu li {
+      padding: 0 15px;
+      }
+    ul.main-menu a {
+      color: white;
+      }
+      #site-menu ul.main-menu a:hover {
+        text-decoration: underline;
+        }
+    ul.secondary-menu {
+      height: 25px;
+      padding-top: 15px;
+      font-size: 2em;
+      }
+      ul.secondary-menu li {
+        padding: 0 40px;
+        }
+      #site-menu ul.secondary-menu a:hover {        
+        color: #406D91;
+        }
+*/
+
+/* -------------------------------------
+ * end Primary/secondary links
+ * ===================================== */
+
+/* =====================================
+ * Blocks
+ * ------------------------------------- */
+
+.block p {
+  margin-bottom: 1.3em;
+  }
+
+/* =====================================
+ * End Blocks
+ * ------------------------------------- */
+
+
+
+/* =====================================
+ * Views
+ * ------------------------------------- */
+
+.views-field-title {
+  font-size: 1.6em;
+  margin-bottom: 5px;
+  }
+  .views-field-title a {
+    font-weight: bold;
+    text-decoration: none;
+    }
+  .views-field-title a:hover {
+    text-decoration: underline;
+    }
+
+.views-field-created {
+  font-size: 1.3em;
+  font-style: italic;
+  }
+
+
+/* =====================================
+ * End Views
+ * ------------------------------------- */
+
+
+
+/* =====================================
+ * Panels
+ * ------------------------------------- */
+
+.panel-spearator {}
+
+.panel-pane {
+  margin-bottom: 20px;
+  }  
+
+  h2.block-title,
+  h2.pane-title {
+    background: #859BAA url(../images/block-title-bg.png) top left repeat-x;
+    color: white;
+    font-weight: normal;
+    padding: 5px 0 5px 10px;
+    }
+
+
+/* =====================================
+ * end Panels
+ * ------------------------------------- */
+
+
+
+/* =====================================
+ * User and sponsor profiles
+ * ------------------------------------- */
+ 
+.profile-sponsor {
+  }
+
+  .profile-sponsor .header {
+    font-size: 1em;
+    line-height: 1.5em;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: rgb(102,102,102);
+    border-top: 1px solid rgb(204,204,204);
+    border-bottom: 1px solid rgb(204,204,204);
+    }
+
+  #main-content .profile-sponsor .item-list ul {
+    font-size: 1.2em;
+    line-height: 1.2em;
+    }
+
+    .profile-sponsor .item-list ul li {
+      list-style: none;
+      margin: 1px 0 0 0;
+      }
+      .profile-sponsor .item-list ul li a {
+        display: block;
+        background: rgb(242,242,242);
+        padding: 3px 5px 3px 20px;
+        text-decoration: none;
+        }
+      .profile-sponsor .item-list ul li a:hover {
+        background: rgb(230,230,230);
+        }
+
+  .profile-sponsor .link-columns .item-list ul {
+    float: left;
+    }
+    .profile-sponsor .link-columns .item-list ul li {
+      float: left;
+      width: 195px;
+      }
+    .profile-sponsor .link-columns .item-list ul li.odd {
+      margin-right: 5px;
+      }
+    .profile-sponsor .link-columns .item-list ul li.even {
+      margin-left: 5px;
+      }
+
+  .profile-sponsor .picture {
+    }
+    .profile-sponsor .picture img {
+      display: block;
+      padding: 4px;
+      border: 1px solid rgb(204,204,204);
+      }
+
+  .profile-wrapper {
+    margin-bottom: 20px;
+    }
+
+/* =====================================
+ * end User and sponsor profiles
+ * ------------------------------------- */
+

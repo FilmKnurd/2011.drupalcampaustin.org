@@ -5,27 +5,18 @@ version     = 0.0 dev
 core        = 6.x
 engine      = phptemplate
 
-; this is a subtheme of ninesixty
-base theme = ninesixty
-
-; override ninesixty's stylesheets by adding empty files
-; stylesheets[all][] = reset.css
-stylesheets[all][] = text.css
-; stylesheets[all][] = 960.css
-stylesheets[all][] = debug.css
-stylesheets[all][] = styles/styles.css
-
 ; stylesheets
-stylesheets[all][]   = style.css
-; stylesheets[print][] = style-print.css
+stylesheets[all][] = styles/reset.css
+stylesheets[all][] = styles/grid.css
+; stylesheets[all][] = styles/debug.css
+stylesheets[all][]   = styles/style.css
+; stylesheets[print][] = styles/style-print.css
 
 ; regions
 regions[sidebar_1]     = "Sidebar 1"
 regions[sidebar_2]     = "Sidebar 2"
 regions[header]        = "Header"
 regions[content]       = "Content"
-regions[preface_left]  = "Preface: Left"
-regions[preface_right] = "Preface: Right"
 
 ; enabled features
 features[] = name
@@ -39,3 +30,6 @@ features[] = primary_links
 features[] = secondary_links
 
 ; disabled features (uncomment to activate)
+
+; set directory where custom Panels layouts are located
+plugins[panels][layouts] = panels_layouts
