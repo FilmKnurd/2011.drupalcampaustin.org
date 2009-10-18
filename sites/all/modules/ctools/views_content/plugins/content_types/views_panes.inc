@@ -1,5 +1,5 @@
 <?php
-// $Id: views_panes.inc,v 1.13 2009/07/20 17:45:21 merlinofchaos Exp $
+// $Id: views_panes.inc,v 1.14.2.1 2009/10/02 21:57:57 merlinofchaos Exp $
 
 /**
  * @file
@@ -105,9 +105,12 @@ function _views_content_panes_content_type($view, $display) {
         list($context, $converter) = explode('.', $argument['context'], 2);
       }
       else {
+        // Backwards-compat for before we had a system for delimiting the data
+        // we retrieve out of context objects.
         $context = $argument['context'];
       }
-      $contexts[] = new ctools_context_required($argument['label'], $context);
+      $class = 'ctools_context_' . (empty($argument['context_optional']) ? 'required' : 'optional');
+      $contexts[] = new $class($argument['label'], $context);
     }
   }
 
@@ -333,14 +336,12 @@ function views_content_views_panes_content_type_edit_form(&$form, &$form_state) 
 
   ctools_include('dependent');
   if ($allow['use_pager']) {
-    $form['pager_aligner_start'] = array(
-      '#value' => '<div class="option-text-aligner">',
-    );
     $form['use_pager'] = array(
       '#type' => 'checkbox',
       '#title' => t('Use pager'),
         '#default_value' => isset($conf['use_pager']) ? $conf['use_pager'] : $view->display_handler->get_option('use_pager'),
       '#id' => 'use-pager-checkbox',
+      '#prefix' => '<div class="container-inline">',
     );
     $form['pager_id'] = array(
       '#type' => 'textfield',
@@ -350,9 +351,7 @@ function views_content_views_panes_content_type_edit_form(&$form, &$form_state) 
       '#id' => 'use-pager-textfield',
       '#process' => array('ctools_dependent_process'),
       '#dependency' => array('use-pager-checkbox' => array(1)),
-    );
-    $form['pager_aligner_stop'] = array(
-      '#value' => '</div><div style="clear: both; padding: 0; margin: 0"></div>',
+      '#suffix' => '</div>',
     );
   }
   if ($allow['items_per_page']) {

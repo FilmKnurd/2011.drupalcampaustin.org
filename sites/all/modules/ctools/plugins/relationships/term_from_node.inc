@@ -1,5 +1,5 @@
 <?php
-// $Id: term_from_node.inc,v 1.2 2009/07/20 16:01:20 merlinofchaos Exp $
+// $Id: term_from_node.inc,v 1.2.2.1 2009/10/01 22:00:09 merlinofchaos Exp $
 
 /**
  * @file
@@ -10,7 +10,7 @@
  * Implementation of specially named hook_ctools_relationships().
  */
 function ctools_term_from_node_ctools_relationships() {
-  $args['term_from_node'] = array(
+  return array(
     'title' => t('Term from node'),
     'keyword' => 'term',
     'description' => t('Adds a taxonomy term from a node context; if multiple terms are selected, this will get the "first" term only.'),

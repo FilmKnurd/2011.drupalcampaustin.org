@@ -1,5 +1,5 @@
 <?php
-// $Id: panel_context.inc,v 1.1.2.38 2009/08/19 01:11:44 merlinofchaos Exp $
+// $Id: panel_context.inc,v 1.1.2.40 2009/10/07 22:20:29 merlinofchaos Exp $
 
 /**
  * @file
@@ -277,13 +277,7 @@ function panels_panel_context_render($handler, $base_contexts, $args, $test = TR
     'no_blocks' => !empty($handler->conf['no_blocks']),
   );
 
-  // If the hide title flag is set, just remove the title altogether.
-  if (!empty($display->hide_title)) {
-    $info['title'] = '';
-  }
-  else if (!empty($display->title)) {
-    $info['title'] = filter_xss_admin(ctools_context_keyword_substitute($display->title, array(), $contexts));
-  }
+  $info['title'] = panels_display_get_title($display);
 
   return $info;
 }
@@ -395,11 +389,10 @@ function panels_panel_context_admin_summary($handler, $task, $subtask, $page, $s
 
   // Get operations for just this handler.
   $operations = $operations['handlers']['children'][$handler->name]['children']['actions']['children'];
-  $args = array('handlers', $handler->name, 'summary');
-  $rendered_operations = page_manager_render_operations($page, $operations, $args, array('class' => 'actions'), 'actions');
+  $args = array('handlers', $handler->name, 'actions');
+  $rendered_operations = page_manager_render_operations($page, $operations, array(), array('class' => 'actions'), 'actions', $args);
 
   $layout = panels_get_layout($display->layout);
-//  $icon = panels_print_layout_icon($display->layout, $layout);
 
   $plugin = page_manager_get_task_handler($handler->handler);
 
