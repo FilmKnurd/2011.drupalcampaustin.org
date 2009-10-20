@@ -1,0 +1,38 @@
+/* $Id: fancy_login.css,v 1.4 2009/08/05 01:26:27 hakulicious Exp $ */
+
+div#fancy_login_login_box
+{
+	display:none;
+}
+
+#fancy_login_close_button
+{
+	border:1px solid #999;
+	color:#FFF;
+	background-color:#F00;
+	float:right;
+	font-size:15px;
+	font-weight:bold;
+	margin-right:-10px;
+	margin-top:3px;
+	padding-left:3px;
+	padding-right:3px;
+}
+
+#fancy_login_close_button:hover
+{
+	text-decoration:none;
+	background-color:#FFF;
+	color:#F00;
+}
+
+#fancy_login_login_box #edit-name-wrapper
+{
+	margin-top:0;
+	clear:both
+}
+
+#fancy_login_ajax_loader
+{
+	display:none;
+}
