@@ -266,8 +266,10 @@ body {
       padding-top: 20px;
       background: url(../images/footer-bg.png) top left repeat-x;
       }
-      #footer-container {}
+      #footer-container {
+        }
         #footer-message {
+          margin-top: 5px;
           color: white;
           font-size: 1.2em;
           }
@@ -750,32 +752,53 @@ div.link-field-subrow {
  * Panels
  * ------------------------------------- */
 
-#panel-front-bottom .panel-pane {
-  margin-bottom: 20px;
+.panel-panel {
   }
-
-  h2.block-title,
-  h2.pane-title,
-  #who-what-where h2 {
-    color: rgb(105,169,97);
-    font-weight: bold;
-    text-transform: uppercase;
+  .panel-pane {
     }
+    .panel-pane ul {
+      list-style-type: disc;
+      list-style-position: inside;
+      }
 
-.panel-pane ul {
-  list-style-type: disc;
-  list-style-position: inside;
+h2.block-title,
+h2.pane-title,
+#who-what-where h2 {
+  color: rgb(105,169,97);
+  font-weight: bold;
+  text-transform: uppercase;
   }
+
+/* Panel Front Top */
+#panel-front-top {
+  border-bottom: 1px solid #eeeeee;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  }
+
+/* Panel Front Bottom */
+#panel-front-bottom {
+  }
+  #sidebar-0 .panel-pane,
+  #sidebar-1 .panel-pane {
+    margin-bottom: 20px;
+    }
 
 /* Who? What? Where? block */
-#who, #what, #where {
-  float: left;
-  width: 180px;
-  margin-right: 20px;
+#who-what-where {
   }
-  #where {
-    margin-right: 0;
+  #who-what-where p {
+    margin-bottom: 0;
     }
+
+  #who, #what, #where {
+    float: left;
+    width: 180px;
+    margin-right: 20px;
+    }
+    #where {
+      margin-right: 0;
+      }
 
 #news-front {
   background: #eeeeee;
@@ -798,26 +821,6 @@ div.link-field-subrow {
   #twitter-front h2 {
     font-size: 1.4em;
     }
-
-/* Panel Front Top */
-#panel-front-top {
-  background: #ffffff;
-  -moz-border-radius: 5px;
-  border-bottom: 1px solid #eeeeee;
-  background-repeat: none;
-  margin-bottom: 10px;
-  }
-  #panel-front-top .panel-pane {
-    margin-bottom: 0;
-    }
-
-/* Panel Front Bottom */
-#panel-front-bottom {
-  background: #ffffff;
-  -moz-border-radius: 5px;
-  border-bottom: 1px solid #eeeeee;
-  background-repeat: none;
-  }
 
 /* =====================================
  * end Panels

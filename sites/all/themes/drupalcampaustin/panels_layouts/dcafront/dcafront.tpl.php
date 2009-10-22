@@ -33,12 +33,12 @@
   </div><!-- /#panel-front-top -->
 
   <div id="panel-front-bottom" class="panels-row grid-17">
-  
-    <div class="panel-panel grid-10 alpha">
+
+    <div id="sidebar-0" class="panel-panel grid-10 alpha">
       <div class="inside"><?php print $content['bottom_left']; ?></div>
     </div>
-  
-    <div class="panel-panel grid-4">
+
+    <div id="sidebar-1" class="panel-panel grid-4">
       <div class="inside"><?php print $content['bottom_right1']; ?></div>
     </div>
 

@@ -212,7 +212,6 @@ function drupalcampaustin_library_form_contact_mail_user_alter(&$form, &$form_st
 }
 
 function drupalcampaustin_library_form_uc_cart_view_form_alter(&$form, &$form_state) {
-  unset($form['continue_shopping']);
   unset($form['update']);
   unset($form['items'][0]['remove']);
   unset($form['items'][0]['image']);
