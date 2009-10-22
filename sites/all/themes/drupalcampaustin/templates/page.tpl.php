@@ -20,16 +20,13 @@
     <div id="header-wrapper" class="clearfix">
       <div id="header-container" class="container-17">
 
-        <div id="logo" class="grid-4">
-         <a href="<?php print $front_page; ?>" title="DrupalCamp Austin" rel="home nofollow"><img src="<?php print $base_path . $directory; ?>/images/DCA_logo.png" alt="DrupalCamp Austin" /></a>
-        </div><!-- /#logo -->
+        <div id="logo" class="grid-6">
+          <a href="<?php print $front_page; ?>" title="DrupalCamp Austin" rel="home nofollow"><img src="<?php print $base_path . $directory; ?>/images/DCA_logo.png" alt="DrupalCamp Austin" /></a>
+        </div> <!-- /#logo -->
 
-        <div id="header" class="grid-7">
+        <div id="header" class="grid-10 prefix-1 clearfix">
           <?php print $header; ?>
         </div> <!-- /#header -->
-
-        <div id="register" class="grid-6">
-        </div><!-- /#register -->
 
         <?php /*
         <?php if ($search_box): ?>
@@ -37,23 +34,30 @@
         <?php endif; ?>
         */ ?>
 
-        <?php if ($main_menu_links || $secondary_menu_links): ?>
+        <?php /*if ($main_menu_links || $secondary_menu_links): ?>
           <div id="menu" class="grid-17 clearfix">
             <?php print $main_menu_links; ?>
             <?php print $secondary_menu_links; ?>
           </div>
-        <?php endif; ?>
+        <?php endif; */?>
 
       </div> <!-- /#header-container -->
     </div> <!-- /#header-wrapper -->
 
 
-    <div id="main-wrapper" class="clearfix">
-      <div id="main-container" class="container-17">
+    <div id="primary-wrapper">
+      <div id="primary-container" class="container-17"><div class="clearfix">
+        <?php if ($primary_links): ?>
+           <?php print theme('links', $primary_links); ?>
+         <?php endif; ?>
+      </div></div> <!-- /#primary-container -->
+    </div> <!-- /#primary-wrapper -->
 
-        <div id="main" class="column clearfix">
-          <?php print $breadcrumb; ?>
 
+    <div id="main-wrapper">
+      <div id="main-container" class="container-17"><div class="clearfix">
+
+        <div id="main" class="column grid-10 clearfix">
           <?php if ($title): ?>
             <h1 class="title" id="page-title"><?php print $title; ?></h1>
           <?php endif; ?>
@@ -65,14 +69,26 @@
           <?php print $messages; ?>
           <?php print $help; ?>
 
-          <div id="main-content" class="region clearfix">
+          <div id="main-content" class="clearfix">
             <?php print $content; ?>
           </div> <!-- /#main-content -->
 
           <?php print $feed_icons; ?>
         </div> <!-- /#main -->
 
-      </div> <!-- /#main-container -->
+        <?php if ($sidebar_1): ?>
+          <div id="sidebar-1" class="column sidebar grid-4 clearfix">
+            <?php print $sidebar_1; ?>
+          </div> <!-- /#sidebar-1 -->
+        <?php endif; ?>
+
+        <?php if ($sidebar_2): ?>
+          <div id="sidebar-2" class="column sidebar grid-3 clearfix">
+            <?php print $sidebar_2; ?>
+          </div> <!-- /#sidebar-2 -->
+        <?php endif; ?>
+
+      </div></div> <!-- /#main-container -->
     </div> <!-- /#main-wrapper -->
 
 
@@ -80,7 +96,7 @@
       <div id="footer-container" class="container-17">
 
         <?php if ($footer): ?>
-          <div id="footer" class="region grid-17 clearfix">
+          <div id="footer" class="grid-17 clearfix">
               <?php print $footer; ?>
           </div> <!-- /#footer -->
         <?php endif; ?>

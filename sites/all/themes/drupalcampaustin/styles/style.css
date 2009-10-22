@@ -1,15 +1,25 @@
 /* =====================================
  * Colors
  * -------------------------------------
+  
+   logo light blue      rgb(204,230,248)   #CCE6F8
+   logo med blue        rgb(166,205,237)   #A6CDED
+   logo dark blue       rgb(65,110,146)    #416E92
+   logo green           rgb(105,169,97)    #69A761
 
-   dark blue            rgb(65,110,146)
-   med blue             rgb(166,205,237)
-   green                rgb(105,169,97)
+   green (light)        #639B15             Grass
+   green (dark)         #456E0C
+   
+   beige (header)        rgb(224,222,169)   #E0DEA9
+   
+   brown (light)        rgb(171,154,110)    #AB9A6E
+   brown (medium)       rgb(138,108,33)     #8A6C21
+   brown (dark)         rgb(73,59,34)       #493B22
    
    black 90%            rgb(26,26,26)
-   black 80%            rgb(51,51,51)    body text
+   black 80%            rgb(51,51,51)       body text
    black 70%            rgb(77,77,77)
-   black 60%            rgb(102,102,102) body text (light)
+   black 60%            rgb(102,102,102)    body text (light)
    black 50%            rgb(128,128,128)
    black 40%            rgb(153,153,153)
    black 30%            rgb(179,179,179)
@@ -105,7 +115,11 @@ body {
 
 a {
   color: rgb(65,110,146);
+  text-decoration: none;
   }
+  a:hover {
+    text-decoration: underline;
+    }
 
 h2, h3, h4 {
   margin-bottom: 10px;
@@ -115,12 +129,15 @@ h1 {
   font-size: 2.4em;
   }
 h2 {
-  font-size: 1.8em;
-  }
-h3 {
   font-size: 1.6em;
   }
+h3 {
+  font-size: 1.3em;
+  }
 
+p {
+	color: #777777;
+}
 
 
 .text-standard {
@@ -151,7 +168,6 @@ h3 {
  * ------------------------------------- */
 
 body {
-  background: white;
   }
 
   #page {
@@ -159,52 +175,105 @@ body {
 
     #header-wrapper {
       height: 240px;
-      background: #F1E4BC url(../images/DCA_header_wrapper_bg2.png) top center repeat-x scroll;
+      background-color: #E0DFA9;
       }
       #header-container {
-        height: 240px;
         background: url(../images/DCA_header_wrapper_bg.jpg) top center no-repeat;
+        height: 240px;
         }
 
         #logo {
           margin-top: 10px;
           height: 190px; /* Total height: 200px */
-          } 
+          }
+
         #header {
-          margin-top: 10px;
-          height: 190px; /* Total height: 200px */
-          } 
-        #register {
           height: 200px;
-          background: url(../images/register-sign.png) top right no-repeat;
           }
 
-        #menu {
-          background: url(../images/DCA_header_menu_bg.png) top center no-repeat;
-          }
+          #header-links {
+            float: right;
+            height: 20px;
+            font-size: 1.1em;
+            letter-spacing: .05em;
+            margin-top: 10px;
+            margin-right: 10px;
+            color: rgb(102,102,102); /* black 60%; body text (light) */
+            }
+          #header-links div {
+            float: right;
+            height: 20px;
+            }
+            #header-links-left {
+              width: 5px;
+              background: transparent url(../images/header-links-left.png) top right no-repeat;
+              }
+            #header-links-text {
+              padding: 4px 5px 0 5px;
+              background: transparent url(../images/header-links-bg.png) top right repeat-x;
+              }
+            #header-links-right {
+              width: 5px;
+              background: transparent url(../images/header-links-right.png) top left no-repeat;
+              }
 
-	#preface-wrapper {
-	  background: rgb(204,204,204);
-	  height: 300px;
-	  }
-	  #preface-left {
-	    height: 300px;
-	    }
-	  #preface-right {
-	    height: 300px;
-	    }
-		
-	
+            #header-links a {
+              color: rgb(51,51,51); /* black 80%; body text */
+              text-decoration: none;
+              }
+            #header-links a:hover,
+            #header-links a:focus {
+              text-decoration: underline;
+              }
+            #header-links span {
+              padding: 0 2px;
+              }
+
+          #header-ribbon {
+            float: right;
+            width: 200px;
+            height: 190px;
+            padding-top: 10px;
+            background: url(../images/header-ribbon-bg.png) top right no-repeat;
+            }
+            #header-ribbon img {
+              display: block;
+              margin: 0 auto 10px auto;
+              }
+            #header-ribbon img.steps {
+              margin-bottom: 20px;
+              }
+
     #main-wrapper {
+      background: #639B15 url(../images/page-bg.png) top left repeat-x;
       min-height: 600px;
-      margin-top: 20px;
-      margin-bottom: 40px;
       }
+
+      #main-container {
+        background-color: #FFFFFF;
+        padding-top: 10px;
+        }
+
+        .column {
+          margin-bottom: 20px;
+        }
+
+        #main {
+          }
 
     #footer-wrapper {
-      height: 178px;
-      background: #F7F7F7 url(../images/DCA_footer_bg.png) repeat scroll 0 0;
+      height: 30px;
+      padding-top: 20px;
+      background: url(../images/footer-bg.png) top left repeat-x;
       }
+      #footer-container {}
+        #footer-message {
+          color: white;
+          font-size: 1.2em;
+          }
+         #footer-message a {
+          color: #AB9A6E;
+          }
 
 /* -------------------------------------
  * end Global styles
@@ -219,6 +288,8 @@ body {
 div.help, div.messages, div.warning {
   min-height: 1em;  /* prevents divs from cutting off the icon (rare) */
   padding: 1em 1em 1em 3em;
+  font-size: 1.3em;
+  line-height: 1.3em;
   }
   div.help a, div.messages a, div.warning a {
     font-weight: bold;
@@ -317,59 +388,310 @@ tr.drag-previous {
 
 
 /* =====================================
+ * Tabs
+ * ------------------------------------- */
+
+.tabs {
+  margin: 10px 0;
+  }
+
+  ul.primary, /* Also ul.tabs */
+  ul.secondary {
+    margin: 5px 0;
+    padding: 0 5px;
+    border: none;
+    }
+    ul.primary li,
+    ul.secondary li {
+      float: left;
+      }
+      ul.primary li a,
+      ul.secondary li a {
+        float: left;
+        margin: 0 5px 5px 0;
+        padding: 2px 6px;
+        border: none;
+        background: #E0DEA9;
+        color: #8A6C21;
+        text-transform: uppercase;
+        font-weight: bold;
+        letter-spacing: .05em;
+        line-height: 1.5em;
+        }
+      ul.primary li a:hover,
+      ul.primary li a:focus,
+      ul.secondary li a:hover,
+      ul.secondary li a:focus {
+        background-color: #AB9A6E;
+        color: #FFFFFF;
+        }
+    ul.primary li.active,
+    ul.secondary li.active {
+      }
+      ul.primary li.active a,
+      ul.secondary li.active a {
+        color: #FFFFFF;
+        background: #8A6C21;
+        border: none;
+        }
+
+  ul.primary { /* Also ul.tabs */
+    padding-top: 5px;
+    background: url(../images/sponsor-bg.png) top left;
+    }
+
+  ul.secondary { /* Also ul.tabs */
+    }
+    ul.secondary li {
+      border: none;
+      padding: 0;
+      }
+      ul.secondary li a {
+        }
+      ul.secondary li a:hover,
+      ul.secondary li a:focus {
+        }
+    ul.secondary li.active {
+      }
+      ul.secondary li.active a {
+        }
+
+/* -------------------------------------
+ * end Tabs
+ * ===================================== */
+
+
+
+/* =====================================
  * Primary/secondary links
  * ------------------------------------- */
 
-#menu a {
-  text-decoration: none;
-  }
+#primary-wrapper {
+  background-color: #456E0C;
+}
 
-#menu ul.main-menu {
-  height: 25px;
-  padding-top: 15px;
-  font-size: 2em;
+  #primary-container {
+  margin: 0 auto;
+  text-align: center;
   }
-  #menu ul.main-menu li {
-    padding: 0 40px;
+  #primary-container ul.links li {
+    padding: 10px 0;
+    background: transparent url(../images/nav-tab.png) top left no-repeat;
+    margin-right: 5px;
+    width: 150px;
+    float: left;
     }
-  #menu ul.main-menu a:hover {        
-    color: #406D91;
-    }
+    #primary-container ul.links li.active {
+      background: transparent url(../images/nav-tab-active.png) top left no-repeat;
+      }
 
-/*
-  ul.main-menu {
-    margin: 0 auto;
-    height: 22px;
-    padding-top: 8px;
-    font-size: 1.6em;
-    width: 940px;
-    text-align: center;
-    }
-    ul.main-menu li {
-      padding: 0 15px;
+    #primary-container ul.links li.first {
+      margin-left: 20px;
       }
-    ul.main-menu a {
-      color: white;
+
+    #primary-container ul.links a {
+      color: #777777;
+      font-size: 1.4em;
+      text-transform: uppercase;
+      font-weight: bold;
+      padding-left: 15px;
       }
-      #site-menu ul.main-menu a:hover {
-        text-decoration: underline;
-        }
-    ul.secondary-menu {
-      height: 25px;
-      padding-top: 15px;
-      font-size: 2em;
+    #primary-container ul.links a:hover {
+      color: #456E0C;
+      text-decoration: none;
       }
-      ul.secondary-menu li {
-        padding: 0 40px;
-        }
-      #site-menu ul.secondary-menu a:hover {        
-        color: #406D91;
-        }
-*/
+
+
+/*End Primary Menu Styling*/
+
 
 /* -------------------------------------
  * end Primary/secondary links
  * ===================================== */
+
+
+
+/* =====================================
+ * Forms
+ * ------------------------------------- */
+
+fieldset {
+  border: 2px solid #E0DEA9;
+  padding: 10px;
+  margin-bottom: 20px;
+  }
+  legend {
+    margin-left: 10px;
+    padding: 0 5px;
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #8A6C21
+    }
+
+label {
+	margin-bottom: 4px;
+	color: #639B15;
+  font-size: 1.3em;
+  }
+
+input,
+textarea {
+  padding: 2px 6px;
+  border: 2px solid #A6CDED;
+  background: #CCE6F8;
+  color: #416E92;
+  font-weight: bold;
+  }
+input:focus {
+  border-color: #416E92;
+  }
+
+  input.form-text,
+  textarea {
+    font-size: 1.6em;
+    }
+  input.form-submit {
+    font-size: 1.4em;
+    cursor: pointer;
+    }
+  input.form-submit:hover {
+    border-color: #416E92;
+    }
+
+div.form-item {
+  margin: 0 0 10px 0;
+  }
+  div.form-item div.form-item {
+    margin-bottom: 5px;
+    }
+
+div.description {
+  margin-bottom: 10px;
+  font-size: 1.2em;
+  line-height: 1.25em;
+  color: #8A6C21;
+  }
+  div.form-item div.description {
+    margin: 2px 0 0 0;
+    font-size: 1.1em;
+    line-height: 1.25em;
+    }
+
+  div.password-description {
+    margin: 0;
+    font-size: 1.2em;
+    line-height: 1.25em;
+    color: rgb(51,51,51); /* black 80%; body text */
+    background: rgb(235,194,194) url(../images/icon-error.png) 8px 10px no-repeat; /* red xxlight */ /* TODO: add sprite */
+    font-weight: bold;
+    }
+  div.password-description.error {
+    width: 356px;
+    margin: 10px 0;
+    padding: 10px 10px 10px 30px;
+    border: 2px solid rgb(205,105,105);
+    }
+    #main-content div.password-description ul {
+      font-size: 1em;
+      line-height: 1.25em;
+      margin: 0 0 0 20px;
+      }
+
+  span.password-strength,
+  span.password-confirm {
+    font-size: 1.1em;
+    color: #8A6C21;
+    }
+
+div.form-checkboxes {
+  margin: 10px 0;
+  }
+  div.form-checkboxes div.form-item {
+    }
+    div.form-checkboxes div.form-item label.option {
+    	color: #416E92;
+      font-weight: bold;
+      }
+
+form#user-register {
+  }
+  div#edit-name-wrapper input,
+  div#edit-mail-wrapper input {
+    width: 384px;
+    }
+  div#edit-name-wrapper div.description,
+  div#edit-mail-wrapper div.description {
+    width: 400px;
+    }
+  div#edit-pass-wrapper input {
+    width: 200px;
+    }
+
+div.node-form {
+  }
+  div.node-form input.form-text {
+    width: 384px;
+    }
+  div.node-form fieldset.group-links input.form-text {
+    width: 240px;
+    }
+  div.node-form textarea#edit-body {
+    width: 564px; /* total: 580px */
+    }
+
+div.maxlength-counter {
+  font-size: 1.3em;
+  text-align: right;
+  }
+
+div.wysiwyg {
+  margin: 10px 0;
+  }
+  div.wysiwyg ul {
+    }
+    div.wysiwyg ul li {
+      margin-bottom: .25em;
+      }
+
+div.link-field-subrow {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #E0DEA9;
+  }
+
+/* -------------------------------------
+ * end Forms
+ * ===================================== */
+
+
+
+/* =====================================
+ * Sidebars
+ * ------------------------------------- */
+
+/* Also applies to front page panel */
+#sidebar-2 {
+  background: url(../images/sponsor-bg.png) top left;
+  }
+  #sidebar-2 h2 {
+    margin: 5px;
+    padding: 5px;
+    font-size: 1em;
+    background: #E0DEA9;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: #8A6C21;
+    }
+  #sidebar-2 img {
+    display: block;
+    margin: 0 auto 5px auto;
+    }
+
+/* =====================================
+ * End Sidebars
+ * ------------------------------------- */
+
+
 
 /* =====================================
  * Blocks
@@ -378,6 +700,17 @@ tr.drag-previous {
 .block p {
   margin-bottom: 1.3em;
   }
+  
+  .block .content h2 {
+    color: #333;
+    font-size: 1.4em;
+    }
+  
+  #sidebar-1 .block {
+    margin-bottom: 10px;
+    }
+    
+  
 
 /* =====================================
  * End Blocks
@@ -417,20 +750,74 @@ tr.drag-previous {
  * Panels
  * ------------------------------------- */
 
-.panel-spearator {}
-
-.panel-pane {
+#panel-front-bottom .panel-pane {
   margin-bottom: 20px;
-  }  
+  }
 
   h2.block-title,
-  h2.pane-title {
-    background: #859BAA url(../images/block-title-bg.png) top left repeat-x;
-    color: white;
-    font-weight: normal;
-    padding: 5px 0 5px 10px;
+  h2.pane-title,
+  #who-what-where h2 {
+    color: rgb(105,169,97);
+    font-weight: bold;
+    text-transform: uppercase;
     }
 
+.panel-pane ul {
+  list-style-type: disc;
+  list-style-position: inside;
+  }
+
+/* Who? What? Where? block */
+#who, #what, #where {
+  float: left;
+  width: 180px;
+  margin-right: 20px;
+  }
+  #where {
+    margin-right: 0;
+    }
+
+#news-front {
+  background: #eeeeee;
+  -moz-border-radius: 5px;
+  border-bottom: 1px solid #eeeeee;
+  background-repeat: none;
+  padding: 15px;
+  }
+  #news-front h2 {
+    font-size: 1.4em;
+    }
+
+#twitter-front {
+  background: #BCD7F1;
+  -moz-border-radius: 5px;
+  border-bottom: 1px solid #eeeeee;
+  background-repeat: none;
+  padding: 15px;
+  }
+  #twitter-front h2 {
+    font-size: 1.4em;
+    }
+
+/* Panel Front Top */
+#panel-front-top {
+  background: #ffffff;
+  -moz-border-radius: 5px;
+  border-bottom: 1px solid #eeeeee;
+  background-repeat: none;
+  margin-bottom: 10px;
+  }
+  #panel-front-top .panel-pane {
+    margin-bottom: 0;
+    }
+
+/* Panel Front Bottom */
+#panel-front-bottom {
+  background: #ffffff;
+  -moz-border-radius: 5px;
+  border-bottom: 1px solid #eeeeee;
+  background-repeat: none;
+  }
 
 /* =====================================
  * end Panels
@@ -504,3 +891,15 @@ tr.drag-previous {
  * end User and sponsor profiles
  * ------------------------------------- */
 
+
+
+/* =====================================
+ * Contact form
+ * ------------------------------------- */
+ 
+ #contact-form-info {
+   }
+
+/* =====================================
+ * end Contact form
+ * ------------------------------------- */

@@ -1,0 +1,54 @@
+/* =====================================
+ * Colors
+ * -------------------------------------
+  
+   logo dark blue       rgb(65,110,146)
+   logo med blue        rgb(166,205,237)
+   logo green           rgb(105,169,97)
+   
+   green (light)        #639B15             Grass
+   green (dark)         #456E0C
+   
+   beige (heaer)        rgb(224,222,169)    #E0DEA9
+   
+   brown (light)        rgb(171,154,110)    #AB9A6E
+   brown (medium)       rgb(138,108,33)     #8A6C21
+   brown (dark)         rgb(73,59,34)       #493B22
+   
+   black 90%            rgb(26,26,26)
+   black 80%            rgb(51,51,51)       body text
+   black 70%            rgb(77,77,77)
+   black 60%            rgb(102,102,102)    body text (light)
+   black 50%            rgb(128,128,128)
+   black 40%            rgb(153,153,153)
+   black 30%            rgb(179,179,179)
+   black 20%            rgb(204,204,204)
+   black 10%            rgb(230,230,230)
+   black 5%             rgb(242,242,242)
+
+   -------------------------------------
+   Help, messages, and warnings
+   -------------------------------------
+   Help:
+     Blue border    -->   blue light
+     Blue BG        -->   blue xxlight
+
+   Status, success, OK:
+     Green border   -->   green light
+     Green BG       -->   green xxlight
+
+   Warning:
+     Yellow border  -->   yellow light
+     Yellow BG      -->   yellow xxlight
+
+   Error, fail:
+     Red border     -->   red light
+     Red BG         -->   red xxlight
+
+ * -------------------------------------
+ * end Colors
+ * ===================================== */
+
+
+
+ * ------------------------------------- */

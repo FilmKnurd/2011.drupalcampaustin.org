@@ -22,7 +22,8 @@
   <div id="panel-front-top" class="panels-row grid-17">
   
     <div class="panel-panel grid-10 alpha">
-      <div class="inside"><?php print $content['top_left']; ?></div>
+      
+      <div class="inside" id="featured"><?php print $content['top_left']; ?></div>
     </div>
   
     <div class="panel-panel grid-7 omega">
@@ -41,7 +42,7 @@
       <div class="inside"><?php print $content['bottom_right1']; ?></div>
     </div>
 
-    <div class="panel-panel grid-3 omega">
+    <div id="sidebar-2" class="panel-panel grid-3 omega">
       <div class="inside"><?php print $content['bottom_right2']; ?></div>
     </div>
   
