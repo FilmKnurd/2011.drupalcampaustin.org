@@ -183,10 +183,11 @@ function drupalcampaustin_library_menu_alter(&$items) {
 }
 */
 
-/*
-*/
+/**
+ * Implementation of hook_form_alter().
+ */
 function drupalcampaustin_library_form_alter(&$form, $form_state, $form_id) {
-//  print $form_id;
+  //print $form_id;
 
   // Content Profile wants to redirect the form to the user's account page.
   // This has to be done here (instead of hook_form_FORM_ID_alter()) below
@@ -207,6 +208,17 @@ function drupalcampaustin_library_form_contact_mail_user_alter(&$form, &$form_st
   }
 }
 
+function drupalcampaustin_library_form_uc_cart_view_form_alter(&$form, &$form_state) {
+  unset($form['continue_shopping']);
+  unset($form['update']);
+  unset($form['items'][0]['remove']);
+  unset($form['items'][0]['image']);
+  unset($form['items']['#columns']['remove']);
+  unset($form['items']['#columns']['image']);
+
+  $form['items']['#columns']['desc']['cell'] = 'Description';
+}
+
 function drupalcampaustin_library_form_profile_node_form_alter(&$form, &$form_state) {
   // Hide the extraneous title ("Name") field
   $form['title']['#type'] = 'hidden';
@@ -216,8 +228,6 @@ function drupalcampaustin_library_form_profile_node_form_alter(&$form, &$form_st
   $form['#validate'][] = 'drupalcampaustin_library_profile_node_form_validate';
 
   $form['revision_information']['#type'] = 'hidden';
-
-//  print_r($form);
 }
 
 function drupalcampaustin_library_profile_node_form_validate($form, &$form_state) {
