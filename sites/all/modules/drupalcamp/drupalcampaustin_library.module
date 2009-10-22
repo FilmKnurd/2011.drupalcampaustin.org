@@ -62,7 +62,7 @@ function drupalcampaustin_library_block_header_links($user) {
   }
   else {
     $links[] = l(t('Log in'), 'user/login');
-    $links[] = l(t('Create an account'), 'user/register');
+    $links[] = l(t('Register'), 'user/register');
   }
 
   $output = '';
@@ -119,15 +119,17 @@ function drupalcampaustin_library_block_header_ribbon($user) {
       }
       else {
         $output .= '<a href="/products/drupalcamp-austin-2009-registration" title="Register"><img src="' . $path . 'header-ribbon-step3.png" alt="Register" /></a>';
+        
         // Add a persistent message reminding users to register
-        drupal_set_message(t('<strong>Don\'t forget to !register!</strong>', array('!register' => l(t('register to attend DrupalCamp Austin 2009'), 'products/drupalcamp-austin-2009-registration'), )));
+        $path = $_GET['q'];
+        if ($path != 'node/add/profile') {
+          drupal_set_message(t('<strong>Don\'t forget to !register!</strong>', array('!register' => l(t('register to attend DrupalCamp Austin 2009'), 'products/drupalcamp-austin-2009-registration'), )));
+        }
       }
     }
   }
   else {
-    $output .= '<a href="/user/login" title="Log in"><img src="' . $path . 'header-ribbon-login.png" alt="Log in" /></a>';
-    $output .= '<img src="' . $path . 'header-ribbon-or.png" alt="or" />';
-    $output .= '<a href="/user/register" title="Create account"><img src="' . $path . 'header-ribbon-createaccount.png" alt="Create account" /></a>';
+    $output .= '<a href="/user/register" title="Register"><img src="' . $path . 'header-ribbon-register.png" alt="Register" /></a>';
   }
 
   $output .= '</div>';
@@ -190,14 +192,15 @@ function drupalcampaustin_library_menu_alter(&$items) {
  * Implementation of hook_form_alter().
  */
 function drupalcampaustin_library_form_alter(&$form, $form_state, $form_id) {
-  //print $form_id;
+//  print $form_id;
 
   // Content Profile wants to redirect the form to the user's account page.
   // This has to be done here (instead of hook_form_FORM_ID_alter()) below
   // because Content Profile uses form_alter(), which runs *after* the
   // FORM_ID version.
-  if ($form_id == 'profile_node_form') {
-    unset($form['#redirect']);
+  if (($form_id == 'profile_node_form') && ($form['#action'] == '/node/add/profile')) {
+    print_r($form['#redirect']);
+    $form['#redirect'] = 'products/drupalcamp-austin-2009-registration';
   }
 }
 

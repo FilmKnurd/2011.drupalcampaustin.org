@@ -194,11 +194,11 @@ body {
           #header-links {
             float: right;
             height: 20px;
-            font-size: 1.1em;
-            letter-spacing: .05em;
             margin-top: 10px;
             margin-right: 10px;
-            color: rgb(102,102,102); /* black 60%; body text (light) */
+            font-size: 1.1em;
+            color: rgb(166,205,237); /* black 60%; body text (light) */
+            letter-spacing: .05em;
             }
           #header-links div {
             float: right;
@@ -218,8 +218,9 @@ body {
               }
 
             #header-links a {
-              color: rgb(51,51,51); /* black 80%; body text */
+              color: rgb(65,110,146); /* black 80%; body text */
               text-decoration: none;
+              font-weight: bold;
               }
             #header-links a:hover,
             #header-links a:focus {
