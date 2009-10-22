@@ -72,8 +72,6 @@
           <div id="main-content" class="clearfix">
             <?php print $content; ?>
           </div> <!-- /#main-content -->
-
-          <?php print $feed_icons; ?>
         </div> <!-- /#main -->
 
         <?php if ($sidebar_1): ?>

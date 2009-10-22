@@ -60,22 +60,20 @@
       <div id="main-container" class="container-17"><div class="clearfix">
 
         <div id="main" class="column clearfix">
-          <?php if ($title): ?>
-            <h1 class="title" id="page-title"><?php print $title; ?></h1>
-          <?php endif; ?>
-
           <?php if ($tabs): ?>
-            <div class="tabs"><?php print $tabs; ?></div>
+            <div class="tabs grid-17"><?php print $tabs; ?></div>
           <?php endif; ?>
 
-          <?php print $messages; ?>
-          <?php print $help; ?>
+          <?php if ($messages || $help): ?>
+            <div class="grid-17">
+              <?php print $messages; ?>
+              <?php print $help; ?>
+            </div>
+          <?php endif; ?>
 
           <div id="main-content" class="clearfix">
             <?php print $content; ?>
           </div> <!-- /#main-content -->
-
-          <?php print $feed_icons; ?>
         </div> <!-- /#main -->
 
       </div></div> <!-- /#main-container -->
