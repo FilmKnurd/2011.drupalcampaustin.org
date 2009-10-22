@@ -73,7 +73,8 @@ function drupalcamp_preprocess_node_profile(&$vars, $node, $node_author) {
   // Leave a helpful message for the user if they are viewing their own
   // profile page
   if ($vars['is_my_node']) {
-    drupal_set_message(t('Hi! You are viewing your profile page. You can change this information by clicking the !edit link above. If you need to change account information (password, email address, etc.), you should visit !youraccountpage. You account page is not publicly visible.', array('!edit' => l(t('edit'), 'node/' . $node->nid . '/edit'), '!youraccountpage' => l(t('your account page'), 'user/' . $user->uid))));
+    drupal_set_message(t('You are viewing your <strong>profile page</strong>, which is publicly visible. You can change this information by clicking the !edit link above.', array('!edit' => l(t('edit'), 'node/' . $node->nid . '/edit'), )));
+    drupal_set_message(t('If you need to change account information (password, email address, etc.), you should visit !youraccountpage, which is not publicly visible.', array('!youraccountpage' => l(t('your account page'), 'user/' . $user->uid))));
   }
 
   // Build a list of roles

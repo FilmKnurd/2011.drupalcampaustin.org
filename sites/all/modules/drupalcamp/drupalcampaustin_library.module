@@ -119,11 +119,14 @@ function drupalcampaustin_library_block_header_ribbon($user) {
       }
       else {
         $output .= '<a href="/products/drupalcamp-austin-2009-registration" title="Register"><img src="' . $path . 'header-ribbon-step3.png" alt="Register" /></a>';
+        // Add a persistent message reminding users to register
+        drupal_set_message(t('<strong>Don\'t forget to !register!</strong>', array('!register' => l(t('register to attend DrupalCamp Austin 2009'), 'products/drupalcamp-austin-2009-registration'), )));
       }
     }
   }
   else {
     $output .= '<a href="/user/login" title="Log in"><img src="' . $path . 'header-ribbon-login.png" alt="Log in" /></a>';
+    $output .= '<img src="' . $path . 'header-ribbon-or.png" alt="or" />';
     $output .= '<a href="/user/register" title="Create account"><img src="' . $path . 'header-ribbon-createaccount.png" alt="Create account" /></a>';
   }
 
