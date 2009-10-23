@@ -86,36 +86,49 @@
 
 /* General text of nodes */
 
-.page-node #main-content ul {
+#main-content .content ul {
   list-style-type: disc;
   list-style-position: outside;
   padding-left: 20px;
   }
 
-
-.page-node #main-content h2 {
+.page-node #main-content .content h2 {
 	color: #8A6C21;
 	font-size: 2em;
 	}
 
-.page-node #main-content h3 {
+.page-node #main-content .content h3 {
 	color: #69A961;
 	font-size: 1.5em;
 	}
 
-.page-node .meta {
+#main-content .meta {
   margin-bottom: 10px;
-  font-size: 1.2em;
+  font-size: 1.1em;
   color: rgb(102,102,102);
   }
   
-.page-node #main-content .links {
-  border-top: 1px solid #EEE;
-  border-bottom: 1px solid #EEE;
-  padding: 3px 0 2px 0;
-  }
+#main-content .links {}
 
 /*  End General text of nodes */
+
+/* Comments */
+
+#main-content #comments {
+  margin-left: 20px;
+  }
+
+.comment .new {
+  text-transform: uppercase;
+  background-color: rgb(213,234,212);
+  border: 1px solid #456E0C;
+  color: #456E0C;
+  padding: 0 2px;
+  margin-left: 5px;
+  font-size: 0.9em;
+  }
+
+/* End Comments */
 
 
 

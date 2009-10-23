@@ -29,23 +29,20 @@
 <div class="comment<?php print ($comment->new) ? ' comment-new' : ''; print ' '. $status ?> clear-block">
   <?php print $picture ?>
 
-  <?php if ($comment->new): ?>
-    <span class="new"><?php print $new ?></span>
-  <?php endif; ?>
+  <div class="meta">
+    <span class="submitted">
+      <?php print t('Posted ') . format_date($comment->timestamp, 'custom', "F jS, Y") . t(' by ') . theme('username', $node); ?>
+    </span>
+  
+    <?php if ($comment->new): ?>
+      <span class="new"><?php print $new ?></span>
+    <?php endif; ?>
+  </div>
 
   <h3><?php print $title ?></h3>
 
-  <div class="submitted">
-    <?php print $submitted ?>
-  </div>
-
   <div class="content">
     <?php print $content ?>
-    <?php if ($signature): ?>
-    <div class="user-signature clear-block">
-      <?php print $signature ?>
-    </div>
-    <?php endif; ?>
   </div>
 
   <?php print $links ?>

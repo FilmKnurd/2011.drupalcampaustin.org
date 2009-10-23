@@ -560,14 +560,16 @@ textarea {
   border: 2px solid #A6CDED;
   background: #CCE6F8;
   color: #416E92;
-  font-weight: bold;
   }
-input:focus {
+input:focus,
+textarea:focus {
   border-color: #416E92;
   }
 
-  input.form-text,
-  textarea {
+input {
+  font-weight: bold;
+  }
+  input.form-text {
     font-size: 1.6em;
     }
   input.form-submit {
@@ -576,6 +578,24 @@ input:focus {
     }
   input.form-submit:hover {
     border-color: #416E92;
+    }
+
+textarea {
+  font-size: 1.4em;
+  }
+  textarea#edit-body,
+  textarea#edit-comment {
+    width: 564px; /* total: 580px */
+    }
+  textarea#edit-comment {
+    height: 100px;
+    }
+
+div.teaser-checkbox {
+  padding: 0;
+  }
+  div#edit-teaser-include-wrapper {
+    margin: 0;
     }
 
 div.form-item {
@@ -654,9 +674,6 @@ div.node-form {
     }
   div.node-form fieldset.group-links input.form-text {
     width: 240px;
-    }
-  div.node-form textarea#edit-body {
-    width: 564px; /* total: 580px */
     }
 
 div.maxlength-counter {
@@ -757,6 +774,10 @@ div.link-field-subrow {
 .views-field-created {
   font-size: 1.3em;
   font-style: italic;
+  }
+
+#main-content .views-row {
+  margin-bottom: 30px;
   }
 
 
@@ -871,6 +892,7 @@ h2.pane-title,
     .profile-sponsor .item-list ul li {
       list-style: none;
       margin: 1px 0 0 0;
+      padding-left: 0;
       }
       .profile-sponsor .item-list ul li a {
         display: block;

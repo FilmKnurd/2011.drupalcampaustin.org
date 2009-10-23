@@ -207,6 +207,12 @@ function drupalcampaustin_library_form_alter(&$form, $form_state, $form_id) {
   }
 }
 
+function drupalcampaustin_library_form_comment_form_alter(&$form, &$form_state) {
+  unset($form['_author']);
+  unset($form['comment_filter']['comment']['#title']);
+  unset($form['preview']);
+}
+
 function drupalcampaustin_library_form_contact_mail_user_alter(&$form, &$form_state) {
   $profile_page = drupalcampaustin_library_user_profile_page(arg(1));
   if ($profile_page != FALSE) {
