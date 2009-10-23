@@ -110,7 +110,7 @@
             <li><a href="/privacy" title="Privacy policy">Privacy policy</a></li>
             <li><a href="/credits" title="Credits and thanks">Credits</a></li>
           </ul>
-        </div>
+        </div> <!-- /#footer-menu -->
 
       </div> <!-- /#footer-container -->
     </div> <!-- /#footer-wrapper -->

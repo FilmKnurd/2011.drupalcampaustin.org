@@ -90,10 +90,17 @@
         <?php endif; ?>
 
         <?php if ($footer_message): ?>
-          <div id="footer-message" class="grid-17 clearfix">
+          <div id="footer-message" class="grid-13">
             <?php print $footer_message; ?>
           </div> <!-- /# footer-message -->
         <?php endif; ?>
+
+        <div id="footer-menu" class="grid-4">
+          <ul>
+            <li><a href="/privacy" title="Privacy policy">Privacy policy</a></li>
+            <li><a href="/credits" title="Credits and thanks">Credits</a></li>
+          </ul>
+        </div> <!-- /#footer-menu -->
 
       </div> <!-- /#footer-container -->
     </div> <!-- /#footer-wrapper -->
