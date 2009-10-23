@@ -122,7 +122,11 @@ function drupalcampaustin_library_block_header_ribbon($user) {
         
         // Add a persistent message reminding users to register
         $path = $_GET['q'];
-        if ($path != 'node/add/profile') {
+
+        // Show a helpful reminder message on most pages
+        // node/2 == Product page
+        // cart == Any shopping cart page
+        if (($path != 'node/add/profile') && ($path != 'node/2') && (arg(0) != 'cart')) {
           drupal_set_message(t('<strong>Don\'t forget to !register!</strong>', array('!register' => l(t('register to attend DrupalCamp Austin 2009'), 'products/drupalcamp-austin-2009-registration'), )));
         }
       }
