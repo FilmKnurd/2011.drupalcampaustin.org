@@ -199,7 +199,6 @@ function drupalcampaustin_library_form_alter(&$form, $form_state, $form_id) {
   // because Content Profile uses form_alter(), which runs *after* the
   // FORM_ID version.
   if (($form_id == 'profile_node_form') && ($form['#action'] == '/node/add/profile')) {
-    print_r($form['#redirect']);
     $form['#redirect'] = 'products/drupalcamp-austin-2009-registration';
   }
 }
