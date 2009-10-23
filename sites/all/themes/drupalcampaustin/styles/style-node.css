@@ -86,6 +86,13 @@
 
 /* General text of nodes */
 
+.page-node #main-content ul {
+  list-style-type: disc;
+  list-style-position: outside;
+  padding-left: 20px;
+  }
+
+
 .page-node #main-content h2 {
 	color: #8A6C21;
 	font-size: 2em;

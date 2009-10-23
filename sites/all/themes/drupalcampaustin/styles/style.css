@@ -135,10 +135,6 @@ h3 {
   font-size: 1.3em;
   }
 
-p {
-	color: #777777;
-}
-
 
 .text-standard {
   font-size: 1.3em;
@@ -267,16 +263,7 @@ body {
       padding-top: 20px;
       background: url(../images/footer-bg.png) top left repeat-x;
       }
-      #footer-container {
-        }
-        #footer-message {
-          margin-top: 5px;
-          color: white;
-          font-size: 1.2em;
-          }
-         #footer-message a {
-          color: #AB9A6E;
-          }
+
 
 /* -------------------------------------
  * end Global styles
@@ -512,7 +499,37 @@ tr.drag-previous {
  * end Primary/secondary links
  * ===================================== */
 
+/* -------------------------------------
+ * Footer links
+ * ===================================== */
+ 
+#footer-wrapper { 
+  color: white;
+  font-size: 1.2em;
+  }
+  #footer-wrapper a {
+    color: #AB9A6E;
+    }
 
+#footer-message {
+  float: left;
+}
+
+#footer-menu {
+  float: right;
+  }
+  #footer-menu ul {
+    text-align: right;
+    }
+    #footer-menu ul li {
+      display: inline;
+      margin-left: 10px;
+      }
+
+  
+ /* -------------------------------------
+ * end Footer links
+ * ===================================== */
 
 /* =====================================
  * Forms
