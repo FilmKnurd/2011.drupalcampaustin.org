@@ -779,7 +779,7 @@ div.link-field-subrow {
 #main-content .views-row {
   margin-bottom: 20px;
   }
-  #main-content .block .views-row { /* Fix for Front page blocks w/ views */
+  #main-content .panel-pane .views-row { /* Fix for Front page blocks w/ views */
     margin-bottom: 10px;
     }
 
