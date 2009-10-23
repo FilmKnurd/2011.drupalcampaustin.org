@@ -585,7 +585,7 @@ textarea {
   }
   textarea#edit-body,
   textarea#edit-comment {
-    width: 564px; /* total: 580px */
+    width: 544px; /* total: 580px - 20px left margin*/ 
     }
   textarea#edit-comment {
     height: 100px;
