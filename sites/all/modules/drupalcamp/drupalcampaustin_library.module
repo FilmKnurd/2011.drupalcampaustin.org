@@ -11,6 +11,9 @@ function drupalcampaustin_library_block($op = 'list', $delta = 0, $edit = array(
     $blocks['dca_header_ribbon'] = array(
       'info' => t('DCA: Header ribbon'),
     );
+    $blocks['dca_user_stats'] = array(
+      'info' => t('DCA: User stats'),
+    );
     return $blocks;
   }
   else if ($op == 'view') {
@@ -28,6 +31,12 @@ function drupalcampaustin_library_block($op = 'list', $delta = 0, $edit = array(
         $block = array(
           'subject' => '',
           'content' => drupalcampaustin_library_block_header_ribbon($user_loaded),
+        );
+        break;
+      case 'dca_user_stats':
+        $block = array(
+          'subject' => 'User stats',
+          'content' => drupalcampaustin_library_block_user_stats($user_loaded),
         );
         break;
     }
@@ -139,6 +148,30 @@ function drupalcampaustin_library_block_header_ribbon($user) {
   $output .= '</div>';
 
   return $output;
+}
+
+function drupalcampaustin_library_block_user_stats($user) {
+  $display_views = array(
+    'users_registered',
+    'users_registered_free',
+    'users_vegetarian',
+    'users_vegan',
+  );
+
+  $output = array();
+
+  foreach ($display_views as $display_view) {
+    $view = views_get_view($display_view);
+    if (!empty($view)) {
+      // Execute view query
+      // Results will be stored as an array in $view->result
+      $view->execute();
+      krumo($view);
+      $output[] = $view->display['default']->display_options['title'] . ': ' . count($view->result);
+    }
+  }
+
+  return implode('<br />', $output);
 }
 
 /**
