@@ -151,26 +151,18 @@ function drupalcampaustin_library_block_header_ribbon($user) {
 }
 
 function drupalcampaustin_library_block_user_stats($user) {
-  $display_views = array(
-    'users_registered',
-    'users_registered_free',
-    'users_vegetarian',
-    'users_vegan',
-  );
+  // Role "attendee" ID == 4
+  $role_id = 4;
+  $query = "
+    SELECT COUNT(*)
+    FROM {users} u INNER JOIN {users_roles} ur ON u.uid = ur.uid
+    WHERE rid = %d;
+  ";
+  $count = (db_result(db_query($query, $role_id)));
 
-  $output = array();
+  $output = 'Registered attendees: ' . $count;
 
-  foreach ($display_views as $display_view) {
-    $view = views_get_view($display_view);
-    if (!empty($view)) {
-      // Execute view query
-      // Results will be stored as an array in $view->result
-      $view->execute();
-      $output[] = $view->display['default']->display_options['title'] . ': ' . count($view->result);
-    }
-  }
-
-  return implode('<br />', $output);
+  return $output;
 }
 
 /**
