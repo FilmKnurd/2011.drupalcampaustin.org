@@ -166,7 +166,6 @@ function drupalcampaustin_library_block_user_stats($user) {
       // Execute view query
       // Results will be stored as an array in $view->result
       $view->execute_display('default');
-      krumo($view);
       $output[] = $view->display['default']->display_options['title'] . ': ' . count($view->result);
     }
   }
