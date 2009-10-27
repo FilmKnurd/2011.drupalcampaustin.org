@@ -222,6 +222,9 @@ function drupalcampaustin_library_user_account_page($uid) {
   elseif (!empty($profile)) {
     $output = l(t('Go to this user\'s profile page'), 'node/' . $profile->nid);
   }
+  else {
+    $output = t('This user has not created a profile page');
+  }
 
   return $output;
 }
@@ -279,9 +282,9 @@ function drupalcampaustin_library_form_contact_mail_user_alter(&$form, &$form_st
 
 function drupalcampaustin_library_form_uc_cart_view_form_alter(&$form, &$form_state) {
   unset($form['update']);
-  unset($form['items'][0]['remove']);
+//  unset($form['items'][0]['remove']);
   unset($form['items'][0]['image']);
-  unset($form['items']['#columns']['remove']);
+//  unset($form['items']['#columns']['remove']);
   unset($form['items']['#columns']['image']);
 
   $form['items']['#columns']['desc']['cell'] = 'Description';
@@ -301,4 +304,12 @@ function drupalcampaustin_library_form_profile_node_form_alter(&$form, &$form_st
 function drupalcampaustin_library_profile_node_form_validate($form, &$form_state) {
   $name = $form_state['values']['field_profile_firstname'][0]['value'] . ' ' . $form_state['values']['field_profile_lastname'][0]['value'];
   form_set_value($form['title'], $name, $form_state);
+}
+
+function drupalcampaustin_library_advforum_styles() {
+  $items = array();
+  $items['drupalcampaustin'] = array(
+    'directory' => '../../themes/drupalcampaustin/forum',
+  );
+  return $items;
 }
