@@ -8,11 +8,12 @@ engine      = phptemplate
 ; Stylesheets
 stylesheets[all][] = styles/reset.css
 stylesheets[all][] = styles/grid.css
-; stylesheets[all][] = styles/debug.css
-stylesheets[all][]   = styles/style.css
+stylesheets[all][] = styles/style.css
 stylesheets[all][] = styles/style-node.css
 stylesheets[all][] = styles/style-product.css
 stylesheets[all][] = styles/session-vote.css
+
+; Stylesheets: Print
 ; stylesheets[print][] = styles/style-print.css
 
 ; Regions

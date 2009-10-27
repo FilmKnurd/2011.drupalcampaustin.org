@@ -188,8 +188,6 @@ function drupalcamp_preprocess_node_session(&$vars, $node, $node_author) {
   }
 
   $vars['profile_action_links'] = drupalcampaustin_profile_action_links($node_author->profile);
-
-//  krumo($vars);
 }
 
 function drupalcampaustin_preprocess_comment_wrapper(&$vars) {
