@@ -53,11 +53,19 @@
       </div></div> <!-- /#primary-container -->
     </div> <!-- /#primary-wrapper -->
 
-
     <div id="main-wrapper">
       <div id="main-container" class="container-17"><div class="clearfix">
 
         <div id="main" class="column grid-10 clearfix">
+
+        <?php if ($secondary_links): ?>
+          <div id="secondary-wrapper">
+            <div id="secondary-links">
+                <?php print theme('links', $secondary_links, array('class' => 'links secondary-links')); ?>
+            </div> <!-- /#secondary-links -->
+          </div> <!-- /#secondary-wrapper -->
+        <?php endif; ?>
+
           <?php if ($title): ?>
             <h1 class="title" id="page-title"><?php print $title; ?></h1>
           <?php endif; ?>
@@ -90,8 +98,8 @@
     </div> <!-- /#main-wrapper -->
 
 
-    <div id="footer-wrapper" class="clearfix">
-      <div id="footer-container" class="container-17">
+    <div id="footer-wrapper">
+      <div id="footer-container" class="container-17"><div class="clearfix">
 
         <?php if ($footer): ?>
           <div id="footer" class="grid-17 clearfix">
@@ -112,7 +120,7 @@
           </ul>
         </div> <!-- /#footer-menu -->
 
-      </div> <!-- /#footer-container -->
+      </div></div> <!-- /#footer-container -->
     </div> <!-- /#footer-wrapper -->
 
 

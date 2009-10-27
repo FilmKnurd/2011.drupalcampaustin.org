@@ -80,8 +80,8 @@
     </div> <!-- /#main-wrapper -->
 
 
-    <div id="footer-wrapper" class="clearfix">
-      <div id="footer-container" class="container-17">
+    <div id="footer-wrapper">
+      <div id="footer-container" class="container-17"><div class="clearfix">
 
         <?php if ($footer): ?>
           <div id="footer" class="grid-17 clearfix">
@@ -102,7 +102,7 @@
           </ul>
         </div> <!-- /#footer-menu -->
 
-      </div> <!-- /#footer-container -->
+      </div></div> <!-- /#footer-container -->
     </div> <!-- /#footer-wrapper -->
 
 

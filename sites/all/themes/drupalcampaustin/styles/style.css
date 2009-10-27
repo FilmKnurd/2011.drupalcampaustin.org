@@ -259,9 +259,9 @@ body {
           }
 
     #footer-wrapper {
-      height: 30px;
-      padding-top: 20px;
-      background: url(../images/footer-bg.png) top left repeat-x;
+      height: 25px;
+      padding-top: 25px;
+      background: #493B22 url(../images/footer-bg.png) top left repeat-x;
       }
 
 
@@ -492,6 +492,18 @@ tr.drag-previous {
       }
 
 
+#secondary-wrapper {
+  font-size: 1.2em;
+  font-weight: bold;
+  background-color: pink;
+  }
+  #secondary-links {
+    }
+    #secondary-links ul.links {}    
+        #secondary-links ul.links li {}
+          #secondary-links ul.links li.active {}
+        #secondary-links ul.links li a {}     
+    
 /*End Primary Menu Styling*/
 
 
@@ -585,7 +597,7 @@ textarea {
   }
   textarea#edit-body,
   textarea#edit-comment {
-    width: 544px; /* total: 580px - 20px left margin*/ 
+    width: 564px;
     }
   textarea#edit-comment {
     height: 100px;

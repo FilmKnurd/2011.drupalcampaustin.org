@@ -102,7 +102,7 @@
 	font-size: 1.5em;
 	}
 
-#main-content .meta {
+#main-content .submitted {
   margin-bottom: 10px;
   font-size: 1.1em;
   color: rgb(102,102,102);
@@ -115,8 +115,20 @@
 /* Comments */
 
 #main-content #comments {
-  margin-left: 20px;
   }
+
+.comment .submitted {
+  background-color: #D5EAD4;
+  border-top: 1px solid #639B15;
+  padding: 7px;
+  }
+  .comment-author {
+    font-weight: bold;
+    font-size: 1.2em;
+    }
+  .comment-timestamp {
+    float: right;
+    }
 
 .comment .new {
   text-transform: uppercase;

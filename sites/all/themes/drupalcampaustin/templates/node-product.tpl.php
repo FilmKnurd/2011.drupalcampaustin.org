@@ -46,10 +46,9 @@
  * @see template_preprocess_node()
  */
 ?>
-<div id="node-<?php print $node->nid; ?>" class="<?php print $node_classes; ?> clearfix">
 
+<div id="node-<?php print $node->nid; ?>" class="<?php print $node_classes; ?> clearfix">
   <div class="content">
     <?php print $content; ?>
   </div>
-
 </div>

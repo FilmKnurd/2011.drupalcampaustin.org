@@ -4,3 +4,4 @@ core = 6.x
 package = DrupalCamp
 dependencies[] = content_profile
 dependencies[] = uc_cart
+dependencies[] = views

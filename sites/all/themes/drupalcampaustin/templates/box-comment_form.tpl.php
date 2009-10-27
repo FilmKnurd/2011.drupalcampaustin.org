@@ -13,9 +13,9 @@
  * @see template_preprocess()
  */
 ?>
-<div class="box">
+<div id="comment-form">
   <?php if ($title): ?>
-    <h2><?php print $title ?></h2>
+    <h3><?php print $title ?></h3>
   <?php endif; ?>
   <div class="content"><?php print $content ?></div>
 </div>

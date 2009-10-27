@@ -47,47 +47,44 @@
  */
 ?>
 
-<?php if (!$teaser): ?>
-  <div id="node-<?php print $node->nid; ?>" class="<?php print $node_classes; ?> clearfix">
-<?php endif; /* if (!$teaser) */ ?>
+<div id="node-<?php print $node->nid; ?>" class="<?php print $node_classes; ?> clearfix">
 
-  <!-- Left column -->
-  <div class="grid-7 alpha">
-    <?php if ($sponsor_level): ?>
-      <div class="header">
-        <?php print $sponsor_level; ?>
+  <div class="session-wrapper clearfix">
+
+    <!-- Left column -->
+    <div class="grid-7 alpha">
+      <?php if ($submitted): ?>
+        <span class="submitted"><?php print $submitted; ?></span>
+      <?php endif; ?>
+
+      <?php if ($terms): ?>
+        <div class="terms terms-inline"><?php print $terms; ?></div>
+      <?php endif;?>
+
+      <div class="content">
+        <?php print $content; ?>
       </div>
-    <?php endif; ?>
-  
-    <div class="content">
-      <?php print $content; ?>
     </div>
 
-    <?php if (!$teaser && $sponsor_attendees): ?>
-      <div class="link-columns">
-        <div class="header">Attendees</div>
-        <?php print $sponsor_attendees; ?>
-      </div>
-    <?php endif; ?>
-  </div>
+    <!-- Right column -->
+    <div class="grid-3 omega">
+      <?php print $vote; ?>
 
-  <!-- Right column -->
-  <div class="grid-3 omega">
-    <div class="picture"><?php print $field_sponsor_logo_rendered ; ?></div>
+      <div class="picture"><?php print $profile_picture; ?></div>
 
-    <?php if (!$teaser && $sponsor_web_links): ?>
-      <div class="web-links">
-        <?php print $sponsor_web_links; ?>
-      </div>
-    <?php endif; ?>
-  </div>
+      <?php if ($profile_action_links): ?>
+        <div class="action-links">
+          <?php print $profile_action_links; ?>
+        </div>
+      <?php endif; ?>
+    </div>
 
-<?php if (!$teaser): ?>
-    <?php if ($links): ?>
-      <div class="links">
-        <?php print $links; ?>
-      </div>
-    <?php endif; ?>
+  </div> <!-- /.session-wrapper -->
 
-  </div>
-<?php endif; /* if (!$teaser) */ ?>
+  <?php if ($links): ?>
+    <div class="links">
+      <?php print $links; ?>
+    </div>
+  <?php endif; ?>
+
+</div>

@@ -30,9 +30,14 @@
   <?php print $picture ?>
 
   <div class="meta">
-    <span class="submitted">
-      <?php print t('Posted ') . format_date($comment->timestamp, 'custom', "F jS, Y") . t(' by ') . theme('username', $node); ?>
-    </span>
+    <div class="submitted">
+      <span class="comment-author">
+        <?php print theme('username', $node); ?>
+       </span>
+       <span class="comment-timestamp">
+         <?php print format_date($comment->timestamp, 'custom', "F jS, Y"); ?>
+       </span>
+    </div>
   
     <?php if ($comment->new): ?>
       <span class="new"><?php print $new ?></span>

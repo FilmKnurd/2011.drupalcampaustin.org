@@ -1,9 +1,10 @@
 <?php
 
-/*
-function drupalcampaustin_preprocess_page(&$vars) {
+function drupalcampaustin_preprocess(&$vars, $hook) {
+  if (($hook == 'box') && ($vars['title'] == 'Post new comment')) {
+    $vars['template_files'][] = 'box-comment_form';
+  }
 }
-*/
 
 function drupalcampaustin_preprocess_node(&$vars) {
   global $user;
@@ -62,6 +63,10 @@ function drupalcampaustin_preprocess_node(&$vars) {
       $node_classes[] = 'profile-sponsor';
       drupalcamp_preprocess_node_sponsor($vars, $node, $node_author);
       break;
+    case 'session':
+      $node_classes[] = 'profile-sponsor';
+      drupalcamp_preprocess_node_session($vars, $node, $node_author);
+      break;
     default:
       break;
   }
@@ -94,10 +99,11 @@ function drupalcamp_preprocess_node_profile(&$vars, $node, $node_author) {
   }
   $vars['roles'] = drupalcampaustin_serialize($roles);
 
+  // Create a uniform name for the profile picture
+  $vars['profile_picture'] = $vars['field_user_picture_rendered'];
+
   // Build a list of action links
-  $profile_action_links = array();
-  $profile_action_links[] = l(t('Contact @name', array('@name' => $node->title)), 'user/' . $node->uid . '/contact');
-  $vars['profile_action_links'] = theme('item_list', $profile_action_links);
+  $vars['profile_action_links'] = drupalcampaustin_profile_action_links($node);
 
   // Build a list of website links
   $profile_web_links = array();
@@ -161,6 +167,26 @@ function drupalcamp_preprocess_node_sponsor(&$vars, $node, $node_author) {
   }
 }
 
+function drupalcamp_preprocess_node_session(&$vars, $node, $node_author) {
+  $vars['vote'] = flag_create_link('session_vote', $node->nid);
+  $vars['profile_action_links'] = drupalcampaustin_profile_action_links($node_author->profile);
+  $vars['profile_picture'] = drupalcampaustin_profile_picture($node_author->profile);
+}
+
+function drupalcampaustin_profile_picture($profile_node) {
+  $profile_node_built = node_build_content($profile_node);
+  return drupal_render($profile_node_built->content['group_profile_personal']['group']['field_user_picture']['field']);
+}
+
+function drupalcampaustin_profile_action_links($profile_node) {
+  $profile_action_links = array();
+  if(arg(1) != $profile_node->nid) {
+    $profile_action_links[] = l(t('View profile'), 'node/' . $profile_node->nid, array('attributes' => array('title' => t('View @name\'s profile', array('@name' => $profile_node->title)))));
+  }
+  $profile_action_links[] = l(t('Contact'), 'user/' . $profile_node->uid . '/contact', array('attributes' => array('title' => t('Contact @name', array('@name' => $profile_node->title)))));
+  return theme('item_list', $profile_action_links);
+}
+
 function drupalcampaustin_serialize($items) {
   $output = '';
   $item_count = count($items);
@@ -193,6 +219,62 @@ function drupalcampaustin_serialize($items) {
   }
 
   return $output;
+}
+
+/**
+ * Override theme_node_submitted().
+ */
+function drupalcampaustin_username($object) {
+
+  if ($object->uid && $object->name) {
+    // Shorten the name when it is too long or it will break many tables.
+    if (drupal_strlen($object->name) > 20) {
+      $name = drupal_substr($object->name, 0, 15) .'...';
+    }
+    else {
+      $name = $object->name;
+    }
+
+    // BEGIN CUSTOMIZATIONS
+    $user = user_load($object->uid);
+    if (!empty($user->profile)) {
+      $output = l($name, 'node/'. $user->profile->nid, array('attributes' => array('title' => t('View @name\'s profile', array('@name' => $user->profile->title)))));
+    }
+    // END CUSTOMIZATIONS
+    else {
+      $output = check_plain($name);
+    }
+  }
+  else if ($object->name) {
+    // Sometimes modules display content composed by people who are
+    // not registered members of the site (e.g. mailing list or news
+    // aggregator modules). This clause enables modules to display
+    // the true author of the content.
+    if (!empty($object->homepage)) {
+      $output = l($object->name, $object->homepage, array('attributes' => array('rel' => 'nofollow')));
+    }
+    else {
+      $output = check_plain($object->name);
+    }
+
+    $output .= ' ('. t('not verified') .')';
+  }
+  else {
+    $output = check_plain(variable_get('anonymous', t('Anonymous')));
+  }
+
+  return $output;
+}
+
+/**
+ * Override theme_node_submitted().
+ */
+function drupalcampaustin_node_submitted($node) {
+  return t('!username | @date',
+    array(
+      '!username' => theme('username', $node),
+      '@date' => format_date($node->created, 'custom', 'l, F jS, Y'),
+    ));
 }
 
 /**

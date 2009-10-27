@@ -46,6 +46,7 @@
  * @see template_preprocess_node()
  */
 ?>
+
 <div id="node-<?php print $node->nid; ?>" class="<?php print $node_classes; ?> clearfix">
 
   <div class="profile-wrapper clearfix">
@@ -72,8 +73,8 @@
   
     <!-- Right column -->
     <div class="grid-3 omega">
-      <div class="picture"><?php print $field_user_picture_rendered; ?></div>
-  
+      <div class="picture"><?php print $profile_picture; ?></div>
+
       <?php if ($profile_action_links): ?>
         <div class="action-links">
           <?php print $profile_action_links; ?>
@@ -104,4 +105,5 @@
       <?php print $links; ?>
     </div>
   <?php endif; ?>
+
 </div>
