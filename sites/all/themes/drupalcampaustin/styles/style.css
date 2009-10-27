@@ -810,6 +810,12 @@ div.link-field-subrow {
     margin-bottom: 0; /* Undo this for #sidebar-2 blocks */
     }
 
+.view-header {
+  background-color: #CCE6F8;
+  border: 1px solid #A6CDED;
+  padding: 10px 10px 0 10px;
+  }
+
 /* -------------------------------------
  * End Views
  * ===================================== */
