@@ -1035,47 +1035,52 @@ h2.pane-title,
  * end Comments
  * ===================================== */
 
-/* Schedule table style */
+/* -------------------------------------
+ * Schedule table style
+ * ===================================== */
  
-#schedule-table {
+.schedule-table {
   width: 100%;
   font-size: 1.2em;
   border-top: 1px solid #CCC;
+  margin-bottom: 20px;
   }
-#schedule-table tbody {}
-  #schedule-table tr {}
+.schedule-table tbody {}
+  .schedule-table tr {}
 
-    #schedule-table th, #schedule-table td {
+    .schedule-table th, .schedule-table td {
       padding: 10px 5px;
       border-left: 1px solid #CCC;
       text-align: center;
       }
 
-    #schedule-table th {}
-    #schedule-table td {}
+    .schedule-table th {}
+    .schedule-table td {}
     
-      #schedule-table tr.odd {
+      .schedule-table tr.odd {
         background-color: #FFF;
         }
-      #schedule-table tr.even {
+      .schedule-table tr.even {
         background-color: rgb(213,234,212);
         }
     
-    #schedule-table tr.row-tracks th,
-    #schedule-table tr.row-rooms th {
+    .schedule-table tr.row-tracks th,
+    .schedule-table tr.row-rooms th {
       padding: 5px;
       }
     
-    #schedule-table tr.row-tracks {
+    .schedule-table tr.row-tracks {
       background-color: #416E92;
       color: white;
       }
-    #schedule-table tr.row-rooms {
+    .schedule-table tr.row-rooms {
       background-color: #A6CDED;
       }
 
-    #schedule-table th.col1, #schedule-table td.col1 {
+    .schedule-table th.col1, .schedule-table td.col1 {
       width: 100px;
       border-left: none;
       }
-    #schedule-table td.timeslot {}
+/* -------------------------------------
+ * End Schedule table style
+ * ===================================== */
