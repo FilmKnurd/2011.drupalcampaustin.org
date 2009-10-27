@@ -816,6 +816,42 @@ div.link-field-subrow {
   padding: 10px 10px 0 10px;
   }
 
+/* Photo mosaic of all registered users */
+.view-users-registered {
+  }
+  .view-users-registered table {
+    width: 100%;
+    }
+    .view-users-registered table tbody tr td {
+      width: 20%;
+      padding-bottom: 10px;
+      }
+      .view-users-registered .picture,
+      .view-users-registered .profile-link {
+        margin: 0 auto;
+        width: 110px;
+        }
+      .view-users-registered .picture {
+        }
+        .view-users-registered .picture img {
+          display: block;
+          padding: 4px;
+          border: 1px solid rgb(204,204,204); /* black 20% */
+          }
+      .view-users-registered .profile-link {
+        }
+        .view-users-registered .profile-link a {
+          display: block;
+          background: rgb(242,242,242); /* black 5% */
+          padding: 3px 5px;
+          text-decoration: none;
+          font-size: 1.2em;
+          line-height: 1.2em;
+          }
+        .view-users-registered .profile-link a:hover {
+          background: rgb(230,230,230); /* black 10% */
+          }
+
 /* -------------------------------------
  * End Views
  * ===================================== */
