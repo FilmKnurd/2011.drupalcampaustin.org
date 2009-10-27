@@ -49,42 +49,65 @@
 
 <div id="node-<?php print $node->nid; ?>" class="<?php print $node_classes; ?> clearfix">
 
-  <div class="session-wrapper clearfix">
+  <?php if ($teaser): ?>
 
-    <!-- Left column -->
-    <div class="grid-7 alpha">
-      <?php if ($submitted): ?>
-        <div class="submitted"><?php print $submitted; ?></div>
-      <?php endif; ?>
+    <div class="session-teaser-wrapper clearfix">
 
-      <?php if ($terms): ?>
-        <div class="terms terms-inline"><?php print $terms; ?></div>
-      <?php endif;?>
-
-      <div class="content">
-        <?php print $content; ?>
-      </div>
-    </div>
-
-    <!-- Right column -->
-    <div class="grid-3 omega">
-      <div class="vote"><?php print $vote; ?></div>
-
-      <div class="picture"><?php print $profile_picture; ?></div>
-
-      <?php if ($profile_action_links): ?>
-        <div class="action-links">
-          <?php print $profile_action_links; ?>
+      <!-- Left column -->
+      <div class="grid-7 alpha">
+        <div class="picture"><?php print $profile_picture; ?></div>
+    
+        <div class="info">
+          <h2 class="title"><a href="<?php print $node_url; ?>" title="<?php print $title; ?>"><?php print $title; ?></a></h2>
+          <div class="submitted"><?php print $name; ?></div>
         </div>
-      <?php endif; ?>
-    </div>
+      </div>
+  
+      <!-- Right column -->
+      <div class="grid-3 omega">
+        <div class="vote"><?php print $vote; ?></div>
+      </div>
 
-  </div> <!-- /.session-wrapper -->
+    </div> <!-- /.session-teaser-wrapper -->
 
-  <?php if ($links): ?>
-    <div class="links">
-      <?php print $links; ?>
-    </div>
+  <?php else: ?>
+
+    <div class="session-wrapper clearfix">
+
+      <!-- Left column -->
+      <div class="grid-7 alpha">
+        <div class="submitted"><?php print $submitted; ?></div>
+
+        <?php /* if ($terms): ?>
+          <div class="terms terms-inline"><?php print $terms; ?></div>
+        <?php endif; */ ?>
+
+        <div class="content">
+          <?php print $content; ?>
+        </div>
+      </div>
+  
+      <!-- Right column -->
+      <div class="grid-3 omega">
+        <div class="vote"><?php print $vote; ?></div>
+  
+        <div class="picture"><?php print $profile_picture; ?></div>
+  
+        <?php if ($profile_action_links): ?>
+          <div class="action-links">
+            <?php print $profile_action_links; ?>
+          </div>
+        <?php endif; ?>
+      </div>
+
+    </div> <!-- /.session-wrapper -->
+  
+    <?php if ($links): ?>
+      <div class="links">
+        <?php print $links; ?>
+      </div>
+    <?php endif; ?>
+  
   <?php endif; ?>
 
 </div>

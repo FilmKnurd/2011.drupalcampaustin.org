@@ -54,7 +54,7 @@
   <?php endif; ?>
 
   <?php if ($submitted): ?>
-    <span class="submitted"><?php print $submitted; ?></span>
+    <div class="submitted"><?php print $submitted; ?></div>
   <?php endif; ?>
 
   <div class="content">

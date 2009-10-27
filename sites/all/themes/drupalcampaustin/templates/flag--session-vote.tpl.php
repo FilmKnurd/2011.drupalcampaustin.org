@@ -36,15 +36,16 @@
  */
 
   if ($setup) {
-    drupal_add_css(drupal_get_path('module', 'flag') .'/theme/session-vote.css');
-//    drupal_add_js(drupal_get_path('module', 'flag') .'/theme/flag.js');
+    drupal_add_js(drupal_get_path('module', 'flag') .'/theme/flag.js');
   }
 ?>
-<span class="flag-wrapper flag-<?php echo $flag_name_css; ?>">
-  <a href="<?php echo $link_href; ?>" title="<?php echo $link_title; ?>" class="<?php print $flag_classes ?>"><?php echo $link_text; ?></a><span class="flag-throbber">&nbsp;</span>
-  <?php if ($after_flagging): ?>
-    <span class="flag-message flag-<?php echo $last_action; ?>-message">
-      <?php echo $message_text; ?>
-    </span>
-  <?php endif; ?>
-</span>
+<div class="flag-wrapper flag-<?php print $flag_name_css; ?> clearfix">
+  <div class="flag-link">
+    <a href="<?php print $link_href; ?>" title="<?php print $link_title; ?>" class="<?php print $flag_classes ?>"><?php print $link_text; ?></a>
+  </div>
+
+  <div class="flag-message flag-<?php print $last_action; ?>-message">
+    <div class="flag-throbber">&nbsp;</div>
+    <?php print $message_text; ?>
+  </div>
+</div>

@@ -49,7 +49,31 @@ ul.links li.last {
 
 
 
+#main-content .view-sessions .views-row {
+  margin-bottom: 10px;
+  }
 
+.session-teaser-wrapper {
+  padding-bottom: 10px;
+  border-bottom: 5px solid rgb(230,230,230); /* black 10% */
+  }
+  .session-teaser-wrapper .picture {
+    width: 60px;
+    float: left;
+    }
+  .session-teaser-wrapper .info {
+    margin-left: 70px;
+    }
+    .session-teaser-wrapper .info h2 {
+      margin-bottom: 5px;
+      }
+    #main-content .session-teaser-wrapper .submitted {
+      border: none;
+      margin-bottom: 0;
+      }
+  .session-teaser-wrapper .vote {
+    margin-bottom: 0;
+    }
 
 
 

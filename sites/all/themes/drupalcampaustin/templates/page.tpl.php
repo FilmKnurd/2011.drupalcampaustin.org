@@ -66,6 +66,8 @@
           </div> <!-- /#secondary-wrapper -->
         <?php endif; ?>
 
+          <?php print $messages; ?>
+
           <?php if ($title): ?>
             <h1 class="title" id="page-title"><?php print $title; ?></h1>
           <?php endif; ?>
@@ -74,7 +76,6 @@
             <div class="tabs"><?php print $tabs; ?></div>
           <?php endif; ?>
 
-          <?php print $messages; ?>
           <?php print $help; ?>
 
           <div id="main-content" class="clearfix">

@@ -129,10 +129,10 @@ h1 {
   font-size: 2.4em;
   }
 h2 {
-  font-size: 1.6em;
+  font-size: 1.8em;
   }
 h3 {
-  font-size: 1.3em;
+  font-size: 1.5em;
   }
 
 
@@ -151,6 +151,11 @@ h3 {
     font-size: 1.3em;
     line-height: 1.3em;
     margin-bottom: 1.3em;
+    }
+  #main-content ul ul,
+  #main-content ol ol {
+    font-size: 1em;
+    margin-bottom: 0;
     }
 
 /* -------------------------------------
@@ -493,16 +498,21 @@ tr.drag-previous {
 
 
 #secondary-wrapper {
-  font-size: 1.2em;
+  font-size: 1.4em;
   font-weight: bold;
-  background-color: pink;
+  margin: 5px 0 10px 0;
   }
-  #secondary-links {
-    }
-    #secondary-links ul.links {}    
-        #secondary-links ul.links li {}
-          #secondary-links ul.links li.active {}
-        #secondary-links ul.links li a {}     
+  #secondary-links ul.links {}    
+      #secondary-links ul.links li {
+        padding: 2px 5px;
+        }
+        #secondary-links ul.links li.active {
+          background-color: #639B15;
+          }
+        #secondary-links ul.links li a.active {
+          color: white;
+          }
+ 
 
 /* -------------------------------------
  * end Primary/secondary links
@@ -515,11 +525,11 @@ tr.drag-previous {
  * ------------------------------------- */
  
 #footer-wrapper { 
-  color: white;
+  color: #AB9A6E;
   font-size: 1.1em;
   }
   #footer-wrapper a {
-    color: #AB9A6E;
+    color: rgb(230,230,230); /* black 10% */
     }
 
 #footer-message {
@@ -919,7 +929,7 @@ h2.pane-title,
       .profile-sponsor .item-list ul li a {
         display: block;
         background: rgb(242,242,242); /* black 5% */
-        padding: 3px 5px 3px 20px;
+        padding: 3px 5px;
         text-decoration: none;
         }
       .profile-sponsor .item-list ul li a:hover {

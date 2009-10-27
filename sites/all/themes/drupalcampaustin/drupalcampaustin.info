@@ -12,6 +12,7 @@ stylesheets[all][] = styles/grid.css
 stylesheets[all][]   = styles/style.css
 stylesheets[all][] = styles/style-node.css
 stylesheets[all][] = styles/style-product.css
+stylesheets[all][] = styles/session-vote.css
 ; stylesheets[print][] = styles/style-print.css
 
 ; Regions

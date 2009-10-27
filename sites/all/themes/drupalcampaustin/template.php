@@ -168,9 +168,28 @@ function drupalcamp_preprocess_node_sponsor(&$vars, $node, $node_author) {
 }
 
 function drupalcamp_preprocess_node_session(&$vars, $node, $node_author) {
-  $vars['vote'] = flag_create_link('session_vote', $node->nid);
+  global $user;
+
+  if (drupalcampaustin_library_user_has_role('attendee', $user)) {
+    $vars['vote'] = flag_create_link('session_vote', $node->nid);
+  }
+  elseif ($user->uid != 0) {
+    $vars['vote'] = l('<img src="/' . path_to_theme() . '/images/session-vote-login.png" alt="Register to vote" />', 'products/drupalcamp-austin-2009-registration', array('html' => TRUE));
+  }
+  else {
+    $vars['vote'] = l('<img src="/' . path_to_theme() . '/images/session-vote-login.png" alt="Log in to vote" />', 'user/login', array('html' => TRUE));
+  }
+
+  if ($node->teaser) {
+    $vars['profile_picture'] = drupalcampaustin_profile_picture($node_author->profile, TRUE, 'user_picture_50x50');
+  }
+  else {
+    $vars['profile_picture'] = drupalcampaustin_profile_picture($node_author->profile);
+  }
+
   $vars['profile_action_links'] = drupalcampaustin_profile_action_links($node_author->profile);
-  $vars['profile_picture'] = drupalcampaustin_profile_picture($node_author->profile);
+
+//  krumo($vars);
 }
 
 function drupalcampaustin_preprocess_comment_wrapper(&$vars) {
@@ -254,6 +273,19 @@ function drupalcampaustin_profile_picture($profile_node, $linked = TRUE, $preset
   }
 
   return $picture;
+}
+
+function drupalcampaustin_preprocess_flag(&$vars) {
+  $flag = $vars['flag'];
+
+  if ($flag->name == 'session_vote') {
+    $image_file = path_to_theme() . '/images/session-vote-' . ($vars['action'] == 'flag' ? 'yes' : 'no') . '.png';
+    // Uncomment the following line when debugging.
+    // drupal_set_message("Flag is looking for '$image_file'...");
+    if (file_exists($image_file)) {
+      $vars['link_text'] = '<img src="' . base_path() . $image_file . '" alt="' . ($vars['action'] == 'flag' ? $flag->flag_short : $flag->unflag_short) . '" />';
+    }
+  }
 }
 
 function drupalcampaustin_profile_action_links($profile_node) {
