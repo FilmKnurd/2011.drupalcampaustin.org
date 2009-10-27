@@ -54,7 +54,7 @@
     <!-- Left column -->
     <div class="grid-7 alpha">
       <?php if ($roles): ?>
-        <div class="roles header">
+        <div class="header header-text">
           <?php print $roles; ?>
         </div>
       <?php endif; ?>

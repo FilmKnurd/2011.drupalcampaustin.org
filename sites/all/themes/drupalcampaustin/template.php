@@ -173,9 +173,87 @@ function drupalcamp_preprocess_node_session(&$vars, $node, $node_author) {
   $vars['profile_picture'] = drupalcampaustin_profile_picture($node_author->profile);
 }
 
-function drupalcampaustin_profile_picture($profile_node) {
+function drupalcampaustin_preprocess_comment_wrapper(&$vars) {
+  $node = $vars['node'];
+
+  $vars['comments_exist'] = FALSE;
+  if ($node->comment_count > 0) {
+    $vars['comments_exist'] = TRUE;
+  }
+}
+
+function drupalcampaustin_preprocess_comment(&$vars) {
+  global $user;
+  static $thread_number = 0;
+  static $thread_child_number = 0;
+  $node = $vars['node'];
+  $comment = $vars['comment'];
+  $comment_author = user_load($comment->uid);
+
+  /*
+   * Add comment classes
+   */
+
+  // Add some default classes
+  $comment_classes = array('comment', $vars['status']);
+
+  // Is this comment new?
+  if ($comment->new) {
+    $comment_classes[] = 'comment-new';
+  } 
+
+  // Is this comment unpublished?
+  if ($comment->status) {
+    $comment_classes[] = 'comment-unpublished';
+  } 
+
+  // Is this comment authored by the node's author?
+  if ($node->uid == $comment->uid) {  
+    $comment_classes[] = 'comment-author';
+  }
+
+  // Is this comment authored by the current user?
+  if ($user->uid == $comment->uid) {  
+    $comment_classes[] = 'comment-mine';
+  }
+
+  // Is this a top-level comment?
+  if ($comment->depth === 0) {
+    $thread_number++; // Increment thread number for color below
+    $comment_classes[] = 'comment-thread-top';
+    $thread_child_number = 0;
+  }
+  else {
+    $comment_classes[] = 'comment-thread-child';
+    $thread_child_number++; // Increment thread child number for even/odd striping
+    if ($thread_child_number % 2) {
+      $comment_classes[] = 'comment-thread-child-odd';
+    }
+    else {
+      $comment_classes[] = 'comment-thread-child-even';
+    }
+  }
+
+  $vars['profile_picture'] = drupalcampaustin_profile_picture($comment_author->profile, TRUE, 'user_picture_50x50');
+
+  $vars['comment_classes'] = implode(' ', $comment_classes);
+}
+
+function drupalcampaustin_profile_picture($profile_node, $linked = TRUE, $preset = NULL) {
   $profile_node_built = node_build_content($profile_node);
-  return drupal_render($profile_node_built->content['group_profile_personal']['group']['field_user_picture']['field']);
+
+  if (!empty($preset)) {
+    $picture = theme('imagecache', $preset, $profile_node_built->field_user_picture[0]['filepath']);
+  }
+  else {
+    $picture = drupal_render($profile_node_built->content['group_profile_personal']['group']['field_user_picture']['field']);
+  }
+
+  if ($linked) {
+    return l($picture, 'node/' . $profile_node->nid, array('html' => TRUE, 'attributes' => array('title' => t('View @name\'s profile', array('@name' => $profile_node->title)), 'rel' => 'nofollow')));
+  }
+
+  return $picture;
 }
 
 function drupalcampaustin_profile_action_links($profile_node) {
@@ -274,6 +352,17 @@ function drupalcampaustin_node_submitted($node) {
     array(
       '!username' => theme('username', $node),
       '@date' => format_date($node->created, 'custom', 'l, F jS, Y'),
+    ));
+}
+
+/**
+ * Override theme_comment_submitted().
+ */
+function drupalcampaustin_comment_submitted($comment) {
+  return t('!username | @date',
+    array(
+      '!username' => theme('username', $comment),
+      '@date' => format_date($comment->timestamp, 'custom', 'l, F jS, Y'),
     ));
 }
 

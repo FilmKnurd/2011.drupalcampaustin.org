@@ -26,29 +26,26 @@
  * @see theme_comment()
  */
 ?>
-<div class="comment<?php print ($comment->new) ? ' comment-new' : ''; print ' '. $status ?> clear-block">
-  <?php print $picture ?>
+<div class="<?php print $comment_classes; ?> clearfix">
 
-  <div class="meta">
-    <div class="submitted">
-      <span class="comment-author">
-        <?php print theme('username', $node); ?>
-       </span>
-       <span class="comment-timestamp">
-         <?php print format_date($comment->timestamp, 'custom', "F jS, Y"); ?>
-       </span>
-    </div>
-  
+  <div class="picture"><?php print $profile_picture; ?></div>
+
+  <div class="submitted">
     <?php if ($comment->new): ?>
-      <span class="new"><?php print $new ?></span>
+      <div class="new"><?php print $new; ?></div>
     <?php endif; ?>
-  </div>
 
-  <h3><?php print $title ?></h3>
+    <?php print $submitted; ?>
+  </div>
 
   <div class="content">
-    <?php print $content ?>
+    <?php print $content; ?>
   </div>
 
-  <?php print $links ?>
+  <?php if ($links): ?>
+    <div class="links">
+      <?php print $links; ?>
+    </div>
+  <?php endif; ?>
+
 </div>

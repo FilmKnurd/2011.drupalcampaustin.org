@@ -54,7 +54,7 @@
   <!-- Left column -->
   <div class="grid-7 alpha">
     <?php if ($sponsor_level): ?>
-      <div class="header">
+      <div class="header header-text">
         <?php print $sponsor_level; ?>
       </div>
     <?php endif; ?>

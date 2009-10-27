@@ -32,6 +32,8 @@
  */
 ?>
 <div id="comments">
-  <h2>Comments</h2>
+  <?php if ($comments_exist): ?>
+    <h2 id="comments-title">Comments</h2>
+  <?php endif; ?>
   <?php print $content; ?>
 </div>

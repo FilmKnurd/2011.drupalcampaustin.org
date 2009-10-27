@@ -54,7 +54,7 @@
     <!-- Left column -->
     <div class="grid-7 alpha">
       <?php if ($submitted): ?>
-        <span class="submitted"><?php print $submitted; ?></span>
+        <div class="submitted"><?php print $submitted; ?></div>
       <?php endif; ?>
 
       <?php if ($terms): ?>
@@ -68,7 +68,7 @@
 
     <!-- Right column -->
     <div class="grid-3 omega">
-      <?php print $vote; ?>
+      <div class="vote"><?php print $vote; ?></div>
 
       <div class="picture"><?php print $profile_picture; ?></div>
 

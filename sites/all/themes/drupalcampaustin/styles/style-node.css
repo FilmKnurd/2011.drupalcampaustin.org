@@ -1,90 +1,25 @@
-/* =====================================
- * Colors
- * -------------------------------------
-  
-   logo dark blue       rgb(65,110,146)
-   logo med blue        rgb(166,205,237)
-   logo green           rgb(105,169,97)
-   
-   green (light)        #639B15             Grass
-   green (dark)         #456E0C
-   
-   beige (heaer)        rgb(224,222,169)    #E0DEA9
-   
-   brown (light)        rgb(171,154,110)    #AB9A6E
-   brown (medium)       rgb(138,108,33)     #8A6C21
-   brown (dark)         rgb(73,59,34)       #493B22
-   
-   black 90%            rgb(26,26,26)
-   black 80%            rgb(51,51,51)       body text
-   black 70%            rgb(77,77,77)
-   black 60%            rgb(102,102,102)    body text (light)
-   black 50%            rgb(128,128,128)
-   black 40%            rgb(153,153,153)
-   black 30%            rgb(179,179,179)
-   black 20%            rgb(204,204,204)
-   black 10%            rgb(230,230,230)
-   black 5%             rgb(242,242,242)
-
-   -------------------------------------
-   Help, messages, and warnings
-   -------------------------------------
-   Help:
-     Blue border    -->   blue light
-     Blue BG        -->   blue xxlight
-
-   Status, success, OK:
-     Green border   -->   green light
-     Green BG       -->   green xxlight
-
-   Warning:
-     Yellow border  -->   yellow light
-     Yellow BG      -->   yellow xxlight
-
-   Error, fail:
-     Red border     -->   red light
-     Red BG         -->   red xxlight
-
- * -------------------------------------
- * end Colors
- * ===================================== */
-
-
 /* Styles for Nodes on Internal Pages Goes Here */
 
-/* Titles */
-
-#page-title {
-	background: #E0DEA9 none repeat scroll 0 0;
-	color: #8A6C21;
-	padding: 10px;
-	margin-bottom: 10px;
-}
-
-
-.profile h3 {
-	border-bottom:1px solid #8A6C21;
-	color: #8A6C21;
-}
-
-#sponsors {
-	padding-left: 20px;
-}
-
-#sponsors h2 {
-	color: #8A6C21;
-}
-
-#sponsors h3 {
-	font-size: 1.3em;
-	color: #69A961;
-}
-
-#sponsors li {
-	color: #777777;
-}
-
 /* General text of nodes */
+
+#main-content .content h2 {
+  color: #8A6C21;
+  font-size: 2em;
+  }
+
+#main-content .content h3 {
+  color: #69A961;
+  font-size: 1.5em;
+  }
+
+#main-content .submitted {
+  margin-bottom: 5px;
+  border-top: 1px solid rgb(204,204,204);
+  border-bottom: 1px solid rgb(204,204,204);
+  font-size: 1.1em;
+  line-height: 1.5em;
+  color: rgb(102,102,102);
+  }
 
 #main-content .content ul {
   list-style-type: disc;
@@ -92,108 +27,111 @@
   padding-left: 20px;
   }
 
-.page-node #main-content .content h2 {
-	color: #8A6C21;
-	font-size: 2em;
-	}
-
-.page-node #main-content .content h3 {
-	color: #69A961;
-	font-size: 1.5em;
-	}
-
-#main-content .submitted {
-  margin-bottom: 10px;
-  font-size: 1.1em;
-  color: rgb(102,102,102);
+#main-content div.links ul.links {
+  margin-bottom: 0;
+  font-size: 1.2em;
+  line-height: 1em;
   }
-  
-#main-content .links {}
+
+ul.links li {
+  margin-right: 10px;
+  padding: 0;
+  }
+ul.links li.last {
+  margin-right: 0;
+  }
+  ul.links li a {
+    }
 
 /*  End General text of nodes */
 
-/* Comments */
 
-#main-content #comments {
-  }
 
-.comment .submitted {
-  background-color: #D5EAD4;
-  border-top: 1px solid #639B15;
-  padding: 7px;
-  }
-  .comment-author {
-    font-weight: bold;
-    font-size: 1.2em;
-    }
-  .comment-timestamp {
-    float: right;
-    }
 
-.comment .new {
-  text-transform: uppercase;
-  background-color: rgb(213,234,212);
-  border: 1px solid #456E0C;
-  color: #456E0C;
-  padding: 0 2px;
-  margin-left: 5px;
-  font-size: 0.9em;
-  }
 
-/* End Comments */
 
+
+
+
+/* Titles */
+
+#page-title {
+  background: #E0DEA9 none repeat scroll 0 0;
+  color: #8A6C21;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+
+.profile h3 {
+  border-bottom:1px solid #8A6C21;
+  color: #8A6C21;
+}
+
+#sponsors {
+  padding-left: 20px;
+}
+
+#sponsors h2 {
+  color: #8A6C21;
+}
+
+#sponsors h3 {
+  font-size: 1.3em;
+  color: #69A961;
+}
+
+#sponsors li {
+  color: #777777;
+}
 
 
 #recommended {
-	background-color: #E0DEA9;
-	padding: 10px;
-	-moz-border-radius: 5px;
-	margin-bottom: 10px;
+  background-color: #E0DEA9;
+  padding: 10px;
+  -moz-border-radius: 5px;
+  margin-bottom: 10px;
 }
 
 #recommended a {
-	color: #8A6C21;
-	font-size: .9em;
-	font-weight: lighter;
+  color: #8A6C21;
+  font-size: .9em;
+  font-weight: lighter;
 }
 
 #refreshments {
-	background: rgb(166,205,237);
-	-moz-border-radius: 5px;
-	padding: 10px;
-	margin-bottom: 10px;
+  background: rgb(166,205,237);
+  -moz-border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
 }
 
 #refreshments p {
-	color: #333333;
-	font-size: 1.3em;
+  color: #333333;
+  font-size: 1.3em;
 }
- 
- 
+
+
 /*News Block*/
 
 #block-views-news-block_1, #news-front {
-	background: #eeeeee;
-	-moz-border-radius: 5px;
-	padding: 10px;
+  background: #eeeeee;
+  -moz-border-radius: 5px;
+  padding: 10px;
 }
  
 #block-views-news-block_1 a, #news-front a {
-	font-size: .9em;
+  font-size: .9em;
 }
 
 
 #edit-subject {
-	width: 385px;
+  width: 385px;
 }
 
 /*News Page*/
 
 .view view-news view-id-news view-display-id-page_1 view-dom-id-1 {
-	padding-left: 20px;
+  padding-left: 20px;
 }
-
-
- 
- 
  

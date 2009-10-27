@@ -503,17 +503,16 @@ tr.drag-previous {
         #secondary-links ul.links li {}
           #secondary-links ul.links li.active {}
         #secondary-links ul.links li a {}     
-    
-/*End Primary Menu Styling*/
-
 
 /* -------------------------------------
  * end Primary/secondary links
  * ===================================== */
 
-/* -------------------------------------
+
+
+/* =====================================
  * Footer links
- * ===================================== */
+ * ------------------------------------- */
  
 #footer-wrapper { 
   color: white;
@@ -542,6 +541,8 @@ tr.drag-previous {
  /* -------------------------------------
  * end Footer links
  * ===================================== */
+
+
 
 /* =====================================
  * Forms
@@ -693,19 +694,20 @@ div.maxlength-counter {
   text-align: right;
   }
 
-div.wysiwyg {
-  margin: 10px 0;
-  }
-  div.wysiwyg ul {
-    }
-    div.wysiwyg ul li {
-      margin-bottom: .25em;
-      }
-
 div.link-field-subrow {
   margin-bottom: 10px;
   padding-bottom: 10px;
   border-bottom: 1px solid #E0DEA9;
+  }
+
+#main-content ul.tips,
+#main-content .content ul.tips {
+  list-style-type: disc;
+  list-style-position: outside;
+  font-size: 1.1em;
+  line-height: 1.3em;
+  margin-bottom: 1em;
+  padding-left: 40px;
   }
 
 /* -------------------------------------
@@ -736,9 +738,9 @@ div.link-field-subrow {
     margin: 0 auto 5px auto;
     }
 
-/* =====================================
+/* -------------------------------------
  * End Sidebars
- * ------------------------------------- */
+ * ===================================== */
 
 
 
@@ -761,9 +763,9 @@ div.link-field-subrow {
     
   
 
-/* =====================================
+/* -------------------------------------
  * End Blocks
- * ------------------------------------- */
+ * ===================================== */
 
 
 
@@ -791,14 +793,16 @@ div.link-field-subrow {
 #main-content .views-row {
   margin-bottom: 20px;
   }
-  #main-content .panel-pane .views-row { /* Fix for Front page blocks w/ views */
-    margin-bottom: 10px;
+  #main-content .panel-pane .views-row {
+    margin-bottom: 10px; /* Fix for front page blocks w/ views */
+    }
+  #main-content #sidebar-2 .panel-pane .views-row {
+    margin-bottom: 0; /* Undo this for #sidebar-2 blocks */
     }
 
-
-/* =====================================
+/* -------------------------------------
  * End Views
- * ------------------------------------- */
+ * ===================================== */
 
 
 
@@ -876,9 +880,9 @@ h2.pane-title,
     font-size: 1.4em;
     }
 
-/* =====================================
+/* -------------------------------------
  * end Panels
- * ------------------------------------- */
+ * ===================================== */
 
 
 
@@ -890,13 +894,16 @@ h2.pane-title,
   }
 
   .profile-sponsor .header {
-    font-size: 1em;
+    border-top: 1px solid rgb(204,204,204); /* black 20% */
+    border-bottom: 1px solid rgb(204,204,204); /* black 20% */
+    font-size: 1.1em;
     line-height: 1.5em;
     text-transform: uppercase;
     letter-spacing: .1em;
-    color: rgb(102,102,102);
-    border-top: 1px solid rgb(204,204,204);
-    border-bottom: 1px solid rgb(204,204,204);
+    color: rgb(102,102,102); /* black 60%; body text (light) */
+    }
+  .profile-sponsor .header-text {
+    margin-bottom: 5px;
     }
 
   #main-content .profile-sponsor .item-list ul {
@@ -911,12 +918,12 @@ h2.pane-title,
       }
       .profile-sponsor .item-list ul li a {
         display: block;
-        background: rgb(242,242,242);
+        background: rgb(242,242,242); /* black 5% */
         padding: 3px 5px 3px 20px;
         text-decoration: none;
         }
       .profile-sponsor .item-list ul li a:hover {
-        background: rgb(230,230,230);
+        background: rgb(230,230,230); /* black 10% */
         }
 
   .profile-sponsor .link-columns .item-list ul {
@@ -924,13 +931,13 @@ h2.pane-title,
     }
     .profile-sponsor .link-columns .item-list ul li {
       float: left;
-      width: 195px;
       }
     .profile-sponsor .link-columns .item-list ul li.odd {
-      margin-right: 5px;
+      width: 199px;
+      margin-right: 1px;
       }
     .profile-sponsor .link-columns .item-list ul li.even {
-      margin-left: 5px;
+      width: 200px;
       }
 
   .profile-sponsor .picture {
@@ -938,26 +945,82 @@ h2.pane-title,
     .profile-sponsor .picture img {
       display: block;
       padding: 4px;
-      border: 1px solid rgb(204,204,204);
+      border: 1px solid rgb(204,204,204); /* black 20% */
       }
 
   .profile-wrapper {
     margin-bottom: 20px;
     }
 
-/* =====================================
+/* -------------------------------------
  * end User and sponsor profiles
- * ------------------------------------- */
+ * ===================================== */
 
 
 
 /* =====================================
- * Contact form
+ * Comments
  * ------------------------------------- */
- 
- #contact-form-info {
-   }
 
-/* =====================================
- * end Contact form
- * ------------------------------------- */
+#comments,
+#comment-form-wrapper {
+  margin-top: 20px;
+  }
+
+  h2#comments-title,
+  h3#comment-form-title {
+    font-size: 2.4em;
+    color: rgb(204,204,204);
+    }
+  h2#comments-title {
+    margin-bottom: 20px;
+    }
+
+  .comment {
+    margin-bottom: 20px;
+    }
+
+    .comment .picture {
+      float: left;
+      width: 60px;
+      }
+      .comment .picture img {
+        display: block;
+        padding: 4px;
+        border: 1px solid rgb(204,204,204); /* black 20% */
+        }
+
+    .comment .submitted {
+      }
+      .comment .submitted .new {
+        float: right;
+        font-size: 1.1em;
+        color: red;
+        text-transform: uppercase;
+        font-weight: bold;
+        letter-spacing: .05em;
+        }
+
+    .comment .submitted,
+    .comment .content,
+    .comment div.links {
+        margin-left: 70px; /* creates 10px margin between content and picture */
+        }
+
+    .comment div.links {
+      text-align: right;
+      }
+
+  .indented {
+    margin-left: 0;
+    padding-left: 20px;
+    border-left: 10px solid rgb(230,230,230); /* black 10% */
+    }
+  .indented .indented .indented .indented .indented .indented {
+    padding-left: 0;
+    border-left: none;
+    }
+
+/* -------------------------------------
+ * end Comments
+ * ===================================== */
