@@ -1,5 +1,5 @@
 <?php
-// $Id: emfield.module,v 1.12.4.44 2009/10/05 19:05:10 aaron Exp $
+// $Id: emfield.module,v 1.12.4.45 2009/10/20 17:11:48 aaron Exp $
 
 /**
  * @file
@@ -611,6 +611,7 @@ function emfield_views_handler_filter_is_not_null($op, $filter, $filterinfo, &$q
 
 /**
  * Create a list of providers.
+ *  @TODO: Is this legacy? Not sure if it's called, and seems specific to emvideo.
  */
 function emfield_views_handler_filter_provider_list($op) {
   $providers = array();
@@ -716,7 +717,7 @@ function emfield_provider_menus($module, $provider = NULL) {
   if ($provider && $submenus = emfield_include_invoke($module, $provider, 'submenu')) {
     $menus = $submenus;
   }
-  $providers = module_invoke('emfield', 'system_list', $module);
+  $providers = emfield_system_list($module);
 
   foreach ($providers as $provider) {
     if ($submenus = emfield_include_invoke($module, $provider->name, 'emfield_submenu')) {

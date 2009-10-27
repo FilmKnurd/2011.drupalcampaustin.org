@@ -1,5 +1,5 @@
 <?php
-// $Id: emfield.admin.inc,v 1.1.2.15 2009/09/24 21:28:54 aaron Exp $
+// $Id: emfield.admin.inc,v 1.1.2.16 2009/10/19 15:02:19 aaron Exp $
 
 /**
  * @file
@@ -30,6 +30,8 @@ function emfield_settings() {
   );
   if (module_exists('flvmediaplayer')) {
     $url = emfield_flvmediaplayer_url(TRUE);
+    $flvmediaplayer_configs = flvmediaplayer_profile_get_configs();
+    $flvmediaplayer_configs = (!empty($flvmediaplayer_configs)) ? $flvmediaplayer_configs : array();
     $form['general']['flvmediaplayer']['emfield_flvmediaplayer_url'] = array(
       '#type' => 'item',
       '#title' => t('JW FLV Media Player'),
@@ -38,7 +40,7 @@ function emfield_settings() {
     $form['general']['flvmediaplayer']['emfield_flv_profile'] = array(
       '#type' => 'select',
       '#title' => t('FLV Media Player Profile'),
-      '#options' => array('' => '') + flvmediaplayer_profile_get_configs(),
+      '#options' => array('' => t('-----')) + $flvmediaplayer_configs,
       '#description' => t('You may choose to display the FLV Media Player with a !profile, if configured.', array('!profile' => l(t('profile'), 'admin/settings/flvmediaplayer/profiles'))),
       '#default_value' => variable_get('emfield_flv_profile', ''),
     );

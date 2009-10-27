@@ -1,5 +1,5 @@
 <?php
-// $Id: emfield.cck.inc,v 1.1.2.28 2009/09/30 15:11:01 aaron Exp $
+// $Id: emfield.cck.inc,v 1.1.2.30 2009/10/20 17:10:46 aaron Exp $
 
 /**
  * @file
@@ -82,6 +82,14 @@ function _emfield_emfield_field($op, &$node, $field, &$items, $teaser, $page, $m
     case 'delete':
       break;
   }
+  // Allow other modules to modify the data before storing.
+  if (in_array($op, array('insert', 'update'))) {
+    foreach ($items as $delta => $item) {
+      // Invoke all modules implementing hook_emfield_data_alter(&$data),
+      // with the following parameters also sent.
+      drupal_alter('emfield_data', $items[$delta]['data'], $module, $delta, $node, $field, $items);
+    }
+  }
   // Allow modules (such as emthumb) to alter our data.
   foreach (module_implements('emfield_field_extra') as $module) {
     $args = array($op, &$node, $field, &$items, $teaser, $page, $module);
@@ -91,8 +99,8 @@ function _emfield_emfield_field($op, &$node, $field, &$items, $teaser, $page, $m
     }
   }
   if (in_array($op, array('insert', 'update'))) {
-    // We need to manually serialize the 'data' array.
     foreach ($items as $delta => $item) {
+      // We need to manually serialize the 'data' array.
       $items[$delta]['data'] = serialize($items[$delta]['data']);
     }
   }

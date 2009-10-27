@@ -1,9 +1,19 @@
-/* $Id: CHANGELOG.txt,v 1.1.2.6 2009/10/05 19:05:10 aaron Exp $ */
+/* $Id: CHANGELOG.txt,v 1.1.2.11 2009/10/20 17:12:16 aaron Exp $ */
 
 /**
  *  @file
  *  Changelog for Embedded Media Field (Drupal version 6).
  */
+
+by aaron: Document module-provided hooks.
+by aaron: Change legacy module_invoke to directly call internal funciton.
+#604524 by aaron | DamienMcKenna : Create new hook_emfield_data_alter(&$data).
+by aaron: Fix error/WSOD on admin screen if FLV Media Player module installed,
+  but no profiles have been created.
+
+================
+ DRUPAL-6--1-11
+================
 
 by aaron: Add generic theme for swfobject when that module not included.
 #592284 by aaron: Fix botched update for provider data import.

@@ -1,5 +1,5 @@
 <?php
-// $Id: bliptv.inc,v 1.1.2.17 2009/09/29 19:52:05 aaron Exp $
+// $Id: bliptv.inc,v 1.1.2.18 2009/10/19 19:45:15 aaron Exp $
 
 /**
  * @file
@@ -208,7 +208,15 @@ function emvideo_bliptv_duration($item) {
   return isset($item['data']['flv']['duration']) ? $item['data']['flv']['duration'] : 0;
 }
 
-function emvideo_bliptv_video_link($video_code) {
+/**
+ * hook emvideo_PROVIDER_embedded_link($video_code)
+ * returns a link to view the video at the provider's site.
+ *  @param $video_code
+ *    The string containing the video to watch.
+ *  @return
+ *    A string containing the URL to view the video at the original provider's site.
+ */
+function emvideo_bliptv_embedded_link($video_code) {
   return 'http://blip.tv/file/'. $video_code;
 }
 

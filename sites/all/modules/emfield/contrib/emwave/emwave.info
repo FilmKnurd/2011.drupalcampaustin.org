@@ -1,9 +1,10 @@
-; $Id: emthumb.info,v 1.1.4.6 2009/08/25 03:00:44 aaron Exp $
-name = Embedded Media Thumbnail
-description = Allows custom thumbnails for Embedded Media Fields.
+; $Id: emwave.info,v 1.1.2.1 2009/10/13 13:26:44 aaron Exp $
+name = Embedded Wave Field
+description = Defines a field type for displaying waves from third party providers, such as Google or ...
 dependencies[] = emfield
 package = CCK
 core = 6.x
+
 ; Information added by drupal.org packaging script on 2009-10-21
 version = "6.x-1.12"
 core = "6.x"

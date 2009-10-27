@@ -1,9 +1,20 @@
-/* $Id: CHANGELOG.txt,v 1.1.2.24 2009/10/05 19:05:10 aaron Exp $ */
+/* $Id: CHANGELOG.txt,v 1.1.2.30 2009/10/20 18:36:34 aaron Exp $ */
 
 /**
  *  @file
  *  Changelog for Embedded Video Field (emvideo).
  */
+
+#289722 by marcp | bonobo: Added Voicethread support.
+#600310 by apb1991: Added m4v Custom Videos.
+#280466 by cogapp_alx | pribeh: Fixed MY Vimeo Not Worky.
+by aaron: Add NOEMBED tag to default flv media player output for youtube.
+by aaron: Fix blip.tv link.
+by aaron: Add FLV Media Player support to custom url videos.
+
+================
+ DRUPAL-6--1-11
+================
 
 by aaron: Clean up youtube to send through emfield's swfobject theme by default.
 by aaron: Use all flashvars w/ flvmediaplayer fallback.

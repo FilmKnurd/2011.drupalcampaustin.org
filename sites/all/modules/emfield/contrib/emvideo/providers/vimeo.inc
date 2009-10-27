@@ -1,5 +1,5 @@
 <?php
-// $Id: vimeo.inc,v 1.1.2.9 2009/09/28 23:15:49 aaron Exp $
+// $Id: vimeo.inc,v 1.1.2.10 2009/10/20 18:19:15 aaron Exp $
 
 /**
  * @file
@@ -115,10 +115,11 @@ function emvideo_vimeo_settings() {
 function emvideo_vimeo_extract($embed = '') {
   // http://vimeo.com/123456
   // http://www.vimeo.com/123456
+  // http://vimeo.com/channels/hd#6912147
   //<object width="400" height="270"><param name="allowfullscreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="movie" value="http://vimeo.com/moogaloop.swf?clip_id=4106135&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1" /><embed src="http://vimeo.com/moogaloop.swf?clip_id=4106135&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=0&amp;color=&amp;fullscreen=1" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="400" height="270"></embed></object><br /><a href="http://vimeo.com/4106135">Two Knives One Motive</a> from <a href="http://vimeo.com/x351">Tyler Capehart</a> on <a href="http://vimeo.com">Vimeo</a>.
   return array(
     '@vimeo\.com/moogaloop\.swf\?clip_id\=([^\"\&]+)@i',
-    '@vimeo\.com/([^\"\&]+)@i',
+    '@vimeo\.com/[^\"\&\d]*([^\"\&]+)@i',
   );
 }
 

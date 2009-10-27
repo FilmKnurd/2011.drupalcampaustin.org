@@ -1,5 +1,5 @@
 <?php
-// $Id: youtube.inc,v 1.1.2.40 2009/10/05 19:05:10 aaron Exp $
+// $Id: youtube.inc,v 1.1.2.42 2009/10/20 13:35:43 aaron Exp $
 
 /**
  * @file
@@ -414,7 +414,7 @@ function theme_emvideo_youtube_flash($code, $width, $height, $autoplay, $options
       $flashvars = array();
 
       // Grab the thumbnail for this video and tell JW FLV Player about it.
-      $flashvars['image'] = theme('emvideo_video_thumbnail', NULL, $options['item'], 'emvideo_thumbnail', $options['node'], FALSE, $tn_options);
+      $flashvars['image'] = theme('emvideo_video_thumbnail', NULL, $options['item'], 'emvideo_thumbnail', $options['node'], TRUE, $tn_options);
 
       // Tell the FLV Player we're sending a YouTube video.
       $flashvars['type'] = 'youtube';
@@ -470,9 +470,15 @@ function theme_emvideo_youtube_flash($code, $width, $height, $autoplay, $options
       $output = theme('emfield_swfobject', $url, $params, $flashvars, $id);
     }
     else if ($use_flv) {
+      // We need to grab the thumbnail again for the NOEMBED option,
+      // for accessibility compliance.
+      // See http://www.w3.org/TR/WCAG10-HTML-TECHS/#text-equivs-multimedia.
+      unset($tn_options['return_url']);
+      $noembed = theme('emvideo_video_thumbnail', NULL, $options['item'], 'emvideo_thumbnail', $options['node'], TRUE, $tn_options);
+
       $flashvars = drupal_query_string_encode($flashvars);
       $output = <<<FLV
-        <div id="$div_id"><embed src="$url" width="$width" height="$height" allowscriptaccess="always" allowfullscreen="$fullscreen_value" flashvars="$flashvars" /></div>
+        <div id="$div_id"><embed src="$url" width="$width" height="$height" allowscriptaccess="always" allowfullscreen="$fullscreen_value" flashvars="$flashvars" /><NOEMBED>$noembed</NOEMBED></div>
 FLV;
     }
     else {
