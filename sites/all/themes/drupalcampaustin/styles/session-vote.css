@@ -1,6 +1,9 @@
 .vote {
   margin-bottom: 10px;
   }
+.session-teaser-wrapper .vote {
+  margin-bottom: 0;
+  }
 
   .vote img {
     display: block;
