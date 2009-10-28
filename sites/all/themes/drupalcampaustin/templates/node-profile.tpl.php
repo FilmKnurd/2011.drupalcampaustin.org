@@ -58,11 +58,11 @@
           <?php print $roles; ?>
         </div>
       <?php endif; ?>
-    
+
       <div class="content">
         <?php print $content; ?>
       </div>
-  
+
       <?php if ($profile_skills): ?>
         <div class="link-columns">
           <div class="header">Areas of interest</div>

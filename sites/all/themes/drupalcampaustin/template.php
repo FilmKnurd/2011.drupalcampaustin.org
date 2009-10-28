@@ -133,6 +133,12 @@ function drupalcamp_preprocess_node_profile(&$vars, $node, $node_author) {
   if (!empty($profile_skills)) {
     $vars['profile_skills'] = theme('item_list', $profile_skills);
   }
+
+  // Add a non-breaking space to content if it's empty
+  // Otherwise, the left column will collapse
+  if(empty($vars['content'])) {
+    $vars['content'] = '&nbsp;';
+  }
 }
 
 function drupalcamp_preprocess_node_sponsor(&$vars, $node, $node_author) {

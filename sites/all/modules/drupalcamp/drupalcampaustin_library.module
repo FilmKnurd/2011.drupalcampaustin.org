@@ -136,7 +136,7 @@ function drupalcampaustin_library_block_header_ribbon($user) {
         // node/2 == Product page
         // cart == Any shopping cart page
         if (($path != 'node/add/profile') && ($path != 'node/2') && (arg(0) != 'cart')) {
-          drupal_set_message(t('<strong>Don\'t forget to !register!</strong>', array('!register' => l(t('register to attend DrupalCamp Austin 2009'), 'products/drupalcamp-austin-2009-registration'), )));
+          drupal_set_message(t('<strong>Don\'t forget to !register!</strong>', array('!register' => l(t('register to attend DrupalCamp Austin 2009'), 'node/2'), )));
         }
       }
     }
@@ -254,14 +254,6 @@ function drupalcampaustin_library_user_has_role($role, $user = NULL) {
  */
 function drupalcampaustin_library_form_alter(&$form, $form_state, $form_id) {
 //  print $form_id;
-
-  // Content Profile wants to redirect the form to the user's account page.
-  // This has to be done here (instead of hook_form_FORM_ID_alter()) below
-  // because Content Profile uses form_alter(), which runs *after* the
-  // FORM_ID version.
-  if (($form_id == 'profile_node_form') && ($form['#action'] == '/node/add/profile')) {
-    $form['#redirect'] = 'products/drupalcamp-austin-2009-registration';
-  }
 }
 
 function drupalcampaustin_library_form_comment_form_alter(&$form, &$form_state) {
@@ -282,9 +274,9 @@ function drupalcampaustin_library_form_contact_mail_user_alter(&$form, &$form_st
 
 function drupalcampaustin_library_form_uc_cart_view_form_alter(&$form, &$form_state) {
   unset($form['update']);
-//  unset($form['items'][0]['remove']);
+  unset($form['items'][0]['remove']);
   unset($form['items'][0]['image']);
-//  unset($form['items']['#columns']['remove']);
+  unset($form['items']['#columns']['remove']);
   unset($form['items']['#columns']['image']);
 
   $form['items']['#columns']['desc']['cell'] = 'Description';
