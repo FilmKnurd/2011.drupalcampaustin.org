@@ -52,7 +52,7 @@ function drupalcampaustin_library_block_header_links($user) {
     $links[] = l(t('My account'), 'user/' . $user->uid);
 
     // Has the user created a profile page?
-    if (!empty($user->profile)) {
+    if ($user->has_profile) {
       // See drupal_get_destination() if we want to add a destination query
       // http://api.drupal.org/api/function/drupal_get_destination/6
       $links[] = l(t('My profile page'), 'node/' . $user->profile->nid);
@@ -61,10 +61,12 @@ function drupalcampaustin_library_block_header_links($user) {
       $links[] = l(t('Create my profile page'), 'node/add/profile');
     }
 
-    // Add a "cart" link if the user is mid-checkout
-    $cart = uc_cart_get_contents();
-    if (!empty($cart)) {
-      $links[] = l(t('My cart'), 'cart');
+    if (!$user->has_registered) {
+      // Add a "cart" link if the user is mid-checkout
+      $cart = uc_cart_get_contents();
+      if (!empty($cart)) {
+        $links[] = l(t('My cart'), 'cart');
+      }
     }
 
     $links[] = l(t('Log out'), 'logout');
@@ -95,46 +97,32 @@ function drupalcampaustin_library_block_header_ribbon($user) {
   // Is the user logged in?
   if ($user->uid != 0) {
 
-    // See all to FALSE
-    $profile_exists = FALSE;
-    $registered = FALSE;
-    // Has the user created a profile page?
-    if (!empty($user->profile)) {
-      $profile_exists = TRUE;
-    }
-    // Has the user registered?
-    if (drupalcampaustin_library_user_has_role('attendee', $user)) {
-      $registered = TRUE;
-    }
-
     // Has the user finished everything?
-    if ($profile_exists && $registered) {
-      $output .= '<img src="' . $path . 'header-ribbon-done.png" class="steps" alt="You\'re done!" />';
+    if ($user->has_profile && $user->has_registered) {
+      $output .= '<img src="' . $path . 'header-ribbon-done.png" class="steps" alt="' . t("You're done!") . '" />';
     }
     else {
-      $output .= '<img src="' . $path . 'header-ribbon-step1-done.png" class="steps" alt="Create account: Done!" />';
+      $output .= '<img src="' . $path . 'header-ribbon-step1-done.png" class="steps" alt="' . t('Create account: Done!') . '" />';
 
       // Has the user created a profile page?
-      if ($profile_exists) {
-        $output .= '<img src="' . $path . 'header-ribbon-step2-done.png" class="steps" alt="Create profile: Done!" />';
+      if ($user->has_profile) {
+        $output .= '<img src="' . $path . 'header-ribbon-step2-done.png" class="steps" alt="' . t('Create profile: Done!') . '" />';
       }
       else {
-        $output .= '<a href="/node/add/profile" title="Create profile"><img src="' . $path . 'header-ribbon-step2.png" class="steps" alt="Create profile" /></a>';
+        $output .= l('<img src="' . $path . 'header-ribbon-step2.png" class="steps" alt="' . t('Create profile') . '" />', 'node/add/profile', array('html' => TRUE, 'attributes' => array('title' => t('Create profile'))));
       }
 
       // Has the user registered?
-      if ($registered) {
-        $output .= '<img src="' . $path . 'header-ribbon-step3-done.png" alt="Registration: Done!" />';
+      if ($user->has_registered) {
+        $output .= '<img src="' . $path . 'header-ribbon-step3-done.png" alt="' . t('Registration: Done!') . '" />';
       }
       else {
-        $output .= '<a href="/products/drupalcamp-austin-2009-registration" title="Register"><img src="' . $path . 'header-ribbon-step3.png" alt="Register" /></a>';
+        $output .= l('<img src="' . $path . 'header-ribbon-step3.png" alt="' . t('Register') . '" />', 'node/2', array('html' => TRUE, 'attributes' => array('title' => t('Register'))));
         
         // Add a persistent message reminding users to register
-        $path = $_GET['q'];
-
-        // Show a helpful reminder message on most pages
         // node/2 == Product page
         // cart == Any shopping cart page
+        $path = $_GET['q'];
         if (($path != 'node/add/profile') && ($path != 'node/2') && (arg(0) != 'cart')) {
           drupal_set_message(t('<strong>Don\'t forget to !register!</strong>', array('!register' => l(t('register to attend DrupalCamp Austin 2009'), 'node/2'), )));
         }
@@ -142,7 +130,7 @@ function drupalcampaustin_library_block_header_ribbon($user) {
     }
   }
   else {
-    $output .= '<a href="/user/register" title="Register"><img src="' . $path . 'header-ribbon-register.png" alt="Register" /></a>';
+    $output .= l('<img src="' . $path . 'header-ribbon-register.png" class="steps" alt="' . t('Register') . '" />', 'user/register', array('html' => TRUE, 'attributes' => array('title' => t('Register'))));
   }
 
   $output .= '</div>';
@@ -180,15 +168,32 @@ function drupalcampaustin_library_user($op, &$edit, &$account, $category = NULL)
   switch ($op) {
     case 'load':
       $account->profile = drupalcampaustin_library_user_profile($account->uid);
+
+      // Has the user created a profile page?
+      if (!empty($account->profile)) {
+        $account->has_profile = TRUE;
+      }
+      else {
+        $account->has_profile = FALSE;
+      }
+
+      // Has the user registered?
+      if (drupalcampaustin_library_user_has_role('attendee', $account)) {
+        $account->has_registered = TRUE;
+      }
+      else {
+        $account->has_registered = FALSE;
+      }
       break;
 
     case 'view':
+      global $user;
       $account->content['summary']['#title'] = t('Account summary');
       $account->content['summary']['#weight'] = -10;
       $account->content['summary']['user_profile'] = array(
         '#type' => 'user_profile_item',
         '#title' => t('Profile page'),
-        '#value' => drupalcampaustin_library_user_account_page($account->uid),
+        '#value' => drupalcampaustin_library_user_account_page($account, $user),
       );
       break;
   }
@@ -202,25 +207,22 @@ function drupalcampaustin_library_user_profile($uid) {
   return NULL;
 }
 
-function drupalcampaustin_library_user_account_page($uid) {
-  global $user;
-
-  $profile = drupalcampaustin_library_user_profile($uid);
+function drupalcampaustin_library_user_account_page($user, $current_user) {
   $output = '';
 
   // Is the user viewing his/her own account page?
-  if ($user->uid == $uid) {
-    if (!empty($profile)) {
-      $output = l(t('View my profile page'), 'node/' . $profile->nid);
+  if ($user->uid == $current_user->uid) {
+    if ($user->has_profile) {
+      $output = l(t('View my profile page'), 'node/' . $user->profile->nid);
       $output .= '<br />';
-      $output .= l(t('Edit my profile page'), 'node/' . $profile->nid . '/edit');
+      $output .= l(t('Edit my profile page'), 'node/' . $user->profile->nid . '/edit');
     }
     else {
       $output = l(t('Create my profile page'), 'node/add/profile');
     }
   }
-  elseif (!empty($profile)) {
-    $output = l(t('Go to this user\'s profile page'), 'node/' . $profile->nid);
+  elseif ($user->has_profile) {
+    $output = l(t('Go to this user\'s profile page'), 'node/' . $user->profile->nid);
   }
   else {
     $output = t('This user has not created a profile page');

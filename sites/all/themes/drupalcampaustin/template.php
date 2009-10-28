@@ -294,10 +294,17 @@ function drupalcampaustin_preprocess_flag(&$vars) {
 
 function drupalcampaustin_profile_action_links($profile_node) {
   $profile_action_links = array();
-  if(arg(1) != $profile_node->nid) {
+
+  if (drupalcampaustin_library_user_has_role('admin')) {
+    $profile_action_links[] = l(t('View account'), 'user/' . $profile_node->uid, array('attributes' => array('title' => t('View @name\'s account', array('@name' => $profile_node->title)))));
+  }
+
+  if (arg(1) != $profile_node->nid) {
     $profile_action_links[] = l(t('View profile'), 'node/' . $profile_node->nid, array('attributes' => array('title' => t('View @name\'s profile', array('@name' => $profile_node->title)))));
   }
+
   $profile_action_links[] = l(t('Contact'), 'user/' . $profile_node->uid . '/contact', array('attributes' => array('title' => t('Contact @name', array('@name' => $profile_node->title)))));
+
   return theme('item_list', $profile_action_links);
 }
 
