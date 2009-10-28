@@ -152,10 +152,10 @@ function drupalcampaustin_library_block_header_ribbon($user) {
 
 function drupalcampaustin_library_block_user_stats($user) {
   $display_views = array(
-    'users_registered',
-    'users_registered_free',
-    'users_vegetarian',
-    'users_vegan',
+    'internal_users_registered',
+    'internal_users_registered_free',
+    'internal_users_vegetarian',
+    'internal_users_vegan',
   );
 
   $output = array();
