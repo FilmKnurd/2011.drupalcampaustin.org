@@ -1119,10 +1119,17 @@ h2.pane-title,
       background-color: #A6CDED;
       }
 
-    .schedule-table th.col1, .schedule-table td.col1 {
-      width: 100px;
+    .schedule-table th.col1, .schedule-table td.col1 { /* First column */
+      width: 20%;
       border-left: none;
       }
+     .schedule-table th.col2, .schedule-table td.col2 { /* Second column */
+        width: 40%;
+      }
+     .schedule-table th.col3, .schedule-table td.col3 { /* Third column */
+        width: 40%;
+      }
+     
 /* -------------------------------------
  * End Schedule table style
  * ===================================== */
