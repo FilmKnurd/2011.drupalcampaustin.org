@@ -358,8 +358,8 @@ function drupalcampaustin_username($object) {
 
     // BEGIN CUSTOMIZATIONS
     $user = user_load($object->uid);
-    if (!empty($user->profile)) {
-      $output = l($name, 'node/'. $user->profile->nid, array('attributes' => array('title' => t('View @name\'s profile', array('@name' => $user->profile->title)))));
+    if ($user->has_profile) {
+      $output = l($user->profile->title, 'node/'. $user->profile->nid, array('attributes' => array('title' => t('View @name\'s profile', array('@name' => $user->profile->title)))));
     }
     // END CUSTOMIZATIONS
     else {
