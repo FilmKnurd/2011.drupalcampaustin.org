@@ -1133,3 +1133,28 @@ h2.pane-title,
 /* -------------------------------------
  * End Schedule table style
  * ===================================== */
+
+/* -------------------------------------
+ * Ubercart style
+ * ===================================== */
+ 
+#cart-form-pane {
+  font-size: 1.4em;
+  }
+  #cart-form-products th, #cart-form-products td {
+    padding: 10px;
+    }
+  #cart-form-buttons {
+    border: none;
+    }
+    #cart-form-buttons .form-submit {
+      margin-right: 0;
+      }
+      
+table.uc-order-history th, table.uc-order-history td {
+  padding: 5px;
+  }
+  
+  /* -------------------------------------
+ * End Ubercart style
+ * ===================================== */
