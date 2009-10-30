@@ -49,7 +49,7 @@
 
 <div id="node-<?php print $node->nid; ?>" class="<?php print $node_classes; ?> clearfix">
 
-  <div class="profile-wrapper clearfix">
+  <div class="profile-wrapper profile-style clearfix">
 
     <!-- Left column -->
     <div class="grid-7 alpha">

@@ -56,15 +56,12 @@ function drupalcampaustin_preprocess_node(&$vars) {
 
   switch ($node->type) {
     case 'profile':
-      $node_classes[] = 'profile-sponsor';
       drupalcamp_preprocess_node_profile($vars, $node, $node_author);
       break;
     case 'sponsor':
-      $node_classes[] = 'profile-sponsor';
       drupalcamp_preprocess_node_sponsor($vars, $node, $node_author);
       break;
     case 'session':
-      $node_classes[] = 'profile-sponsor';
       drupalcamp_preprocess_node_session($vars, $node, $node_author);
       break;
     default:

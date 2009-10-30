@@ -940,13 +940,13 @@ h2.pane-title,
 
 
 /* =====================================
- * User and sponsor profiles
+ * Profile, sponsor, and session styles
  * ------------------------------------- */
  
-.profile-sponsor {
+.profile-style {
   }
 
-  .profile-sponsor .header {
+  .profile-style .header {
     border-top: 1px solid rgb(204,204,204); /* black 20% */
     border-bottom: 1px solid rgb(204,204,204); /* black 20% */
     font-size: 1.1em;
@@ -955,47 +955,47 @@ h2.pane-title,
     letter-spacing: .1em;
     color: rgb(102,102,102); /* black 60%; body text (light) */
     }
-  .profile-sponsor .header-text {
+  .profile-style .header-text {
     margin-bottom: 5px;
     }
 
-  #main-content .profile-sponsor .item-list ul {
+  #main-content .profile-style .item-list ul {
     font-size: 1.2em;
     line-height: 1.2em;
     }
 
-    .profile-sponsor .item-list ul li {
+    .profile-style .item-list ul li {
       list-style: none;
       margin: 1px 0 0 0;
       padding-left: 0;
       }
-      .profile-sponsor .item-list ul li a {
+      .profile-style .item-list ul li a {
         display: block;
         background: rgb(242,242,242); /* black 5% */
         padding: 3px 5px;
         text-decoration: none;
         }
-      .profile-sponsor .item-list ul li a:hover {
+      .profile-style .item-list ul li a:hover {
         background: rgb(230,230,230); /* black 10% */
         }
 
-  .profile-sponsor .link-columns .item-list ul {
+  .profile-style .link-columns .item-list ul {
     float: left;
     }
-    .profile-sponsor .link-columns .item-list ul li {
+    .profile-style .link-columns .item-list ul li {
       float: left;
       }
-    .profile-sponsor .link-columns .item-list ul li.odd {
+    .profile-style .link-columns .item-list ul li.odd {
       width: 199px;
       margin-right: 1px;
       }
-    .profile-sponsor .link-columns .item-list ul li.even {
+    .profile-style .link-columns .item-list ul li.even {
       width: 200px;
       }
 
-  .profile-sponsor .picture {
+  .profile-style .picture {
     }
-    .profile-sponsor .picture img {
+    .profile-style .picture img {
       display: block;
       padding: 4px;
       border: 1px solid rgb(204,204,204); /* black 20% */
@@ -1006,7 +1006,7 @@ h2.pane-title,
     }
 
 /* -------------------------------------
- * end User and sponsor profiles
+ * end Profile, sponsor, and session
  * ===================================== */
 
 

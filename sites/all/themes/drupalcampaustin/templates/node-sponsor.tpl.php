@@ -51,7 +51,7 @@
   <div id="node-<?php print $node->nid; ?>" class="<?php print $node_classes; ?> clearfix">
 <?php endif; /* if (!$teaser) */ ?>
 
-  <div class="sponsor-wrapper clearfix">
+  <div class="sponsor-wrapper profile-style clearfix">
 
     <!-- Left column -->
     <div class="grid-7 alpha">

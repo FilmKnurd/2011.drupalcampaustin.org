@@ -51,7 +51,7 @@
 
   <?php if ($teaser): ?>
 
-    <div class="session-teaser-wrapper clearfix">
+    <div class="session-teaser-wrapper profile-style clearfix">
 
       <!-- Left column -->
       <div class="grid-7 alpha">
@@ -72,7 +72,7 @@
 
   <?php else: ?>
 
-    <div class="session-wrapper clearfix">
+    <div class="session-wrapper profile-style clearfix">
 
       <!-- Left column -->
       <div class="grid-7 alpha">
