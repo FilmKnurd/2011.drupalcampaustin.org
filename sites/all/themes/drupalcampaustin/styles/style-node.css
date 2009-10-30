@@ -84,26 +84,6 @@ ul.links li.last {
 }
 
 
-.profile h3 {
-  border-bottom:1px solid #8A6C21;
-  color: #8A6C21;
-}
-
-
-#sponsors h2 {
-  color: #8A6C21;
-}
-
-#sponsors h3 {
-  font-size: 1.3em;
-  color: #69A961;
-}
-
-#sponsors li {
-  color: #777777;
-}
-
-
 #recommended {
   background-color: #E0DEA9;
   padding: 10px;
