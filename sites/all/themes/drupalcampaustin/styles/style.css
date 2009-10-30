@@ -121,12 +121,11 @@ a {
     text-decoration: underline;
     }
 
-h2, h3, h4 {
-  margin-bottom: 10px;
-}
-
 h1 {
   font-size: 2.4em;
+  }
+h2, h3, h4, h5, h6 {
+  margin-bottom: 10px;
   }
 h2 {
   font-size: 1.8em;
@@ -136,7 +135,16 @@ h3 {
   font-size: 1.5em;
   color: #69A961;
   }
+h4 {
+  font-size: 1.25em;
+  }
 
+h1#page-title {
+  background: #E0DEA9 none repeat scroll 0 0;
+  color: #8A6C21;
+  padding: 10px;
+  margin-bottom: 10px;
+  }
 
 .text-standard {
   font-size: 1.3em;
@@ -270,7 +278,6 @@ body {
       padding-top: 25px;
       background: #493B22 url(../images/footer-bg.png) top left repeat-x;
       }
-
 
 /* -------------------------------------
  * end Global styles
@@ -757,6 +764,57 @@ div.link-field-subrow {
 
 
 /* =====================================
+ * Nodes
+ * ------------------------------------- */
+
+#main-content .content h2 {
+  color: #8A6C21;
+  font-size: 2em;
+  }
+
+#main-content .content h3 {
+  color: #69A961;
+  font-size: 1.5em;
+  }
+
+#main-content .submitted {
+  margin-bottom: 5px;
+  border-top: 1px solid rgb(204,204,204);
+  border-bottom: 1px solid rgb(204,204,204);
+  font-size: 1.1em;
+  line-height: 1.5em;
+  color: rgb(102,102,102);
+  }
+
+#main-content .content ul {
+  list-style-type: disc;
+  list-style-position: outside;
+  padding-left: 20px;
+  }
+
+#main-content div.links ul.links {
+  margin-bottom: 0;
+  font-size: 1.2em;
+  line-height: 1em;
+  }
+
+ul.links li {
+  margin-right: 10px;
+  padding: 0;
+  }
+ul.links li.last {
+  margin-right: 0;
+  }
+  ul.links li a {
+    }
+
+/* -------------------------------------
+ * End Nodes
+ * ===================================== */
+
+
+
+/* =====================================
  * Blocks
  * ------------------------------------- */
 
@@ -772,8 +830,41 @@ div.link-field-subrow {
   #sidebar-1 .block {
     margin-bottom: 10px;
     }
-    
-  
+
+#recommended {
+  background-color: #E0DEA9;
+  padding: 10px;
+  -moz-border-radius: 5px;
+  margin-bottom: 10px;
+  }
+  #recommended a {
+    color: #8A6C21;
+    font-size: .9em;
+    font-weight: lighter;
+    }
+
+#refreshments {
+  background: rgb(166,205,237);
+  -moz-border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  }
+  #refreshments p {
+    color: #333333;
+    font-size: 1.3em;
+    }
+
+/* News block */
+#block-views-news-block_1,
+#news-front {
+  background: #eeeeee;
+  -moz-border-radius: 5px;
+  padding: 10px;
+  }
+  #block-views-news-block_1 a,
+  #news-front a {
+    font-size: .9em;
+    }
 
 /* -------------------------------------
  * End Blocks
@@ -812,15 +903,6 @@ div.link-field-subrow {
     margin-bottom: 0; /* Undo this for #sidebar-2 blocks */
     }
 
-/*
-.view-header, .view-footer {
-  font-size: 1.2em;
-  }
-.view-header a, .view-footer a {
-  font-weight: bold;
-  }
-*/
-
 /* Photo mosaic of all registered users */
 .view-users-registered {
   }
@@ -856,6 +938,30 @@ div.link-field-subrow {
         .view-users-registered .profile-link a:hover {
           background: rgb(230,230,230); /* black 10% */
           }
+
+/* Session list */
+#main-content .view-sessions .views-row {
+  margin-bottom: 10px;
+  }
+
+.session-teaser-wrapper {
+  padding-bottom: 10px;
+  border-bottom: 5px solid rgb(230,230,230); /* black 10% */
+  }
+  .session-teaser-wrapper .picture {
+    width: 60px;
+    float: left;
+    }
+  .session-teaser-wrapper .info {
+    margin-left: 70px;
+    }
+    .session-teaser-wrapper .info h2 {
+      margin-bottom: 5px;
+      }
+    #main-content .session-teaser-wrapper .submitted {
+      border: none;
+      margin-bottom: 0;
+      }
 
 /* -------------------------------------
  * End Views
@@ -1082,9 +1188,11 @@ h2.pane-title,
  * end Comments
  * ===================================== */
 
-/* -------------------------------------
+
+
+/* =====================================
  * Schedule table style
- * ===================================== */
+ * ------------------------------------- */
  
 .schedule-table {
   width: 100%;
@@ -1092,28 +1200,19 @@ h2.pane-title,
   border-top: 1px solid #CCC;
   margin-bottom: 20px;
   }
-.schedule-table tbody {}
-  .schedule-table tr {}
+  .schedule-table thead {
+    }
+  .schedule-table tbody {
+    }
 
-    .schedule-table th, .schedule-table td {
-      padding: 10px 5px;
-      border-left: 1px solid #CCC;
-      text-align: center;
+    .schedule-table tr {
       }
 
-    .schedule-table th {}
-    .schedule-table td {}
-    
-      .schedule-table tr.odd {
-        background-color: #FFF;
-        }
-      .schedule-table tr.even {
-        background-color: rgb(213,234,212);
-        }
-    
-    .schedule-table tr.row-tracks th,
-    .schedule-table tr.row-rooms th {
-      padding: 5px;
+    .schedule-table tr.odd {
+      background-color: #FFF;
+      }
+    .schedule-table tr.even {
+      background-color: rgb(213,234,212);
       }
     
     .schedule-table tr.row-tracks {
@@ -1124,24 +1223,42 @@ h2.pane-title,
       background-color: #A6CDED;
       }
 
-    .schedule-table th.col1, .schedule-table td.col1 { /* First column */
-      width: 20%;
-      border-left: none;
-      }
-     .schedule-table th.col2, .schedule-table td.col2 { /* Second column */
-        width: 40%;
-      }
-     .schedule-table th.col3, .schedule-table td.col3 { /* Third column */
-        width: 40%;
-      }
-     
+      .schedule-table th,
+      .schedule-table td {
+        padding: 10px 5px;
+        border-left: 1px solid #CCC;
+        text-align: center;
+        }
+      .schedule-table th {
+        }
+      .schedule-table td {
+        }
+
+      .schedule-table tr.row-tracks th,
+      .schedule-table tr.row-rooms th {
+        padding: 5px;
+        }
+
+      .schedule-table th.col1, .schedule-table td.col1 { /* First column */
+        width: 20%;
+        border-left: none;
+        }
+       .schedule-table th.col2, .schedule-table td.col2 { /* Second column */
+          width: 40%;
+        }
+       .schedule-table th.col3, .schedule-table td.col3 { /* Third column */
+          width: 40%;
+        }
+
 /* -------------------------------------
  * End Schedule table style
  * ===================================== */
 
-/* -------------------------------------
- * Ubercart style
- * ===================================== */
+
+
+/* =====================================
+ * Schedule Ubercart
+ * ------------------------------------- */
  
 #cart-form-pane {
   font-size: 1.4em;
@@ -1160,6 +1277,6 @@ table.uc-order-history th, table.uc-order-history td {
   padding: 5px;
   }
   
-  /* -------------------------------------
+/* -------------------------------------
  * End Ubercart style
  * ===================================== */

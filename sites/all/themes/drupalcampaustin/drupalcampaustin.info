@@ -1,7 +1,6 @@
 name        = DrupalCamp Austin
-description = DrupalCamp Austin for Drupal 6
+description = Custom theme for DrupalCamp Austin 2009
 screenshot  = drupalcampaustin-preview.png
-version     = 0.0 dev
 core        = 6.x
 engine      = phptemplate
 
@@ -9,7 +8,6 @@ engine      = phptemplate
 stylesheets[all][] = styles/reset.css
 stylesheets[all][] = styles/grid.css
 stylesheets[all][] = styles/style.css
-stylesheets[all][] = styles/style-node.css
 stylesheets[all][] = styles/session-vote.css
 
 ; Stylesheets: Print
@@ -20,17 +18,16 @@ regions[sidebar_1]     = "Sidebar 1"
 regions[sidebar_2]     = "Sidebar 2"
 regions[content]       = "Content"
 regions[header]        = "Header"
-;regions[header_ribbon] = "Header: Ribbon"
 
 ; Features (enabled)
 features[] = name
 features[] = slogan
-features[] = breadcrumb
 features[] = favicon
-features[] = search
 features[] = primary_links
 
 ; Features (disabled)
+; features[] = breadcrumb
+; features[] = search
 ; features[] = node_user_picture
 ; features[] = comment_user_picture
 ; features[] = secondary_links
