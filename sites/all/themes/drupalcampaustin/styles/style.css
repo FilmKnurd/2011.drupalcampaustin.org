@@ -812,12 +812,14 @@ div.link-field-subrow {
     margin-bottom: 0; /* Undo this for #sidebar-2 blocks */
     }
 
+/*
 .view-header, .view-footer {
   font-size: 1.2em;
   }
 .view-header a, .view-footer a {
   font-weight: bold;
   }
+*/
 
 /* Photo mosaic of all registered users */
 .view-users-registered {
