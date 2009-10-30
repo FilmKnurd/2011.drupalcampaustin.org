@@ -91,14 +91,8 @@
 
   </div> <!-- /.profile-wrapper -->
 
-
-  <!-- Sponsor area -->
-  <?php if ($field_profile_sponsor_rendered): ?>
-    <div class="sponsor-wrapper clearfix">
-      <?php print $field_profile_sponsor_rendered; ?>
-    </div> <!-- /.sponsor-wrapper -->
-  <?php endif; ?>
-
+  <!-- Sponsor -->
+  <?php print $field_profile_sponsor_rendered; ?>
 
   <?php if ($links): ?>
     <div class="links">
