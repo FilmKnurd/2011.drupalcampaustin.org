@@ -122,9 +122,20 @@ function drupalcamp_preprocess_node_profile(&$vars, $node, $node_author) {
 
   // Build a list of skills (areas of interest)
   $profile_skills = array();
+//  krumo($vars['field_profile_skills']);
   if ($vars['field_profile_skills'][0]['view']) {
     foreach ($vars['field_profile_skills'] as $skill) {
-      $profile_skills[] = l($skill['view'], 'directory/interest-area/' . $skill['value']);
+      $skill_path = $skill['view'];
+      $synonyms = taxonomy_get_synonyms($skill['value']);
+      if (!empty($synonyms)) {
+        $skill_path = $synonyms[0];
+      }
+      else {
+        $skill_path = str_replace(' ', '-', $skill_path);
+        $skill_path = str_replace('/', '-', $skill_path);
+        $skill_path = strtolower($skill_path);
+      }
+      $profile_skills[] = l($skill['view'], 'attendees/interest/' . $skill_path);
     }
   }
   if (!empty($profile_skills)) {
