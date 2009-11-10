@@ -142,6 +142,7 @@ function drupalcampaustin_library_block_user_stats($user) {
   $display_views = array(
     'internal_users_registered',
     'internal_users_registered_free',
+    'internal_users_unregistered',
     'internal_users_vegetarian',
     'internal_users_vegan',
   );
