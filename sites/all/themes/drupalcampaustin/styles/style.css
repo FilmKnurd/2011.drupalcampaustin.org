@@ -1199,15 +1199,8 @@ h2.pane-title,
   font-size: 1.2em;
   border-top: 1px solid #CCC;
   margin-bottom: 20px;
+  line-height: 1.2em;
   }
-  .schedule-table thead {
-    }
-  .schedule-table tbody {
-    }
-
-    .schedule-table tr {
-      }
-
     .schedule-table tr.odd {
       background-color: #FFF;
       }
@@ -1228,10 +1221,6 @@ h2.pane-title,
         padding: 10px 5px;
         border-left: 1px solid #CCC;
         text-align: center;
-        }
-      .schedule-table th {
-        }
-      .schedule-table td {
         }
 
       .schedule-table tr.row-tracks th,
