@@ -168,7 +168,9 @@ h1#page-title {
     margin-bottom: 1.3em;
     }
   #main-content ul ul,
-  #main-content ol ol {
+  #main-content ol ol,
+  #main-content ul ol,
+  #main-content ol ul {
     font-size: 1em;
     margin-bottom: 0;
     }
@@ -770,6 +772,54 @@ div.link-field-subrow {
 /* =====================================
  * Sidebars
  * ------------------------------------- */
+
+#sidebar-1 .block ul {
+  padding: 0; /* undo system style */
+  }
+
+#sidebar-1 {
+  }
+
+  #sidebar-1 p,
+  #sidebar-1 ul,
+  #sidebar-1 ol {
+    font-size: 1.2em;
+    line-height: 1.2em;
+    }
+  #sidebar-1 ul ul,
+  #sidebar-1 ol ol,
+  #sidebar-1 ul ol,
+  #sidebar-1 ol ul {
+    font-size: 1em;
+    margin-bottom: 0;
+    }
+
+  #sidebar-1 ul,
+  #sidebar-1 ol {
+    padding: 0;
+    }
+    #sidebar-1 ul li {
+      list-style: none;
+      margin: 1px 0 0 0;
+      padding: 0;
+      }
+      #sidebar-1 ul li a {
+        display: block;
+        background: rgb(242,242,242); /* black 5% */
+        padding: 3px 5px;
+        text-decoration: none;
+        }
+      #sidebar-1 ul li a:hover {
+        background: rgb(230,230,230); /* black 10% */
+        }
+
+  #sidebar-1 .item-list ul {
+    }
+    #sidebar-1 .item-list ul li {
+      background: rgb(242,242,242); /* black 5% */
+      padding: 3px 5px;
+      }
+
 
 /* Also applies to front page panel */
 #sidebar-2 {
