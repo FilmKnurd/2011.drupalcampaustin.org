@@ -61,6 +61,12 @@
           <h2 class="title"><a href="<?php print $node_url; ?>" title="<?php print $title; ?>"><?php print $title; ?></a></h2>
           <div class="submitted">
             <?php print $name; ?>
+            <?php if ($field_session_date_rendered): ?>
+              | <?php print $field_session_date_rendered; ?>
+            <?php endif; ?>
+            <?php if ($field_session_room_rendered): ?>
+              | <?php print $field_session_room_rendered; ?>
+            <?php endif; ?>
           </div>
         </div>
       </div>

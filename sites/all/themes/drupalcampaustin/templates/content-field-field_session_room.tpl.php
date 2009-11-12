@@ -29,7 +29,7 @@
   <?php $count = 1;
   foreach ($items as $delta => $item) :
     if (!$item['empty']) : ?>
-      <strong><?php print $item['view']; ?></strong>
+      <?php print $item['view']; ?>
     <?php $count++;
     endif;
   endforeach;?>
