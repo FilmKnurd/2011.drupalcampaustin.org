@@ -722,7 +722,8 @@ div.form-checkboxes {
 form#user-register {
   }
   div#edit-name-wrapper input,
-  div#edit-mail-wrapper input {
+  div#edit-mail-wrapper input,
+  div#edit-subject-wrapper input {
     width: 384px;
     }
   div#edit-name-wrapper div.description,
