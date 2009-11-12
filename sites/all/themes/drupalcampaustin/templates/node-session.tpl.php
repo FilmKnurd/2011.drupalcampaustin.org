@@ -84,7 +84,7 @@
             | <?php print $field_session_date_rendered; ?>
           <?php endif; ?>
           <?php if ($field_session_room_rendered): ?>
-            in the <?php print $field_session_room_rendered; ?>
+            | <?php print $field_session_room_rendered; ?>
           <?php endif; ?>
         </div>
 
