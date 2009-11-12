@@ -645,6 +645,7 @@ textarea {
   font-size: 1.4em;
   }
   textarea#edit-body,
+  textarea#edit-teaser-js,
   textarea#edit-comment {
     width: 564px;
     }
@@ -653,11 +654,13 @@ textarea {
     }
 
 div.teaser-checkbox {
-  padding: 0;
   }
-  div#edit-teaser-include-wrapper {
-    margin: 0;
+  div.teaser-button-wrapper {
+    padding: 0;
     }
+div#edit-body-wrapper {
+  margin-top: 10px;
+  }
 
 div.form-item {
   margin: 0 0 10px 0;
