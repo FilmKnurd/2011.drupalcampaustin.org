@@ -231,12 +231,12 @@ function drupalcampaustin_preprocess_comment(&$vars) {
   // Is this comment new?
   if ($comment->new) {
     $comment_classes[] = 'comment-new';
-  } 
+  }
 
   // Is this comment unpublished?
   if ($comment->status) {
     $comment_classes[] = 'comment-unpublished';
-  } 
+  }
 
   // Is this comment authored by the node's author?
   if ($node->uid == $comment->uid) {  

@@ -59,7 +59,9 @@
     
         <div class="info">
           <h2 class="title"><a href="<?php print $node_url; ?>" title="<?php print $title; ?>"><?php print $title; ?></a></h2>
-          <div class="submitted"><?php print $name; ?></div>
+          <div class="submitted">
+            <?php print $name; ?>
+          </div>
         </div>
       </div>
   
@@ -76,7 +78,15 @@
 
       <!-- Left column -->
       <div class="grid-7 alpha">
-        <div class="submitted"><?php print $submitted; ?></div>
+        <div class="submitted">
+          <?php print $name; ?>
+          <?php if ($field_session_date_rendered): ?>
+            | <?php print $field_session_date_rendered; ?>
+          <?php endif; ?>
+          <?php if ($field_session_room_rendered): ?>
+            in the <?php print $field_session_room_rendered; ?>
+          <?php endif; ?>
+        </div>
 
         <?php /* if ($terms): ?>
           <div class="terms terms-inline"><?php print $terms; ?></div>
