@@ -147,7 +147,7 @@ function drupalcampaustin_library_block_user_stats($user) {
     'internal_users_vegan',
   );
 
-  $output = array();
+  $items = array();
 
   foreach ($display_views as $display_view) {
     $view = views_get_view($display_view);
@@ -155,11 +155,11 @@ function drupalcampaustin_library_block_user_stats($user) {
       // Execute view query
       // Results will be stored as an array in $view->result
       $view->execute_display('default');
-      $output[] = $view->display['default']->display_options['title'] . ': ' . count($view->result);
+      $items[] = $view->display['default']->display_options['title'] . ': ' . count($view->result);
     }
   }
 
-  return implode('<br />', $output);
+  return theme('item_list', $items);
 }
 
 /**
@@ -254,10 +254,10 @@ function drupalcampaustin_library_user_has_role($role, $user = NULL) {
 
 /**
  * Implementation of hook_form_alter().
- */
 function drupalcampaustin_library_form_alter(&$form, $form_state, $form_id) {
 //  print $form_id;
 }
+ */
 
 function drupalcampaustin_library_form_comment_form_alter(&$form, &$form_state) {
   unset($form['_author']);
@@ -299,12 +299,4 @@ function drupalcampaustin_library_form_profile_node_form_alter(&$form, &$form_st
 function drupalcampaustin_library_profile_node_form_validate($form, &$form_state) {
   $name = $form_state['values']['field_profile_firstname'][0]['value'] . ' ' . $form_state['values']['field_profile_lastname'][0]['value'];
   form_set_value($form['title'], $name, $form_state);
-}
-
-function drupalcampaustin_library_advforum_styles() {
-  $items = array();
-  $items['drupalcampaustin'] = array(
-    'directory' => '../../themes/drupalcampaustin/forum',
-  );
-  return $items;
 }
