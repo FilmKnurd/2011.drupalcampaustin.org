@@ -995,7 +995,7 @@ ul.links li.last {
     line-height: normal;
     }
     #main-content .view-users-registered table tbody tr td {
-      padding: 0;
+      padding: 0 0 10px 0;
       }
 
   .view-users-registered table {
@@ -1003,7 +1003,6 @@ ul.links li.last {
     }
     .view-users-registered table tbody tr td {
       width: 20%;
-      padding-bottom: 10px;
       }
       .view-users-registered .picture,
       .view-users-registered .profile-link {
