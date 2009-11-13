@@ -822,14 +822,15 @@ div.link-field-subrow {
       padding: 3px 5px;
       }
 
-#block-views-twitter_drupalatx-block_1 {
+/* Twitter block */
+#sidebar-1 div.view-id-twitter_drupalatx {
   }
-  #block-views-twitter_drupalatx-block_1 ul li a {
+  #sidebar-1 div.view-id-twitter_drupalatx ul li a {
     display: inline;
     background: none;
     padding: 0;
     }
-  #block-views-twitter_drupalatx-block_1 ul li a:hover {
+  #sidebar-1 div.view-id-twitter_drupalatx ul li a:hover {
     background: none;
     }
 
@@ -1118,28 +1119,6 @@ h2.pane-title,
     #where {
       margin-right: 0;
       }
-
-#news-front {
-  background: #eeeeee;
-  -moz-border-radius: 5px;
-  border-bottom: 1px solid #eeeeee;
-  background-repeat: none;
-  padding: 15px;
-  }
-  #news-front h2 {
-    font-size: 1.4em;
-    }
-
-#twitter-front {
-  background: #BCD7F1;
-  -moz-border-radius: 5px;
-  border-bottom: 1px solid #eeeeee;
-  background-repeat: none;
-  padding: 15px;
-  }
-  #twitter-front h2 {
-    font-size: 1.4em;
-    }
 
 /* -------------------------------------
  * end Panels
