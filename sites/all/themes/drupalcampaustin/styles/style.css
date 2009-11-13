@@ -288,7 +288,7 @@ body {
               }
 
     #main-wrapper {
-      background: #639B15 url(../images/page-bg.png) top left repeat-x;
+      background: #639B15 url(../images/page-bg.png) top center repeat-x;
       min-height: 600px;
       }
 
