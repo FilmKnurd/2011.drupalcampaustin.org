@@ -771,21 +771,56 @@ div.link-field-subrow {
 
 
 /* =====================================
+ * Blocks
+ * ------------------------------------- */
+
+#recommended {
+  background-color: #E0DEA9;
+  padding: 10px;
+  -moz-border-radius: 5px;
+  margin-bottom: 10px;
+  }
+  #recommended a {
+    color: #8A6C21;
+    font-size: .9em;
+    font-weight: lighter;
+    }
+
+#refreshments {
+  background: rgb(166,205,237);
+  -moz-border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+  }
+  #refreshments p {
+    color: #333333;
+    font-size: 1.3em;
+    }
+
+/* -------------------------------------
+ * End Blocks
+ * ===================================== */
+
+
+
+/* =====================================
  * Sidebars
  * ------------------------------------- */
 
-#sidebar-1 .block ul {
-  padding: 0; /* undo system style */
-  }
-
 #sidebar-1 {
   }
-
+  #sidebar-1 .block {
+    margin-bottom: 10px;
+    }
+  
   #sidebar-1 p,
   #sidebar-1 ul,
   #sidebar-1 ol {
     font-size: 1.2em;
     line-height: 1.2em;
+    }
+  #sidebar-1 p {
+    margin-bottom: .6em;
     }
   #sidebar-1 ul ul,
   #sidebar-1 ol ol,
@@ -795,6 +830,9 @@ div.link-field-subrow {
     margin-bottom: 0;
     }
 
+  #sidebar-1 .block ul { /* specificity required to undo system style */
+    padding: 0;
+    }
   #sidebar-1 ul,
   #sidebar-1 ol {
     padding: 0;
@@ -911,52 +949,6 @@ ul.links li.last {
 
 /* -------------------------------------
  * End Nodes
- * ===================================== */
-
-
-
-/* =====================================
- * Blocks
- * ------------------------------------- */
-
-.block p {
-  margin-bottom: 1.3em;
-  }
-  
-  .block .content h2 {
-    color: #333;
-    font-size: 1.4em;
-    }
-  
-  #sidebar-1 .block {
-    margin-bottom: 10px;
-    }
-
-#recommended {
-  background-color: #E0DEA9;
-  padding: 10px;
-  -moz-border-radius: 5px;
-  margin-bottom: 10px;
-  }
-  #recommended a {
-    color: #8A6C21;
-    font-size: .9em;
-    font-weight: lighter;
-    }
-
-#refreshments {
-  background: rgb(166,205,237);
-  -moz-border-radius: 5px;
-  padding: 10px;
-  margin-bottom: 10px;
-  }
-  #refreshments p {
-    color: #333333;
-    font-size: 1.3em;
-    }
-
-/* -------------------------------------
- * End Blocks
  * ===================================== */
 
 
