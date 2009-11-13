@@ -988,10 +988,16 @@ ul.links li.last {
 /* Photo mosaic of all registered users */
 .view-users-registered {
   }
-  #main-content .view-users-registered table { /* undo default sizing of table contents */
+
+  /* undo default sizing of tables in #main-content */
+  #main-content .view-users-registered table {
     font-size: 1em;
     line-height: normal;
     }
+    #main-content .view-users-registered table tbody tr td {
+      padding: 0;
+      }
+
   .view-users-registered table {
     width: 100%;
     }
