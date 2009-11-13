@@ -1031,8 +1031,6 @@ ul.links li.last {
   }
 
 .session-teaser-wrapper {
-  padding-bottom: 10px;
-  border-bottom: 5px solid rgb(230,230,230); /* black 10% */
   }
   .session-teaser-wrapper .picture {
     width: 60px;
