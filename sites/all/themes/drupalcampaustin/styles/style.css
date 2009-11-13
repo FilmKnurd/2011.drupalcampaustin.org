@@ -991,11 +991,9 @@ ul.links li.last {
 #main-content .views-row {
   margin-bottom: 20px;
   }
-  #main-content .panel-pane .views-row {
-    margin-bottom: 10px; /* Fix for front page blocks w/ views */
-    }
+  #main-content #sidebar-1 .panel-pane .views-row,
   #main-content #sidebar-2 .panel-pane .views-row {
-    margin-bottom: 0; /* Undo this for #sidebar-2 blocks */
+    margin-bottom: 0; /* Undo this for views and blocks in front-page sidebars */
     }
 
 /* Photo mosaic of all registered users */
