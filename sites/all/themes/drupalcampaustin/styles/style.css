@@ -822,6 +822,12 @@ div.link-field-subrow {
       padding: 3px 5px;
       }
 
+    /* Undo some .item-list styline for links-only lists */
+    #block-views-news-block_1 .item-list ul li {
+      background: none;
+      padding: 0;
+      }
+
 /* Twitter block */
 #sidebar-1 div.view-id-twitter_drupalatx {
   }
@@ -949,18 +955,6 @@ ul.links li.last {
     font-size: 1.3em;
     }
 
-/* News block */
-#block-views-news-block_1,
-#news-front {
-  background: #eeeeee;
-  -moz-border-radius: 5px;
-  padding: 10px;
-  }
-  #block-views-news-block_1 a,
-  #news-front a {
-    font-size: .9em;
-    }
-
 /* -------------------------------------
  * End Blocks
  * ===================================== */
@@ -971,6 +965,13 @@ ul.links li.last {
  * Views
  * ------------------------------------- */
 
+.node-list {
+  border-bottom: 5px solid rgb(230,230,230); /* black 10% */
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  }
+
+/*
 .views-field-title {
   font-size: 1.6em;
   margin-bottom: 5px;
@@ -982,11 +983,7 @@ ul.links li.last {
   .views-field-title a:hover {
     text-decoration: underline;
     }
-
-.views-field-created {
-  font-size: 1.3em;
-  font-style: italic;
-  }
+*/
 
 #main-content .views-row {
   margin-bottom: 20px;
@@ -1089,7 +1086,7 @@ h2.pane-title,
 
 /* Panel Front Top */
 #panel-front-top {
-  border-bottom: 1px solid #eeeeee;
+  border-bottom: 5px solid rgb(230,230,230); /* black 10% */
   margin-bottom: 20px;
   padding-bottom: 20px;
   }
@@ -1104,6 +1101,9 @@ h2.pane-title,
 
 /* Who? What? Where? block */
 #who-what-where {
+  border-bottom: 5px solid rgb(230,230,230); /* black 10% */
+  margin-bottom: 20px;
+  padding-bottom: 20px;
   }
   #who-what-where p {
     margin-bottom: 0;
@@ -1321,7 +1321,7 @@ h2.pane-title,
 
 
 /* =====================================
- * Schedule Ubercart
+ * Ubercart style
  * ------------------------------------- */
  
 #cart-form-pane {
