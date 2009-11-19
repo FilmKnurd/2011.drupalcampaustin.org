@@ -1,5 +1,5 @@
 <?php
-// $Id: pageroute.install,v 1.10.2.7 2009/09/30 14:22:25 fago Exp $
+// $Id: pageroute.install,v 1.10.2.8 2009/10/29 12:07:50 sgilits Exp $
 
 /**
  * @file
@@ -87,15 +87,15 @@ function pageroute_update_6001() {
           "with this page types, otherwise you'll get an error message!", 'warning'));
         break;
       case 'user_edit':
-      	$new_type = 'useredit';
-      	$module = 'pageroute';
+        $new_type = 'useredit';
+        $module = 'pageroute';
         break;
       default:
         break 2;
     }
     $prid = intval($page->prid);
     $name = db_escape_string($page->name);
-    db_query("UPDATE {pageroute_pages} SET type = '%s', module = '%s' WHERE prid = '%d' AND name = '%s'", $new_type, $module, $prid, $name);
+    update_sql("UPDATE {pageroute_pages} SET type = '%s', module = '%s' WHERE prid = '%d' AND name = '%s'", $new_type, $module, $prid, $name);
   }
   
   return $ret;

@@ -1,5 +1,5 @@
 <?php
-// $Id: pageroute.test,v 1.1.2.5 2009/10/17 12:30:39 sgilits Exp $
+// $Id: pageroute.test,v 1.1.2.6 2009/10/29 12:07:50 sgilits Exp $
 /**
  * @file
  * Pageroute Simpletest test cases
@@ -10,7 +10,7 @@
  */
 abstract class PagerouteTestCase extends DrupalWebTestCase {
   function setUp($module = '') {
-    if(empty($module)) {
+    if (empty($module)) {
       parent::setUp('pageroute', 'pageroute_ui');
     }
     else {
@@ -25,7 +25,7 @@ abstract class PagerouteTestCase extends DrupalWebTestCase {
   }
 
   function useAdmin() {
-    $user = $this->drupalCreateUser(array('administer pageroutes', 'administer nodes'));
+    $user = $this->drupalCreateUser(array('administer pageroutes', 'administer nodes', 'access administration pages'));
     $this->drupalLogin($user);
     $this->drupalGet('admin/build/pageroute');
     $this->assertText('Pageroute', "Make sure browser is on the Pageroute site.");
@@ -330,4 +330,9 @@ class PageRoutePageTypesTestCase extends PagerouteTestCase {
     $this->assertText('My new Body');
   }
 
+  function testingByModulesBug() {
+    $this->useAdmin();
+    $this->drupalGet("admin/by-module");
+    $this->assertRaw("This page shows you all available administration tasks for each module.");
+  }
 }

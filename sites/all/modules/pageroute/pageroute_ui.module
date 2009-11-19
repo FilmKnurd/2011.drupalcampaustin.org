@@ -1,5 +1,5 @@
 <?php
-// $Id: pageroute_ui.module,v 1.36.2.7 2009/08/05 14:36:32 fago Exp $
+// $Id: pageroute_ui.module,v 1.36.2.8 2009/10/29 12:07:50 sgilits Exp $
 
 /**
  * @file
@@ -322,7 +322,7 @@ function _pageroute_ui_get_help() {
   foreach ($module_types as $module => $types) {
     foreach ($types as $type => $typeinfo) {
       $output .= '<h3>'. $typeinfo['name'] .'</h3>';
-      $class = $module .'_page_'. $type;
+      $class = pageroute_get_page_class($module, $type);
       $output .= '<p>'. call_user_func(array($class, 'help')) .'</p>';
     }
   }

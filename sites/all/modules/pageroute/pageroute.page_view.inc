@@ -1,5 +1,5 @@
 <?php
-// $Id: pageroute.page_view.inc,v 1.1.2.8 2009/09/10 10:09:48 fago Exp $
+// $Id: pageroute.page_view.inc,v 1.1.2.9 2009/10/29 12:07:50 sgilits Exp $
 
 /**
  * @file
@@ -7,7 +7,7 @@
  */
 
 
-
+include_once(drupal_get_path('module', 'pageroute') .'/pageroute.route.inc');
 /**
  * PageroutePageView display a simple node.
  */
