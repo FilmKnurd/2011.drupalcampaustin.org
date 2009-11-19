@@ -1,5 +1,5 @@
 <?php
-// $Id: vimeo.inc,v 1.1.2.10 2009/10/20 18:19:15 aaron Exp $
+// $Id: vimeo.inc,v 1.1.2.11 2009/10/29 13:29:51 aaron Exp $
 
 /**
  * @file
@@ -182,7 +182,7 @@ function theme_emvideo_vimeo_flash($embed, $width, $height, $autoplay) {
  *  @return
  *    the html of the embedded video
  */
-function emvideo_vimeo_video($embed, $width, $height, $field, $item, &$node, $autoplay) {
+function emvideo_vimeo_video($embed, $width, $height, $field, $item, $node, $autoplay) {
   $output = theme('emvideo_vimeo_flash', $embed, $width, $height, $autoplay);
   return $output;
 }
@@ -203,7 +203,7 @@ function emvideo_vimeo_video($embed, $width, $height, $field, $item, &$node, $au
  *  @return
  *    the html of the embedded video
  */
-function emvideo_vimeo_preview($embed, $width, $height, $field, $item, &$node, $autoplay) {
+function emvideo_vimeo_preview($embed, $width, $height, $field, $item, $node, $autoplay) {
   $output = theme('emvideo_vimeo_flash', $embed, $width, $height, $autoplay);
   return $output;
 }

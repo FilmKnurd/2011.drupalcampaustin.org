@@ -1,5 +1,5 @@
 <?php
-// $Id: ustream.inc,v 1.1.2.2 2009/09/28 23:05:47 aaron Exp $
+// $Id: ustream.inc,v 1.1.2.3 2009/10/21 16:50:14 aaron Exp $
 
 define('EMVIDEO_USTREAM_MAIN_URL', 'http://www.ustream.tv/');
 define('EMVIDEO_USTREAM_API_INFO', 'http://developer.ustream.tv/');
@@ -161,13 +161,13 @@ function emvideo_ustream_thumbnail($field, $item, $formatter, $node, $width, $he
 //   $tn = $request['THUMBNAIL_URL'][0];
 
   // if we have a large thumbnail size, then get the larger version available.
-  if ($width > 130 || $height > 97) {
-    $tn = "http://img.ustream.tv/vi/$ustream_id/0.jpg";
-  } else {
-    // ustream offers 3 thumbnails. select one randomly.
-    $rand = rand(0, 2) + 1;
-    $tn = "http://img.ustream.tv/vi/$ustream_id/$rand.jpg";
-  }
+//   if ($width > 130 || $height > 97) {
+//     $tn = "http://img.ustream.tv/vi/$ustream_id/0.jpg";
+//   } else {
+//     // ustream offers 3 thumbnails. select one randomly.
+//     $rand = rand(0, 2) + 1;
+//     $tn = "http://img.ustream.tv/vi/$ustream_id/$rand.jpg";
+//   }
   return $tn;
 }
 

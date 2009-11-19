@@ -1,5 +1,5 @@
 <?php
-// $Id: imeem.inc,v 1.1.2.6 2008/12/19 18:17:14 aaron Exp $
+// $Id: imeem.inc,v 1.1.2.7 2009/10/29 13:29:51 aaron Exp $
 
 define('EMVIDEO_IMEEM_MAIN_URL', 'http://www.imeem.com/');
 define('EMVIDEO_IMEEM_API_INFO', 'http://www.imeem.com/developers/documentation/');
@@ -83,12 +83,12 @@ function emvideo_imeem_thumbnail($field, $item, $formatter, $node, $width, $heig
   return $thm;
 }
 
-function emvideo_imeem_video($embed, $width, $height, $field, $item, &$node, $autoplay) {
+function emvideo_imeem_video($embed, $width, $height, $field, $item, $node, $autoplay) {
   $output = theme('emvideo_imeem_flash', $embed, $width, $height, $autoplay);
   return $output;
 }
 
-function emvideo_imeem_preview($embed, $width, $height, $field, $item, &$node, $autoplay) {
+function emvideo_imeem_preview($embed, $width, $height, $field, $item, $node, $autoplay) {
   $output = theme('emvideo_imeem_flash', $embed, $width, $height, $autoplay);
   return $output;
 }

@@ -1,5 +1,5 @@
 <?php
-// $Id: myspace.inc,v 1.1.2.11 2009/09/28 22:47:12 aaron Exp $
+// $Id: myspace.inc,v 1.1.2.12 2009/10/29 13:29:51 aaron Exp $
 
 /**
  * @file
@@ -132,12 +132,12 @@ function emvideo_myspace_thumbnail($field, $item, $formatter, $node, $width, $he
   return $item['data']['emvideo_myspace_thumbnail'] ;
 }
 
-function emvideo_myspace_video($embed, $width, $height, $field, $item, &$node) {
+function emvideo_myspace_video($embed, $width, $height, $field, $item, $node) {
   $output = theme('emvideo_myspace_flash', $embed, $width, $height);
   return $output;
 }
 
-function emvideo_myspace_preview($embed, $width, $height, $field, $item, &$node) {
+function emvideo_myspace_preview($embed, $width, $height, $field, $item, $node) {
   $output = theme('emvideo_myspace_flash', $embed, $width, $height);
   return $output;
 }

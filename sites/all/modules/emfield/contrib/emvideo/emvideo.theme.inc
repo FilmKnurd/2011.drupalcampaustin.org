@@ -1,5 +1,5 @@
 <?php
-// $Id: emvideo.theme.inc,v 1.1.2.37 2009/09/28 23:38:30 aaron Exp $
+// $Id: emvideo.theme.inc,v 1.1.2.38 2009/10/21 16:12:36 aaron Exp $
 
 /**
  * @file
@@ -30,6 +30,14 @@ function theme_emvideo_video_embed($field, $item, $formatter, $node, $options = 
   return $output;
 }
 
+function theme_emvideo_video_thumbnail_no_link($field, $item, $formatter, $node, $options = array()) {
+  return theme('emvideo_video_thumbnail', $field, $item, $formatter, $node, TRUE, $options);
+}
+function theme_emvideo_video_thumbnail_provider_link($field, $item, $formatter, $node, $options = array()) {
+  $options['link_url'] = isset($options['link_url']) ? $options['link_url'] : emfield_include_invoke('emvideo', $item['provider'], 'embedded_link', $item['value'], $item['data']);
+  return theme('emvideo_video_thumbnail', $field, $item, $formatter, $node, FALSE, $options);
+}
+
 /**
  * This will return a provided thumbnail image for a video.
  *
@@ -57,6 +65,7 @@ function theme_emvideo_video_embed($field, $item, $formatter, $node, $options = 
  *     $options['thumbnail_url'], if provided, will completely override the thumbnail image entirely.
  *     $options['attributes'], if provided, sets the attributes for the displayed image.
  *     $options['return_url'], if provided, simply returns the URL to the thumbnail.
+ *     $options['raw'], if TRUE, will return the raw URL, assuming $options['return_url'] is also true.
  * @return
  *   The thumbnail output.
  */
@@ -74,8 +83,8 @@ function theme_emvideo_video_thumbnail($field, $item, $formatter, $node, $no_lin
     $thumbnail_url = isset($options['thumbnail_url']) ? $options['thumbnail_url'] : '';
 
     // Otherwise, if we have emthumb installed, then give it a chance to override our thumbnail.
-    if (empty($thumbnail_url) && function_exists('emthumb_thumbnail_url')) {
-      $thumbnail_url = emthumb_thumbnail_url($item);
+    if (empty($thumbnail_url) && function_exists('emthumb_thumbnail_path')) {
+      $thumbnail_url = emthumb_thumbnail_path($item);
     }
 
     // If we don't have a custom thumbnail, then see if the provider gives us a thumbnail.
@@ -106,7 +115,7 @@ function theme_emvideo_video_thumbnail($field, $item, $formatter, $node, $no_lin
 
   if (isset($thumbnail_url)) {
     if (isset($options['return_url'])) {
-      return url($thumbnail_url);
+      return $options['raw'] ? $thumbnail_url : url($thumbnail_url);
     }
     $width = isset($options['width']) ? $options['width'] : NULL;
     $width = isset($width) ? $width : ($field['widget']['thumbnail_width'] ? $field['widget']['thumbnail_width'] : variable_get('emvideo_default_thumbnail_width', EMVIDEO_DEFAULT_THUMBNAIL_WIDTH));
@@ -126,7 +135,7 @@ function theme_emvideo_video_thumbnail($field, $item, $formatter, $node, $no_lin
   }
   else {
     if ($options['return_url']) {
-      return url($link_url);
+      return $options['raw'] ? $thumbnail_url : url($link_url);
     }
 
     // If all else fails, then just print a 'see video' type link.
@@ -159,12 +168,12 @@ function theme_emvideo_default($field, $item, $formatter, $node, $options = arra
 }
 
 function theme_emvideo_video_link($field, $item, $formatter, $node, $options = array()) {
-  $link_title = isset($options['link_title']) ? $options['link_title'] : (isset($options['title']) ? $options['title'] : (isset($field['widget']['thumbnail_link_title']) ? $field['widget']['thumbnail_link_title'] : variable_get('emvideo_default_thumbnail_link_title', t('See video'))));
-  $url = emfield_include_invoke('emvideo', $item['provider'], 'embedded_link', $node, $field);
+  $title = isset($options['link_title']) ? $options['link_title'] : (isset($options['title']) ? $options['title'] : (isset($field['widget']['thumbnail_link_title']) ? $field['widget']['thumbnail_link_title'] : variable_get('emvideo_default_thumbnail_link_title', t('See video'))));
+  $url = emfield_include_invoke('emvideo', $item['provider'], 'embedded_link', $item['value'], $item['data']);
   return l($title, $url);
 }
 function theme_emvideo_video_url($field, $item, $formatter, $node, $options = array()) {
-  $url = emfield_include_invoke('emvideo', $item['provider'], 'embedded_link', $node, $field);
+  $url = emfield_include_invoke('emvideo', $item['provider'], 'embedded_link', $item['value'], $item['data']);
   return url($url);
 }
 function theme_emvideo_video_duration($field, $item, $formatter, $node, $options = array()) {
@@ -188,7 +197,7 @@ function theme_emvideo_video_preview($field, $item, $formatter, $node, $options 
 
 function theme_emvideo_modal_generic($field, $item, $formatter, $node, $options = array()) {
   $title = isset($options['title']) ? $options['title'] : (isset($node->title) ? $node->title : (isset($node->node_title) ? $node->node_title : (isset($field['widget']['thumbnail_link_title']) ? $field['widget']['thumbnail_link_title'] : variable_get('emvideo_default_thumbnail_link_title', t('See video')))));
-  $thumbnail = theme('emvideo_video_thumbnail', $field, $item, 'video_thumbnail', $node, TRUE, $options);
+  $thumbnail = isset($options['thumbnail']) ? $options['thumbnail'] : theme('emvideo_video_thumbnail', $field, $item, 'video_thumbnail', $node, TRUE, $options);
   $width = ($formatter == 'video_replace_preview') ? $field['widget']['preview_width'] : $field['widget']['video_width'];
   $height = ($formatter == 'video_replace_preview') ? $field['widget']['preview_height'] : $field['widget']['video_height'];
   $destination = 'emvideo/modal/'. $node->nid .'/'. $width .'/'. $height .'/'. $field['field_name'] .'/'. $item['provider'] .'/'. $item['value'];
@@ -314,6 +323,12 @@ function theme_emvideo_formatter_video_replace($element) {
   return _emvideo_formatter_theme_helper($element);
 }
 function theme_emvideo_formatter_video_replace_preview($element) {
+  return _emvideo_formatter_theme_helper($element);
+}
+function theme_emvideo_formatter_video_thumbnail_no_link($element) {
+  return _emvideo_formatter_theme_helper($element);
+}
+function theme_emvideo_formatter_video_thumbnail_provider_link($element) {
   return _emvideo_formatter_theme_helper($element);
 }
 

@@ -1,5 +1,5 @@
 <?php
-// $Id: livevideo.inc,v 1.1.2.11 2009/07/23 18:55:41 robloach Exp $
+// $Id: livevideo.inc,v 1.1.2.12 2009/10/29 13:29:51 aaron Exp $
 
 /**
  * @file
@@ -155,7 +155,7 @@ function emvideo_livevideo_thumbnail($field, $item, $formatter, $node, $width, $
  *  @return
  *    the html of the embedded video
  */
-function emvideo_livevideo_video($embed, $width, $height, $field, $item, &$node, $autoplay) {
+function emvideo_livevideo_video($embed, $width, $height, $field, $item, $node, $autoplay) {
   $output = theme('emvideo_livevideo_flash', $embed, $width, $height, $autoplay);
 
   return $output;
@@ -177,7 +177,7 @@ function emvideo_livevideo_video($embed, $width, $height, $field, $item, &$node,
  *  @return
  *    the html of the embedded video
  */
-function emvideo_livevideo_preview($embed, $width, $height, $field, $item, &$node, $autoplay) {
+function emvideo_livevideo_preview($embed, $width, $height, $field, $item, $node, $autoplay) {
   $output = theme('emvideo_livevideo_flash', $embed, $width, $height, $autoplay);
 
   return $output;

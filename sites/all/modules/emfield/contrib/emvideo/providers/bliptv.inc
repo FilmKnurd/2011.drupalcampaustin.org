@@ -1,5 +1,5 @@
 <?php
-// $Id: bliptv.inc,v 1.1.2.18 2009/10/19 19:45:15 aaron Exp $
+// $Id: bliptv.inc,v 1.1.2.19 2009/10/29 13:29:51 aaron Exp $
 
 /**
  * @file
@@ -337,7 +337,7 @@ function emvideo_bliptv_thumbnail($field, $item, $formatter, $node, $width, $hei
   return $tn;
 }
 
-function emvideo_bliptv_video($code, $width, $height, $field, $item, &$node, $autoplay, $options = array()) {
+function emvideo_bliptv_video($code, $width, $height, $field, $item, $node, $autoplay, $options = array()) {
   if ($item['data']['emvideo_bliptv_data_version'] >= 1) {
     $flv = $item['data']['flv']['url'];
     $thumbnail = $item['data']['thumbnail']['url'];
@@ -351,7 +351,7 @@ function emvideo_bliptv_video($code, $width, $height, $field, $item, &$node, $au
   return $output;
 }
 
-function emvideo_bliptv_preview($code, $width, $height, $field, $item, &$node, $autoplay, $options = array()) {
+function emvideo_bliptv_preview($code, $width, $height, $field, $item, $node, $autoplay, $options = array()) {
   if ($item['data']['emvideo_bliptv_data_version'] >= 1) {
     $flv = $item['data']['flv']['url'];
     $thumbnail = $item['data']['thumbnail']['url'];

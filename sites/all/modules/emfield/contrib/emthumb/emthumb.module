@@ -1,5 +1,5 @@
 <?php
-// $Id: emthumb.module,v 1.7.2.30 2009/09/25 17:07:21 aaron Exp $
+// $Id: emthumb.module,v 1.7.2.33 2009/10/30 21:12:27 aaron Exp $
 
 /**
  *  @file
@@ -18,6 +18,7 @@ function emthumb_emfield_field_extra($op, &$node, $field, &$items, $teaser, $pag
     case 'validate':
       if ($field['multiple']) {
         foreach ($items as $delta => $item) {
+          // @TODO: This has to be buggy... Need to test and fix this!
           $items[$delta]['data'] = $list['provider'];
         }
       }
@@ -519,6 +520,15 @@ function _emthumb_file_load($fid = NULL) {
  *  @return
  *    The path to the custom thumbnail file.
  */
+function emthumb_thumbnail_path($item) {
+  if ($item['data']['emthumb']['filepath']) {
+    return file_create_path($item['data']['emthumb']['filepath']);
+  }
+}
+
+/**
+ *  @legacy
+ */
 function emthumb_thumbnail_url($item) {
   if ($item['data']['emthumb']['filepath']) {
     return file_create_url($item['data']['emthumb']['filepath']);
@@ -652,7 +662,7 @@ function emthumb_fetch_remote_thumbnail($item, $field) {
  * Implementation of hook_theme().
  */
 function emthumb_theme() {
-  return array(
+  $themes = array(
     'emthumb_view_image' => array(
       'arguments' => array('file' => NULL, 'alt' => '', 'title' => '', 'attributes' => NULL, 'getsize' => TRUE),
      ),
@@ -669,6 +679,66 @@ function emthumb_theme() {
       'arguments' => array('element' => NULL),
     ),
   );
+  if (module_exists('imagecache')) {
+    foreach (imagecache_presets() as $preset) {
+      $themes['emthumb_formatter_'. $preset['presetname'] .'_default'] = array(
+        'arguments' => array('element' => NULL),
+        'function' => 'theme_emthumb_imagecache_formatter_default',
+        'file' => 'emthumb.theme.inc',
+      );
+      $themes['emthumb_formatter_'. $preset['presetname'] .'_linked'] = array(
+        'arguments' => array('element' => NULL),
+        'function' => 'theme_emthumb_imagecache_formatter_linked',
+        'file' => 'emthumb.theme.inc',
+      );
+      $themes['emthumb_formatter_'. $preset['presetname'] .'_imagelink'] = array(
+        'arguments' => array('element' => NULL),
+        'function' => 'theme_emthumb_imagecache_formatter_imagelink',
+        'file' => 'emthumb.theme.inc',
+      );
+      $themes['emthumb_formatter_'. $preset['presetname'] .'_path'] = array(
+        'arguments' => array('element' => NULL),
+        'function' => 'theme_emthumb_imagecache_formatter_path',
+        'file' => 'emthumb.theme.inc',
+      );
+      $themes['emthumb_formatter_'. $preset['presetname'] .'_url'] = array(
+        'arguments' => array('element' => NULL),
+        'function' => 'theme_emthumb_imagecache_formatter_url',
+        'file' => 'emthumb.theme.inc',
+      );
+      $themes['emthumb_formatter_'. $preset['presetname'] .'_providerlink'] = array(
+        'arguments' => array('element' => NULL),
+        'function' => 'theme_emthumb_imagecache_formatter_provider_link',
+        'file' => 'emthumb.theme.inc',
+      );
+      $themes['emthumb_formatter_'. $preset['presetname'] .'_full'] = array(
+        'arguments' => array('element' => NULL),
+        'function' => 'theme_emthumb_imagecache_formatter_full',
+        'file' => 'emthumb.theme.inc',
+      );
+      $themes['emthumb_formatter_'. $preset['presetname'] .'_preview'] = array(
+        'arguments' => array('element' => NULL),
+        'function' => 'theme_emthumb_imagecache_formatter_preview',
+        'file' => 'emthumb.theme.inc',
+      );
+      $themes['emthumb_formatter_'. $preset['presetname'] .'_thickbox'] = array(
+        'arguments' => array('element' => NULL),
+        'function' => 'theme_emthumb_imagecache_formatter_thickbox',
+        'file' => 'emthumb.theme.inc',
+      );
+      $themes['emthumb_formatter_'. $preset['presetname'] .'_lightbox2'] = array(
+        'arguments' => array('element' => NULL),
+        'function' => 'theme_emthumb_imagecache_formatter_lightbox2',
+        'file' => 'emthumb.theme.inc',
+      );
+      $themes['emthumb_formatter_'. $preset['presetname'] .'_shadowbox'] = array(
+        'arguments' => array('element' => NULL),
+        'function' => 'theme_emthumb_imagecache_formatter_shadowbox',
+        'file' => 'emthumb.theme.inc',
+      );
+    }
+  }
+  return $themes;
 }
 
 /**
@@ -726,4 +796,77 @@ function theme_emthumb_edit_image_row($element) {
  */
 function theme_emthumb_widget($element) {
   return theme('form_element', $element, $element['#children']);
+}
+
+/**
+ * Implementation of hook_field_formatter_info().
+ *
+ * imagecache formatters are named as $presetname_$style
+ * $style is used to determine how the preset should be rendered.
+ * If you are implementing custom imagecache formatters please treat _ as
+ * reserved.
+ *
+ * @todo: move the linking functionality up to imagefield and clean up the default image
+ * integration.
+ */
+function emthumb_field_formatter_info() {
+  $formatters = array();
+  if (!module_exists('imagecache')) {
+    return $formatters;
+  }
+  $field_types = array('emvideo', 'emimage', 'emaudio');
+  foreach (imagecache_presets() as $preset) {
+    $formatters[$preset['presetname'] .'_default'] = array(
+      'label' => t('@preset image', array('@preset' => $preset['presetname'])),
+      'field types' => $field_types,
+    );
+    $formatters[$preset['presetname'] .'_linked'] = array(
+      'label' => t('@preset image linked to node', array('@preset' => $preset['presetname'])),
+      'field types' => $field_types,
+    );
+    $formatters[$preset['presetname'] .'_imagelink'] = array(
+      'label' => t('@preset image linked to original image', array('@preset' => $preset['presetname'])),
+      'field types' => $field_types,
+    );
+    $formatters[$preset['presetname'] .'_path'] = array(
+      'label' => t('@preset file path', array('@preset' => $preset['presetname'])),
+      'field types' => $field_types,
+    );
+    $formatters[$preset['presetname'] .'_url'] = array(
+      'label' => t('@preset URL', array('@preset' => $preset['presetname'])),
+      'field types' => $field_types,
+    );
+    $formatters[$preset['presetname'] .'_providerlink'] = array(
+      'label' => t('@preset image linked to provider', array('@preset' => $preset['presetname'])),
+      'field types' => $field_types,
+    );
+    $formatters[$preset['presetname'] .'_full'] = array(
+      'label' => t('@preset image -> Full Size Media', array('@preset' => $preset['presetname'])),
+      'field types' => $field_types,
+    );
+    $formatters[$preset['presetname'] .'_preview'] = array(
+      'label' => t('@preset image -> Preview Size Media', array('@preset' => $preset['presetname'])),
+      'field types' => $field_types,
+    );
+    // Add thickbox formatter if thickbox module exists.
+    if (module_exists('thickbox')) {
+      $formatters[$preset['presetname'] .'_thickbox'] = array(
+        'label' => t('Thickbox: @preset image -> Full Size Media', array('@preset' => $preset['presetname'])),
+        'field types' => $field_types,
+        );
+    }
+    if (module_exists('lightbox2')) {
+      $formatters[$preset['presetname'] .'_lightbox2'] = array(
+        'label' => t('Lightbox2: @preset image -> Full Size Media', array('@preset' => $preset['presetname'])),
+        'field types' => $field_types,
+      );
+    }
+    if (module_exists('shadowbox')) {
+      $formatters[$preset['presetname'] .'_shadowbox'] = array(
+        'label' => t('Shadowbox: @preset image -> Full Size Media', array('@preset' => $preset['presetname'])),
+        'field types' => $field_types,
+      );
+    }
+  }
+  return $formatters;
 }

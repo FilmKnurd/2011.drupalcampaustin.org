@@ -1,5 +1,5 @@
 <?php
-// $Id: dailymotion.inc,v 1.1.2.12 2009/09/28 22:11:27 aaron Exp $
+// $Id: dailymotion.inc,v 1.1.2.13 2009/10/29 13:29:51 aaron Exp $
 
 /**
  * @file
@@ -142,7 +142,7 @@ function emvideo_dailymotion_thumbnail($field, $item, $formatter, $node, $width,
  *  @return
  *    the html of the embedded video
  */
-function emvideo_dailymotion_video($embed, $width, $height, $field, $item, &$node, $autoplay) {
+function emvideo_dailymotion_video($embed, $width, $height, $field, $item, $node, $autoplay) {
   $output = theme('emvideo_dailymotion_flash', $embed, $width, $height, $autoplay);
   return $output;
 }
@@ -163,7 +163,7 @@ function emvideo_dailymotion_video($embed, $width, $height, $field, $item, &$nod
  *  @return
  *    the html of the embedded video
  */
-function emvideo_dailymotion_preview($embed, $width, $height, $field, $item, &$node, $autoplay) {
+function emvideo_dailymotion_preview($embed, $width, $height, $field, $item, $node, $autoplay) {
   $output = theme('emvideo_dailymotion_flash', $embed, $width, $height, $autoplay);
   return $output;
 }

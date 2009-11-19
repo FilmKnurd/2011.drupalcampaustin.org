@@ -1,5 +1,5 @@
 <?php
-// $Id: google.inc,v 1.1.2.12 2009/09/28 22:29:27 aaron Exp $
+// $Id: google.inc,v 1.1.2.14 2009/10/29 13:29:51 aaron Exp $
 
 /**
  * @file
@@ -53,7 +53,7 @@ function emvideo_google_request($embed, $cacheable = TRUE) {
   return module_invoke('emfield', 'request_xml', 'google', EMVIDEO_GOOGLE_XML, $args, $cacheable);
 }
 
-function emvideo_google_video_link($video_code) {
+function emvideo_google_embedded_link($video_code) {
   return 'http://video.google.'. variable_get('emvideo_google_domain', EMVIDEO_GOOGLE_DOMAIN_DEFAULT) .'/videoplay?docid='. $video_code;
 }
 
@@ -200,12 +200,12 @@ function emvideo_google_thumbnail($field, $item, $formatter, $node, $width, $hei
   return NULL;
 }
 
-function emvideo_google_video($embed, $width, $height, $field, $item, &$node, $autoplay) {
+function emvideo_google_video($embed, $width, $height, $field, $item, $node, $autoplay) {
   $output = theme('emvideo_google_flash', $embed, $width, $height, $autoplay);
   return $output;
 }
 
-function emvideo_google_preview($embed, $width, $height, $field, $item, &$node, $autoplay) {
+function emvideo_google_preview($embed, $width, $height, $field, $item, $node, $autoplay) {
   $output = theme('emvideo_google_flash', $embed, $width, $height, $autoplay);
   return $output;
 }

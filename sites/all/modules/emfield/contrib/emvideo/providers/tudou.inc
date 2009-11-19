@@ -1,5 +1,5 @@
 <?php
-// $Id: tudou.inc,v 1.1.2.5 2008/12/19 18:17:14 aaron Exp $
+// $Id: tudou.inc,v 1.1.2.6 2009/10/29 13:29:51 aaron Exp $
 
 /**
  * @file
@@ -123,7 +123,7 @@ function emvideo_tudou_thumbnail($field, $item, $formatter, $node, $width, $heig
  *  @return
  *    the html of the embedded video
  */
-function emvideo_tudou_video($embed, $width, $height, $field, $item, &$node, $autoplay) {
+function emvideo_tudou_video($embed, $width, $height, $field, $item, $node, $autoplay) {
   $output = theme('emvideo_tudou_flash', $embed, $width, $height, $autoplay);
   return $output;
 }
@@ -144,7 +144,7 @@ function emvideo_tudou_video($embed, $width, $height, $field, $item, &$node, $au
  *  @return
  *    the html of the embedded video
  */
-function emvideo_tudou_preview($embed, $width, $height, $field, $item, &$node, $autoplay) {
+function emvideo_tudou_preview($embed, $width, $height, $field, $item, $node, $autoplay) {
   $output = theme('emvideo_tudou_flash', $embed, $width, $height, $autoplay);
   return $output;
 }

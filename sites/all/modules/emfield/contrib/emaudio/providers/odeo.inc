@@ -1,5 +1,5 @@
 <?php
-// $Id: odeo.inc,v 1.1.4.9 2009/09/29 19:52:05 aaron Exp $
+// $Id: odeo.inc,v 1.1.4.10 2009/10/29 13:32:55 aaron Exp $
 
 /**
  * @file
@@ -126,7 +126,7 @@ function emaudio_odeo_thumbnail($field, $item, $formatter, $node, $width, $heigh
  * @return
  *   The html of the embedded audio.
  */
-function emaudio_odeo_audio($embed, $width, $height, $field, $item, &$node, $autoplay) {
+function emaudio_odeo_audio($embed, $width, $height, $field, $item, $node, $autoplay) {
   $output = theme('emaudio_odeo_flash', $embed, $width, $height, $autoplay);
 
   return $output;
@@ -150,7 +150,7 @@ function emaudio_odeo_audio($embed, $width, $height, $field, $item, &$node, $aut
  * @return
  *   The html of the embedded audio.
  */
-function emaudio_odeo_preview($embed, $width, $height, $field, $item, &$node, $autoplay) {
+function emaudio_odeo_preview($embed, $width, $height, $field, $item, $node, $autoplay) {
   $output = theme('emaudio_odeo_flash', $embed, $width, $height, $autoplay);
 
   return $output;

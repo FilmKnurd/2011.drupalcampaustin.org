@@ -1,5 +1,5 @@
 <?php
-// $Id: guba.inc,v 1.1.2.9 2009/08/24 20:46:15 aaron Exp $
+// $Id: guba.inc,v 1.1.2.10 2009/10/29 13:29:51 aaron Exp $
 /**
  * @file
  *   Provide support for the Guba provider to the emfield.module.
@@ -50,12 +50,12 @@ function emvideo_guba_thumbnail($field, $item, $formatter, $node, $width, $heigh
   return $thm;
 }
 
-function emvideo_guba_video($embed, $width, $height, $field, $item, &$node, $autoplay) {
+function emvideo_guba_video($embed, $width, $height, $field, $item, $node, $autoplay) {
   $output = theme('emvideo_guba_flash', $embed, $width, $height, $autoplay);
   return $output;
 }
 
-function emvideo_guba_preview($embed, $width, $height, $field, $item, &$node, $autoplay) {
+function emvideo_guba_preview($embed, $width, $height, $field, $item, $node, $autoplay) {
   $output = theme('emvideo_guba_flash', $embed, $width, $height, $autoplay);
   return $output;
 }

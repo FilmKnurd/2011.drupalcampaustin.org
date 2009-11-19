@@ -1,5 +1,5 @@
 <?php
-// $Id: emvideo.install,v 1.1.2.29 2009/09/30 21:05:09 aaron Exp $
+// $Id: emvideo.install,v 1.1.2.30 2009/10/21 16:12:36 aaron Exp $
 
 /**
  * @file
@@ -415,6 +415,13 @@ function emvideo_update_6014() {
   cache_clear_all('*', content_cache_tablename(), TRUE);
   cache_clear_all('*', 'cache', TRUE);
   return $ret;
+}
+
+/**
+ *  New formatters and theme functions.
+ */
+function emvideo_update_6015() {
+  return _emvideo_update_add_new_formatters();
 }
 
 /**

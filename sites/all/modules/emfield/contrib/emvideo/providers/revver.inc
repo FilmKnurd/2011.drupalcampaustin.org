@@ -1,5 +1,5 @@
 <?php
-// $Id: revver.inc,v 1.1.2.8 2008/12/19 18:17:14 aaron Exp $
+// $Id: revver.inc,v 1.1.2.9 2009/10/29 13:29:51 aaron Exp $
 
 /**
  * @file
@@ -67,12 +67,12 @@ function emvideo_revver_thumbnail($field, $item, $formatter, $node, $width, $hei
   return 'http://frame.revver.com/frame/'. $width .'x'. $height .'/'. check_plain($item['value']) .'.jpg';
 }
 
-function emvideo_revver_video($embed, $width, $height, $field, $item, &$node, $autoplay) {
+function emvideo_revver_video($embed, $width, $height, $field, $item, $node, $autoplay) {
   $output = theme('emvideo_revver_flash', $embed, $width, $height, $autoplay);
   return $output;
 }
 
-function emvideo_revver_preview($embed, $width, $height, $field, $item, &$node, $autoplay) {
+function emvideo_revver_preview($embed, $width, $height, $field, $item, $node, $autoplay) {
   $output = theme('emvideo_revver_flash', $embed, $width, $height, $autoplay);
   return $output;
 }

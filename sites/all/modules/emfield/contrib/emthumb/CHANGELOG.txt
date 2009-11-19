@@ -1,9 +1,21 @@
-/* $Id: CHANGELOG.txt,v 1.1.2.2 2009/09/25 17:07:21 aaron Exp $ */
+/* $Id: CHANGELOG.txt,v 1.1.2.4 2009/10/29 18:29:05 aaron Exp $ */
 
 /**
  *  @file
  *  Changelog for Embedded Thumbnail Field.
  */
+
+by aaron: Make imagecache requirement conditional.
+
+================
+ DRUPAL-6--1-13
+================
+
+#356511 | #593760 by aaron: Add imagecache support.
+
+================
+ DRUPAL-6--1-12
+================
 
 September 2009
 --------------

@@ -1,9 +1,31 @@
-/* $Id: CHANGELOG.txt,v 1.1.2.30 2009/10/20 18:36:34 aaron Exp $ */
+/* $Id: CHANGELOG.txt,v 1.1.2.37 2009/10/31 00:30:24 aaron Exp $ */
 
 /**
  *  @file
  *  Changelog for Embedded Video Field (emvideo).
  */
+
+by aaron: Valid W3 code for youtube flashparams when using w/ flv player.
+
+================
+ DRUPAL-6--1-14
+================
+
+by aaron: Use object tags rather than embed. See http://www.alistapart.com/articles/flashsatay
+#597664 by kratib: Fixed Parameter 6 to emvideo_vimeo_video() expected to be a reference, value given in /var/www/adhack/live/modules/emfield/emfield.mod.
+
+================
+ DRUPAL-6--1-13
+================
+
+by aaron: Add wmode=transparent to youtube.
+by aaron: Remove thumbnail support from uStream.
+by aaron: Fix google embedded links.
+#591700 by aaron: Add new formatters for thumbnails.
+
+================
+ DRUPAL-6--1-12
+================
 
 #289722 by marcp | bonobo: Added Voicethread support.
 #600310 by apb1991: Added m4v Custom Videos.

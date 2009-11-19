@@ -1,5 +1,5 @@
 <?php
-// $Id: podomatic.inc,v 1.1.4.11 2009/09/29 19:52:05 aaron Exp $
+// $Id: podomatic.inc,v 1.1.4.12 2009/10/29 13:32:55 aaron Exp $
 
 /**
  * @file
@@ -131,7 +131,7 @@ function emaudio_podomatic_thumbnail($field, $item, $formatter, $node, $width, $
  *  @return
  *    the html of the embedded audio
  */
-function emaudio_podomatic_audio($embed, $width, $height, $field, $item, &$node, $autoplay) {
+function emaudio_podomatic_audio($embed, $width, $height, $field, $item, $node, $autoplay) {
   $output = theme('emaudio_podomatic_flash', $embed, $width, $height, $autoplay);
   return $output;
 }
@@ -152,7 +152,7 @@ function emaudio_podomatic_audio($embed, $width, $height, $field, $item, &$node,
  *  @return
  *    the html of the embedded audio
  */
-function emaudio_podomatic_preview($embed, $width, $height, $field, $item, &$node, $autoplay) {
+function emaudio_podomatic_preview($embed, $width, $height, $field, $item, $node, $autoplay) {
   $output = theme('emaudio_podomatic_flash', $embed, $width, $height, $autoplay);
   return $output;
 }

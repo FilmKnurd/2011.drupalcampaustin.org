@@ -1,5 +1,5 @@
 <?php
-// $Id: sevenload.inc,v 1.1.2.7 2008/12/19 18:17:14 aaron Exp $
+// $Id: sevenload.inc,v 1.1.2.8 2009/10/29 13:29:51 aaron Exp $
 
 /**
  * @file
@@ -105,7 +105,7 @@ function theme_emvideo_sevenload_flash($embed, $width, $height) {
  *  @return
  *    the html of the embedded video
  */
-function emvideo_sevenload_video($embed, $width, $height, $field, $item, &$node) {
+function emvideo_sevenload_video($embed, $width, $height, $field, $item, $node) {
   $output = theme('emvideo_sevenload_flash', $embed, $width, $height);
   return $output;
 }
@@ -126,7 +126,7 @@ function emvideo_sevenload_video($embed, $width, $height, $field, $item, &$node)
  *  @return
  *    the html of the embedded video
  */
-function emvideo_sevenload_preview($embed, $width, $height, $field, $item, &$node) {
+function emvideo_sevenload_preview($embed, $width, $height, $field, $item, $node) {
   $output = theme('emvideo_sevenload_flash', $embed, $width, $height);
   return $output;
 }

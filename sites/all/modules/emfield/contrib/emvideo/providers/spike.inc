@@ -1,5 +1,5 @@
 <?php
-// $Id: spike.inc,v 1.1.2.8 2008/12/19 18:17:14 aaron Exp $
+// $Id: spike.inc,v 1.1.2.9 2009/10/29 13:29:51 aaron Exp $
 
 /**
  * @file
@@ -65,12 +65,12 @@ function emvideo_spike_thumbnail($field, $item, $formatter, $node, $width, $heig
   return 'http://img1.ifilmpro.com/resize/image/stills/films/resize/istd/'. $picturelink .'.jpg?width='. $width;
 }
 
-function emvideo_spike_video($embed, $width, $height, $field, $item, &$node, $autoplay) {
+function emvideo_spike_video($embed, $width, $height, $field, $item, $node, $autoplay) {
   $output = theme('emvideo_spike_flash', $embed, $width, $height, $autoplay);
   return $output;
 }
 
-function emvideo_spike_preview($embed, $width, $height, $field, $item, &$node, $autoplay) {
+function emvideo_spike_preview($embed, $width, $height, $field, $item, $node, $autoplay) {
   $output = theme('emvideo_spike_flash', $embed, $width, $height, $autoplay);
   return $output;
 }

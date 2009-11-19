@@ -1,5 +1,5 @@
 <?php
-// $Id: youtube.inc,v 1.1.2.42 2009/10/20 13:35:43 aaron Exp $
+// $Id: youtube.inc,v 1.1.2.47 2009/10/31 00:30:24 aaron Exp $
 
 /**
  * @file
@@ -451,6 +451,7 @@ function theme_emvideo_youtube_flash($code, $width, $height, $autoplay, $options
         $data['params']['height'] = $height;
         $data['flashvars']['autostart'] = $flashvars['autostart'];
         $data['params']['allowFullScreen'] = $fullscreen_value;
+        $data['params']['wmode'] = 'transparent';
         $data['flashvars']['image'] = $flashvars['image'];
         $output = theme('flvmediaplayer_render_player', $url, $data['params'], $data['flashvars']);
       }
@@ -467,6 +468,7 @@ function theme_emvideo_youtube_flash($code, $width, $height, $autoplay, $options
       $params['height'] = $height;
       $params['div_id'] = $id;
       $params['allowFullScreen'] = $fullscreen_value;
+      $params['wmode'] = 'transparent';
       $output = theme('emfield_swfobject', $url, $params, $flashvars, $id);
     }
     else if ($use_flv) {
@@ -475,10 +477,20 @@ function theme_emvideo_youtube_flash($code, $width, $height, $autoplay, $options
       // See http://www.w3.org/TR/WCAG10-HTML-TECHS/#text-equivs-multimedia.
       unset($tn_options['return_url']);
       $noembed = theme('emvideo_video_thumbnail', NULL, $options['item'], 'emvideo_thumbnail', $options['node'], TRUE, $tn_options);
-
-      $flashvars = drupal_query_string_encode($flashvars);
+      $flv_path = url($flv_path);
+      $flashvars = check_plain(drupal_query_string_encode($flashvars));
+      // Use object tags rather than embed.
+      // See http://www.alistapart.com/articles/flashsatay
       $output = <<<FLV
-        <div id="$div_id"><embed src="$url" width="$width" height="$height" allowscriptaccess="always" allowfullscreen="$fullscreen_value" flashvars="$flashvars" /><NOEMBED>$noembed</NOEMBED></div>
+        <div id="$div_id">
+          <object
+            type="application/x-shockwave-flash" data="$flv_path"
+            width="$width" height="$height">
+            <param name="movie" value="$flv_path" />
+            <param name="flashvars" value="$flashvars" />
+            $noembed
+          </object>
+        </div>
 FLV;
     }
     else {
@@ -545,7 +557,7 @@ function emvideo_youtube_thumbnail($field, $item, $formatter, $node, $width, $he
  *  @return
  *    the html of the embedded video
  */
-function emvideo_youtube_video($code, $width, $height, $field, $item, &$node, $autoplay, $options = array()) {
+function emvideo_youtube_video($code, $width, $height, $field, $item, $node, $autoplay, $options = array()) {
   $options['item'] = $item;
   $options['node'] = $node;
   $output = theme('emvideo_youtube_flash', $code, $width, $height, $autoplay, $options);
@@ -568,7 +580,7 @@ function emvideo_youtube_video($code, $width, $height, $field, $item, &$node, $a
  *  @return
  *    the html of the embedded video
  */
-function emvideo_youtube_preview($code, $width, $height, $field, $item, &$node, $autoplay, $options = array()) {
+function emvideo_youtube_preview($code, $width, $height, $field, $item, $node, $autoplay, $options = array()) {
   $options['item'] = $item;
   $options['node'] = $node;
   $output = theme('emvideo_youtube_flash', $code, $width, $height, $autoplay, $options);

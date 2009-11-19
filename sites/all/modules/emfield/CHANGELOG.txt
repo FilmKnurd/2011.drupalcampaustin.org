@@ -1,9 +1,21 @@
-/* $Id: CHANGELOG.txt,v 1.1.2.11 2009/10/20 17:12:16 aaron Exp $ */
+/* $Id: CHANGELOG.txt,v 1.1.2.13 2009/10/29 18:29:43 aaron Exp $ */
 
 /**
  *  @file
  *  Changelog for Embedded Media Field (Drupal version 6).
  */
+
+#618272 by hutch: Fixed bug in emfield.php.
+
+================
+ DRUPAL-6--1-13
+================
+
+#612780 by cangeceiro: Fixed Error in emfield.php.
+
+================
+ DRUPAL-6--1-12
+================
 
 by aaron: Document module-provided hooks.
 by aaron: Change legacy module_invoke to directly call internal funciton.

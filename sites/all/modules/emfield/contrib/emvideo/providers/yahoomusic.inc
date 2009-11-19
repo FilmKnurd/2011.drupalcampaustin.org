@@ -1,5 +1,5 @@
 <?php
-// $Id: yahoomusic.inc,v 1.1.2.3 2009/09/28 23:23:21 aaron Exp $
+// $Id: yahoomusic.inc,v 1.1.2.4 2009/10/29 13:29:51 aaron Exp $
 
 /**
  * @file
@@ -430,7 +430,7 @@ function emvideo_yahoomusic_thumbnail($field, $item, $formatter, $node, $width, 
  *  @return
  *    the html of the embedded video
  */
-function emvideo_yahoomusic_video($embed, $width, $height, $field, $item, &$node, $autoplay) {
+function emvideo_yahoomusic_video($embed, $width, $height, $field, $item, $node, $autoplay) {
   $output = theme('emvideo_yahoomusic_flash', $embed, $width, $height, $autoplay);
   return $output;
 }

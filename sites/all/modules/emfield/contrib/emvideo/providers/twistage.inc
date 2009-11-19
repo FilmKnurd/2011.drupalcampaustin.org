@@ -1,5 +1,5 @@
 <?php
-// $Id: twistage.inc,v 1.1.2.1 2009/07/23 19:08:10 robloach Exp $
+// $Id: twistage.inc,v 1.1.2.2 2009/10/29 13:29:51 aaron Exp $
 
 /**
  * @file
@@ -136,7 +136,7 @@ function theme_emvideo_twistage_flash($embed, $width, $height, $autoplay, $item)
         <param name="allowfullscreen" value="$allowfullscreen"/>
         <param name="allowscriptaccess" value="always"/>
         <param name="base" value="http://service.twistage.com"/>
-        <param name="flashvars" value="v=$embed&config={config:{autoplay:$autoplay}}"/> 
+        <param name="flashvars" value="v=$embed&config={config:{autoplay:$autoplay}}"/>
       </object>
 TWISTAGECODE;
   }
@@ -155,14 +155,14 @@ function emvideo_twistage_thumbnail($field, $item, $formatter, $node, $width, $h
 /**
  * Implementation of hook_PROVIDER_video().
  */
-function emvideo_twistage_video($embed, $width, $height, $field, $item, &$node, $autoplay) {
+function emvideo_twistage_video($embed, $width, $height, $field, $item, $node, $autoplay) {
   return theme('emvideo_twistage_flash', $embed, $width, $height, $autoplay, $item);
 }
 
 /**
  * Implementation of hook_PROVIDER_preview().
  */
-function emvideo_twistage_preview($embed, $width, $height, $field, $item, &$node, $autoplay) {
+function emvideo_twistage_preview($embed, $width, $height, $field, $item, $node, $autoplay) {
   return theme('emvideo_twistage_flash', $embed, $width, $height, $autoplay, $item);
 }
 

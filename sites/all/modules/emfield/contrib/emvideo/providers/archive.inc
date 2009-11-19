@@ -1,5 +1,5 @@
 <?php
-// $Id: archive.inc,v 1.1.2.4 2009/09/28 22:02:40 aaron Exp $
+// $Id: archive.inc,v 1.1.2.5 2009/10/29 13:29:51 aaron Exp $
 
 /**
  * @file
@@ -366,7 +366,7 @@ function emvideo_archive_thumbnail($field, $item, $formatter, $node, $width, $he
  *  @return
  *    The html of the embedded video.
  */
-function emvideo_archive_video($embed, $width, $height, $field, $item, &$node, $autoplay) {
+function emvideo_archive_video($embed, $width, $height, $field, $item, $node, $autoplay) {
   $output = theme('emvideo_archive_flash', $item, $width, $height, $autoplay);
   return $output;
 }
@@ -389,7 +389,7 @@ function emvideo_archive_video($embed, $width, $height, $field, $item, &$node, $
  *  @return
  *    The html of the embedded video.
  */
-function emvideo_archive_preview($embed, $width, $height, $field, $item, &$node, $autoplay) {
+function emvideo_archive_preview($embed, $width, $height, $field, $item, $node, $autoplay) {
   $output = theme('emvideo_archive_flash', $item, $width, $height, $autoplay);
   return $output;
 }

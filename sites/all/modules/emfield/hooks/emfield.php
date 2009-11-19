@@ -1,5 +1,5 @@
 <?php
-// $Id: emfield.php,v 1.1.2.1 2009/10/20 17:12:16 aaron Exp $
+// $Id: emfield.php,v 1.1.2.3 2009/10/29 18:29:43 aaron Exp $
 
 /**
  *  @file
@@ -54,7 +54,7 @@ function EMMODULE_PROVIDER_info() {
     'provider' => 'example',
     'name' => t('Example.com'),
     'url' => 'http://example.com/',
-    'settings_description' => t('These settings specifically affect videos displayed from <a href="@example" target="_blank">Example.com</a>.', array('@example' => 'http://example.com'),
+    'settings_description' => t('These settings specifically affect videos displayed from <a href="@example" target="_blank">Example.com</a>.', array('@example' => 'http://example.com')),
     'supported_features' => $features,
   );
 }
@@ -81,8 +81,8 @@ function EMMODULE_PROVIDER_form($field, $item) {
  */
 function EMMODULE_PROVIDER_extract($embed, $field) {
   return array(
-    '@example\.com/video/(*+)@i'
-    '@example\.com/rss/video/(*+)@i'
+    '@example\.com/video/(*+)@i',
+    '@example\.com/rss/video/(*+)@i',
   );
 }
 

@@ -1,5 +1,5 @@
 <?php
-// $Id: emvideo.module,v 1.1.2.29 2009/09/30 15:56:48 aaron Exp $
+// $Id: emvideo.module,v 1.1.2.30 2009/10/21 16:12:36 aaron Exp $
 
 /**
  * @file
@@ -55,6 +55,14 @@ function emvideo_theme() {
       'arguments' => array('field' => NULL, 'item' => NULL, 'formatter' => NULL, 'node' => NULL, 'no_link' => FALSE, 'options' => array()),
       'file' => 'emvideo.theme.inc',
     ),
+    'emvideo_video_thumbnail_no_link' => array(
+      'arguments' => array('field' => NULL, 'item' => NULL, 'formatter' => NULL, 'node' => NULL, 'options' => array()),
+      'file' => 'emvideo.theme.inc',
+    ),
+    'emvideo_video_thumbnail_provider_link' => array(
+      'arguments' => array('field' => NULL, 'item' => NULL, 'formatter' => NULL, 'node' => NULL, 'options' => array()),
+      'file' => 'emvideo.theme.inc',
+    ),
     'emvideo_video_video' => array(
       'arguments' => array('field' => NULL, 'item' => NULL, 'formatter' => NULL, 'node' => NULL, 'options' => array()),
       'file' => 'emvideo.theme.inc',
@@ -108,6 +116,14 @@ function emvideo_theme() {
         'file' => 'emvideo.theme.inc'
     ),
     'emvideo_formatter_video_thumbnail' => array(
+        'arguments' => array('element' => NULL),
+        'file' => 'emvideo.theme.inc'
+    ),
+    'emvideo_formatter_video_thumbnail_no_link' => array(
+        'arguments' => array('element' => NULL),
+        'file' => 'emvideo.theme.inc'
+    ),
+    'emvideo_formatter_video_thumbnail_provider_link' => array(
         'arguments' => array('element' => NULL),
         'file' => 'emvideo.theme.inc'
     ),
@@ -282,8 +298,16 @@ function emvideo_field_formatter_info() {
       'label' => t('Preview Video'),
       'field types' => $types,
     ),
-    'video_thumbnail' => array(
+    'video_thumbnail_no_link' => array(
       'label' => t('Image Thumbnail'),
+      'field types' => $types,
+    ),
+    'video_thumbnail' => array(
+      'label' => t('Image Thumbnail (linked to node)'),
+      'field types' => $types,
+    ),
+    'video_thumbnail_provider_link' => array(
+      'label' => t('Image Thumbnail (linked to original video)'),
       'field types' => $types,
     ),
     'video_link' => array(
