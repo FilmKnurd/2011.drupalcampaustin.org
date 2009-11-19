@@ -1,4 +1,0 @@
-name = Promo
-description = "System for creating callout blocks with uploaded images (This By Them)."
-core = 6.x
-package = DrupalCamp
