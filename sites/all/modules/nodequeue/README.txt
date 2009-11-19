@@ -1,3 +1,4 @@
+$Id: README.txt,v 1.6 2009/10/26 15:07:49 ezrag Exp $
 The Node Queue module allows an administrator to arbitrarily put nodes in a
 group for some purpose; examples of this might be to highlight one particular
 node, as in a typical news site's Lead Article. Another use might be to create
