@@ -1,5 +1,5 @@
 <?php
-// $Id: emfield.module,v 1.12.4.45 2009/10/20 17:11:48 aaron Exp $
+// $Id: emfield.module,v 1.12.4.46 2009/11/04 21:43:34 aaron Exp $
 
 /**
  * @file
@@ -146,13 +146,13 @@ function emfield_implement_types($cached = TRUE) {
 function emfield_parse_embed($field, $embed = '', $module) {
   $providers = emfield_allowed_providers($field, $module);
   foreach ($providers as $provider) {
-    $success = emfield_include_invoke($module, $provider->name, 'extract', $embed, $field);
+    $success = emfield_include_invoke($module, $provider->name, 'extract', trim($embed), $field);
 
     // We've been given an array of regex strings, so try to find a match.
     if (is_array($success)) {
       foreach ($success as $regex) {
         $matches = NULL;
-        if (preg_match($regex, $embed, $matches)) {
+        if (preg_match($regex, trim($embed), $matches)) {
           return array('provider' => $provider->name, 'value' => $matches[1]);
         }
       }

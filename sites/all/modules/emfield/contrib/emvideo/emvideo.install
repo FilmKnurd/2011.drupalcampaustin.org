@@ -1,5 +1,5 @@
 <?php
-// $Id: emvideo.install,v 1.1.2.30 2009/10/21 16:12:36 aaron Exp $
+// $Id: emvideo.install,v 1.1.2.31 2009/11/08 23:45:30 aaron Exp $
 
 /**
  * @file
@@ -292,8 +292,7 @@ function emvideo_update_6006() {
 function emvideo_update_6007() {
   // This update was originally malformed, and did not always work properly.
   // It's now redone in 6010.
-  $ret = array();
-  return $ret;
+  return array();
 }
 
 /**
@@ -302,8 +301,7 @@ function emvideo_update_6007() {
 function emvideo_update_6008() {
   // The previous update, upon which this depended, was originally malformed,
   // and did not always work properly. It's now redone in 6011.
-  $ret = array();
-  return $ret;
+  return array();
 }
 
 /**
@@ -318,16 +316,14 @@ function emvideo_update_6009() {
  *  Botched update_6007, redo at 6013.
  */
 function emvideo_update_6010() {
-  $ret = array();
-  return $ret;
+  return array();
 }
 
 /**
- *  Botched update, redo at 6014.
+ *  Botched update, redo at 6016.
  */
 function emvideo_update_6011() {
-  $ret = array();
-  return $ret;
+  return array();
 }
 
 /**
@@ -380,9 +376,23 @@ function emvideo_update_6013() {
 }
 
 /**
- *  Add a duration column to existing fields.
+ *  Botched update, redo at 6016.
  */
 function emvideo_update_6014() {
+  return array();
+}
+
+/**
+ *  New formatters and theme functions.
+ */
+function emvideo_update_6015() {
+  return _emvideo_update_add_new_formatters();
+}
+
+/**
+ *  Add a duration column to existing fields.
+ */
+function emvideo_update_6016() {
   $ret = array();
 
   // Build a list of fields that need data updating.
@@ -418,13 +428,6 @@ function emvideo_update_6014() {
 }
 
 /**
- *  New formatters and theme functions.
- */
-function emvideo_update_6015() {
-  return _emvideo_update_add_new_formatters();
-}
-
-/**
  *  Batch function to grab the duration for each video field.
  */
 function _emvideo_update_get_duration($field, &$context) {
@@ -445,7 +448,7 @@ function _emvideo_update_get_duration($field, &$context) {
 
   // Work our way through the field values 50 rows at a time.
   $limit = 50;
-  $result = db_query_range("SELECT * FROM {{$context['sandbox']['table']}} WHERE vid > %d AND {$context['sandbox']['col_duration']} = 0 ORDER BY nid ASC", $context['sandbox']['current_node'], 0, $limit);
+  $result = db_query_range("SELECT * FROM {{$context['sandbox']['table']}} WHERE vid > %d AND {$context['sandbox']['col_duration']} = 0 ORDER BY vid ASC", $context['sandbox']['current_node'], 0, $limit);
   while ($row = db_fetch_array($result)) {
     // Fetch the duration from the provider.
     $item = array(

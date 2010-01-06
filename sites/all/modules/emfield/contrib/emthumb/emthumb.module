@@ -1,5 +1,5 @@
 <?php
-// $Id: emthumb.module,v 1.7.2.33 2009/10/30 21:12:27 aaron Exp $
+// $Id: emthumb.module,v 1.7.2.36 2009/12/07 19:41:52 aaron Exp $
 
 /**
  *  @file
@@ -12,33 +12,21 @@
  */
 function emthumb_emfield_field_extra($op, &$node, $field, &$items, $teaser, $page, $module) {
   switch ($op) {
-    case 'presave':
-    case 'update':
-    case 'insert':
-    case 'validate':
-      if ($field['multiple']) {
-        foreach ($items as $delta => $item) {
-          // @TODO: This has to be buggy... Need to test and fix this!
-          $items[$delta]['data'] = $list['provider'];
-        }
-      }
-      else {
-        if (!isset($items[0]['data']['emthumb']) && isset($items[0]['emthumb']['emthumb']['emthumb']['emthumb'])) {
-          $items[0]['data']['emthumb'] = $items[0]['emthumb']['emthumb']['emthumb']['emthumb'];
-        }
-        unset($items[0]['emthumb']);
-        if (empty($items[0]['data']['emthumb'])) {
-          $items[0]['data']['emthumb'] = emthumb_fetch_remote_thumbnail($items[0], $field);
-        }
-      }
-      break;
     case 'load':
       // Called after content.module loads default data.
       $output = array();
       if (count($items)) {
         $values = array();
         foreach ($items as $delta => $file) {
-          $items[$delta]['data']['emthumb'] = _emthumb_file_load($file['data']['emthumb']['fid']);
+          // For some weird reason this is_array() test is required to
+          // prevent php from segfaulting apache
+          $existing_data = array();
+          if (isset($file['data']) && isset($file['data']['emthumb']) && is_array($file['data']['emthumb'])) {
+            $existing_data = $file['data']['emthumb'];
+          }
+          
+          // Merge new file with existing data so we include alt tag data.
+          $items[$delta]['data']['emthumb'] = array_merge($existing_data, _emthumb_file_load($file['data']['emthumb']['fid']));
         }
         return array($field['field_name'] => $items);
       }
@@ -59,37 +47,36 @@ function emthumb_emfield_field_extra($op, &$node, $field, &$items, $teaser, $pag
         }
       }
       return $output;
-    case 'insert':
-      // Called before content.module defaults.
-      if (!$items[0]['data']['emthumb'] && $items[0]['emthumb']['emthumb']['emthumb']['emthumb']) {
-        $items[0]['data']['emthumb'] = $items[0]['emthumb']['emthumb']['emthumb']['emthumb'];
-      }
-      unset($items[0]['emthumb']);
-      foreach ($items as  $delta => $item) {
-        if (empty($item['data']['emthumb']) && $field['widget']['emthumb_store_local_thumbnail']) { // was: variable_get('emthumb_store_local_thumbnail', TRUE)) {
-          $file = emthumb_fetch_remote_thumbnail($item, $field);
-        }
-        else {
-          $file = $item['data']['emthumb'];
-        }
-        $items[$delta]['data']['emthumb'] = _emthumb_file_insert($node, $file, $field);
-      }
+    case 'validate':
+      //TODO Implement this validate function
       break;
-
+    case 'insert':
     case 'update':
       // Called before content.module defaults.
-      if (!$items[0]['data']['emthumb'] && $items[0]['emthumb']['emthumb']['emthumb']['emthumb']) {
-        $items[0]['data']['emthumb'] = $items[0]['emthumb']['emthumb']['emthumb']['emthumb'];
-        unset($items[0]['emthumb']['emthumb']['emthumb']['emthumb']);
-      }
       foreach ($items as $delta => $item) {
-        if (empty($item['data']['emthumb']) && $field['widget']['emthumb_store_local_thumbnail']) { // was: variable_get('emthumb_store_local_thumbnail', TRUE)) {
-          $file = emthumb_fetch_remote_thumbnail($item, $field);
+        if (!$items[$delta]['data']['emthumb'] && $items[$delta]['emthumb']['emthumb']['emthumb']['emthumb']) {
+          // This will delete the file if the flag is on
+          _emthumb_file_update($node, $items[$delta]['emthumb']['emthumb']['emthumb']['emthumb']['file'], $field, $items[$delta]['emthumb']['emthumb']['emthumb']['emthumb']['flags']['delete']);
+          $items[$delta]['data']['emthumb'] = $items[$delta]['emthumb']['emthumb']['emthumb']['emthumb']['file'];
         }
-        else {
-          $file = $item['data']['emthumb'];
+        
+        if (empty($items[$delta]['data']['emthumb']) && $field['widget']['emthumb_store_local_thumbnail']) { // was: variable_get('emthumb_store_local_thumbnail', TRUE)) {
+          // Fetch remote thumb because we don't have a custom one.
+          $items[$delta]['data']['emthumb'] = emthumb_fetch_remote_thumbnail($items[$delta], $field);
         }
-        $items[$delta]['data']['emthumb'] = _emthumb_file_update($node, $file, $field);
+        
+        // Add alt text and alt title if necessary.
+        if (!empty($items[$delta]['emthumb']['emthumb']['emthumb']['emthumb']['emthumb_alt'])) {
+          $items[$delta]['data']['emthumb']['emthumb_alt'] = $items[$delta]['emthumb']['emthumb']['emthumb']['emthumb']['emthumb_alt'];
+        }
+        if (!empty($items[$delta]['emthumb']['emthumb']['emthumb']['emthumb']['emthumb_title'])) {
+          $items[$delta]['data']['emthumb']['emthumb_title'] = $items[$delta]['emthumb']['emthumb']['emthumb']['emthumb']['emthumb_title'];
+        }
+        
+        if (isset($items[$delta]['emthumb'])) {
+          // We're saving in the data property so delete emthumb
+          unset($items[$delta]['emthumb']);
+        }
       }
       // Compact deltas.
       $items = array_values($items);
@@ -106,78 +93,62 @@ function emthumb_emfield_field_extra($op, &$node, $field, &$items, $teaser, $pag
 /**
  *  Process our emthumb element.
  */
-function emthumb_widget_element_process($element, $form_state) {
+function emthumb_widget_element_process($element, $edit, &$form_state) {
   $field = $element['#field'];
-  $items = $element['#items'];
+  $fieldname = $element['#fieldname'];
   $delta = $element['#delta'];
-  $fieldname = $element['#fieldname'];
-
-  $fieldname = $element['#fieldname'];
-  $field = $element['#field'];
-  // Attach new files.
-  $validators = array();
-  $filename = $source = $fieldname .'_upload';
-  if (isset($field['widget']['emimport_image_path']) && $file = file_save_upload($filename, $validators, file_create_path($field['widget']['emimport_image_path']), FILE_EXISTS_RENAME)) {
-    $file = (array)$file;
-    if (strpos($file['filemime'], 'image') !== FALSE) {
-      $file = _emthumb_scale_image($file, $field['widget']['emthumb_max_resolution']);
-
-      // Create the filepath for the image preview.
-      $filepath = file_create_filename($file['filename'], file_create_path($field['widget']['emimport_image_path']));
-
-      // If a single field, mark any other images for deletion and delete
-      // files in session.
-      if (!$field['multiple']) {
-        if (is_array($items)) {
-          foreach ($items as $delta => $session_file) {
-              $items[$delta]['data']['emthumb']['flags']['delete'] = TRUE;
-          }
-        }
-      }
+  $upload_op = 'emthumb_'. $fieldname . '_' . $delta . '_upload';
+  $filefield_name = $fieldname . '_' . $delta . '_file';
+  
+  // Get our file
+  $file = array();
+  if ($form_state['values'] && $form_state['values']['nid'] && $node = node_load($form_state['values']['nid'])) {
+    $field_data = $node->{$fieldname}[$delta];
+    if ($node->$fieldname && !empty($field_data['data']['emthumb'])) {
+      // Get saved file if we have it.
+      $file = $field_data['data']['emthumb'];
     }
   }
-
-  // Separate from tree becase of that silly things won't be
-  // displayed if they are a child of '#type' = form issue
-  $element[$fieldname .'_upload'] = array(
-    '#type'  => 'file',
-    '#description' => isset($field['widget']['emthumb_description']) ? $field['widget']['emthumb_description'] : t('If you upload a custom thumbnail, then this will be displayed when the @field thumbnail is called for, overriding any automatic thumbnails by custom providers.', array('@field' => $field['widget']['label'])),
-    '#tree' => FALSE,
-    '#weight' => 9,
-  );
-
-  $element['upload'] = array(
-    '#type' => 'button',
-    '#value' => t('Upload'),
-    '#name' => 'emthumb_'. $fieldname .'_op',
-    '#attributes' => array('id' => $fieldname .'-attach-button'),
-    '#tree' => FALSE,
-    '#weight' => 10,
-  );
-
-  // Store the file data object to be carried on.
-  $file = !empty($file) ? $file : (isset($items[$delta]['data']['emthumb']) ? $items[$delta]['data']['emthumb'] : array());
-
-  // If we have no current file, and have been told to store a local thumbnail,
-  // then fetch it now.
-  if (empty($file) && !empty($field['widget']['emthumb_store_local_thumbnail'])) {
-    $item = $items[$delta];
-    if (!empty($item['value'])) {
-      $file = emthumb_fetch_remote_thumbnail($item, $field);
-    }
+  if (!empty($form_state['storage']) && isset($form_state['storage']['emthumb']) && isset($form_state['storage']['emthumb'][$upload_op])) {
+    // Get uploaded file if we have it. Merge it with existing file to get alt text
+    $file = array_merge($file, $form_state['storage']['emthumb'][$upload_op]);
   }
-  // If we have one, display the current thumbnail and a delete checkbox.
-  if (isset($file['filepath']) && !isset($file['flags']['delete'])) {
+
+  // Do not display custom thumb stuff if we don't allow a custom thumb.
+  if ($field['widget']['emthumb']) {
+    // Separate from tree becase of that silly things won't be
+    // displayed if they are a child of '#type' = form issue
+    $element[$filefield_name] = array(
+      '#type'  => 'file',
+      '#description' => isset($field['widget']['emthumb_description']) ? $field['widget']['emthumb_description'] : t('If you upload a custom thumbnail, then this will be displayed when the @field thumbnail is called for, overriding any automatic thumbnails by custom providers.', array('@field' => $field['widget']['label'])),
+      '#tree' => FALSE,
+      '#weight' => 9,
+    );
+  
+    $element['upload'] = array(
+      '#type' => 'submit',
+      '#value' => t('Upload'),
+      '#name' => $upload_op,
+      '#attributes' => array('id' => $fieldname .'-attach-button'),
+      '#tree' => FALSE,
+      '#submit' => array('emthumb_widget_upload_button_submit'), 
+      '#weight' => 10,
+    );
+  }
+
+  if (isset($file) && isset($file['filepath'])) {
     $element['#title'] = t('Replace');
     $element['emthumb'] = array(
       '#theme' => 'emthumb_edit_image_row',
     );
-
+    
     $element['emthumb']['flags']['delete'] = array(
       '#type' => 'checkbox',
       '#title' => t('Delete'),
+      '#description' => t("Checking this field causes the thumbnail to be redownloaded, deleting the current thumbnail."),
       '#default_value' => 0,
     );
+
     $filename = $file['filepath'];
     $element['emthumb']['preview'] = array(
       '#type' => 'markup',
@@ -189,10 +160,6 @@ function emthumb_widget_element_process($element, $form_state) {
       '#value' => '<strong>'. t('Filename:') .' </strong>'. $file['filename'],
     );
 
-    $element['emthumb']['emthumb_alt'] = array(
-      '#type' => 'hidden',
-      '#value' => $file['filename'],
-    );
     // Overwrite with an input field if custom_alt is flagged.
     if ($field['widget']['emthumb_custom_alt']) {
       $element['emthumb']['emthumb_alt'] = array(
@@ -205,10 +172,6 @@ function emthumb_widget_element_process($element, $form_state) {
       );
     }
 
-    $element['emthumb']['emthumb_title'] = array(
-      '#type' => 'hidden',
-      '#value' => $file['filename'],
-    );
     // Overwrite with an input field if custom_title is flagged.
     if ($field['widget']['emthumb_custom_title']) {
       $element['emthumb']['emthumb_title'] = array(
@@ -221,27 +184,51 @@ function emthumb_widget_element_process($element, $form_state) {
       );
     }
 
-    $element['emthumb']['filename'] = array('#type' => 'value',  '#value' => $file['filename']);
-    $element['emthumb']['filepath'] = array('#type' => 'value',  '#value' => $file['filepath']);
-    $element['emthumb']['filemime'] = array('#type' => 'value',  '#value' => $file['filemime']);
-    $element['emthumb']['filesize'] = array('#type' => 'value',  '#value' => $file['filesize']);
-    $element['emthumb']['fid'] = array('#type' => 'value',  '#value' => $file['fid']);
+    $element['emthumb']['file'] = array('#type' => 'value',  '#value' => $file);
 
-    // Special handling for single value fields.
-    if (!$field['multiple']) {
-      $element['emthumb']['replace'] = array(
-        '#type' => 'markup',
-        '#value' => t('If a new custom thumbnail is chosen, the current custom thumbnail will be replaced upon submitting the form.'),
-      );
-    }
-  }
-  elseif (isset($file['filepath']) && isset($file['flags']['delete'])) {
-    $element['emthumb']['flags']['delete'] = array(
-      '#type' => 'hidden', // A value type will not persist here, must be hidden.
-      '#value' => $file['flags']['delete'],
+    // If this was an uploaded file, we need to save it. Otherwise it will be
+    // forgotten on node save
+    $element['emthumb']['replace'] = array(
+      '#type' => 'markup',
+      '#value' => $field['widget']['emthumb'] ? t('If a new custom thumbnail is chosen, the current custom thumbnail will be replaced upon submitting the form.') : '',
     );
   }
+  
+  if (isset($form_state['clicked_button']) && in_array('node_form_submit', $form_state['clicked_button']['#submit']) && isset($form_state['storage']['emthumb'])) {
+    // Form is being submitted and we want to empty our storage
+    // so we can redirect to wherever was specified
+    if (isset($form_state['storage']['emthumb'][$upload_op])) {
+      unset($form_state['storage']['emthumb'][$upload_op]);
+    }
+    if (empty($form_state['storage']['emthumb'])) {
+      unset($form_state['storage']['emthumb']);
+    }
+  }
+  
   return $element;
+}
+
+function emthumb_widget_upload_button_submit($form, &$form_state) {
+  $delta = substr($form_state['clicked_button']['#name'], strrpos($form_state['clicked_button']['#name'], '_', -(strlen('_upload')+1)) + 1, -strlen('_upload'));
+  $fieldname = substr($form_state['clicked_button']['#name'], strlen('emthumb_'), -strlen("_{$delta}_upload"));
+  $field = $form['#field_info'][$fieldname];
+  $upload_op = 'emthumb_'. $fieldname . '_' . $delta . '_upload';
+
+  $validators = array();
+  $filename = $source = $fieldname . '_' . $delta . '_file';
+  if ($file = file_save_upload($filename, $validators, file_create_path($field['widget']['emimport_image_path']), FILE_EXISTS_RENAME)) {
+    $file = (array)$file;
+    if (strpos($file['filemime'], 'image') !== FALSE) {
+      $file = _emthumb_scale_image($file, $field['widget']['emthumb_max_resolution']);
+      $form_state['storage']['emthumb'][$upload_op] = $file;
+    }
+    else {
+      form_set_error('', t("The file you uploaded was not recognized as an image. Please upload a different image type."));
+    }
+  }
+  else {
+    form_set_error('', t("There was an error uploading your file."));
+  }
 }
 
 /**
@@ -309,25 +296,29 @@ function emthumb_emfield_widget_extra_file_included() {
 function emthumb_emfield_widget_extra(&$form, &$form_state, $field, $items, $delta = 0, $module) {
   $element = array();
   // Construct the thumbnail fieldset with the custom label.
-  $emthumb_label = isset($field['widget']['emthumb_label']) ? $field['widget']['emthumb_label'] : (isset($field['widget']['label']) ? t('@field custom thumbnail', array('@field' => $field['widget']['label'])) : t('Custom thumbnail'));
-  $element['emthumb'] = array(
-    '#type' => 'fieldset',
-    '#title' => $emthumb_label,
-    '#collapsible' => TRUE,
-    '#collapsed' => ($field['widget']['emthumb_start_collapsed']),
-    '#tree' => TRUE,
-  );
-  if (isset($field['widget']['emthumb_weight'])) {
-    $element['emthumb']['#weight'] = $field['widget']['emthumb_weight'];
+  // We do not want this fieldset if there are no items
+  // and the editor can't upload a thumb
+  if ((!empty($items) && !empty($items[0]['value'])) || $field['widget']['emthumb']) {
+    $emthumb_label = isset($field['widget']['emthumb_label']) ? $field['widget']['emthumb_label'] : (isset($field['widget']['label']) ? t('@field custom thumbnail', array('@field' => $field['widget']['label'])) : t('Custom thumbnail'));
+    $element['emthumb'] = array(
+      '#type' => 'fieldset',
+      '#title' => $emthumb_label,
+      '#collapsible' => TRUE,
+      '#collapsed' => ($field['widget']['emthumb_start_collapsed']),
+      '#tree' => TRUE,
+    );
+    if (isset($field['widget']['emthumb_weight'])) {
+      $element['emthumb']['#weight'] = $field['widget']['emthumb_weight'];
+    }
+    $element['emthumb']['emthumb'] = array(
+      '#type' => 'emthumb_widget',
+      '#title' => $field['widget']['emthumb'] ? t('New upload') : '',
+      '#field' => $field,
+      '#fieldname' => $field['field_name'],
+      '#items' => $items,
+      '#delta' => $delta,
+    );
   }
-  $element['emthumb']['emthumb'] = array(
-    '#type' => 'emthumb_widget',
-    '#title' => t('New upload'),
-    '#field' => $field,
-    '#fieldname' => $field['field_name'],
-    '#items' => $items,
-    '#delta' => $delta,
-  );
   return $element;
 }
 
@@ -462,7 +453,7 @@ function _emthumb_file_insert($node, &$file, $field) {
     drupal_set_message(t('Thumbnail upload (%filename) was unsuccessful.', array('%filename' => $file['filename'])), 'error');
     return FALSE;
   }
-  return (array)$file;
+  $file = (array)$file;
 }
 
 /**
@@ -471,15 +462,16 @@ function _emthumb_file_insert($node, &$file, $field) {
  * @param $file
  * @param $field
  */
-function _emthumb_file_update($node, &$file, $field) {
+function _emthumb_file_update($node, &$file, $field, $delete = FALSE) {
   $file = (array)$file;
-  if ($file['flags']['delete'] == TRUE) {
-    if (_emthumb_file_delete($file, $field['field_name'])) {
-      return array();
-    }
+  if ($delete) {
+    _emthumb_file_delete($file, $field['field_name']);
+    $file = array();
+    return array();
   }
   if (!$file['status']) {
-    return _emthumb_file_insert($node, $file, $field);
+    _emthumb_file_insert($node, $file, $field);
+    return $file;
   }
   else {
     // if fid is not numeric here we should complain.
@@ -493,9 +485,6 @@ function _emthumb_file_delete($file, $fieldname) {
   if (is_numeric($file['fid'])) {
     db_query('DELETE FROM {files} WHERE fid = %d', $file['fid']);
   }
-//   else {
-// //     unset($_SESSION['emthumb'][$fieldname][$file['sessionid']]);
-//   }
   return file_delete($file['filepath']);
 }
 
@@ -507,7 +496,7 @@ function _emthumb_file_load($fid = NULL) {
     if (is_numeric($fid)) {
       $result = db_query('SELECT * FROM {files} WHERE fid = %d', $fid);
       $file = db_fetch_array($result);
-      return ($file) ? $file : array();
+      return ($file ? $file : array());
     }
   }
   return array();

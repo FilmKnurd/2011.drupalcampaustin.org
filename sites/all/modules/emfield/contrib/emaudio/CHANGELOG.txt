@@ -1,5 +1,10 @@
-/* $Id: CHANGELOG.txt,v 1.1.2.2 2009/10/29 13:32:55 aaron Exp $ */
+/* $Id: CHANGELOG.txt,v 1.1.2.4 2009/12/07 22:24:59 aaron Exp $ */
 
+================
+ DRUPAL-6--1-18
+================
+
+by aaron: Change hook_theme to call emfield directly rather than through module_invoke.
 #597664 by kratib: Fixed Parameter 6 to emvideo_vimeo_video() expected to be a reference, value given in /var/www/adhack/live/modules/emfield/emfield.mod.
 
 ===============

@@ -17,9 +17,9 @@ project = "pageroute"
 datestamp = "1226664644"
 
 
-; Information added by drupal.org packaging script on 2009-10-29
-version = "6.x-1.0-beta4"
+; Information added by drupal.org packaging script on 2009-12-12
+version = "6.x-1.0-beta5"
 core = "6.x"
 project = "pageroute"
-datestamp = "1256818577"
+datestamp = "1260636650"
 

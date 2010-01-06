@@ -1,4 +1,8 @@
-/* $Id: CHANGELOG.txt,v 1.1.2.2 2009/09/29 19:52:05 aaron Exp $ */
+/* $Id: CHANGELOG.txt,v 1.1.2.3 2009/12/07 22:24:59 aaron Exp $ */
+
+================
+ DRUPAL-6--1-18
+================
 
 by aaron: Implement hook_PROVIDER_data_version in picasa, flickr, imageshack.
 

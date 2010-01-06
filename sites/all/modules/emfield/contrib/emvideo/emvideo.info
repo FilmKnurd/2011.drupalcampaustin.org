@@ -7,9 +7,9 @@ core = 6.x
 dependencies[] = emfield
 package = CCK
 
-; Information added by drupal.org packaging script on 2009-10-31
-version = "6.x-1.15"
+; Information added by drupal.org packaging script on 2009-12-07
+version = "6.x-1.18"
 core = "6.x"
 project = "emfield"
-datestamp = "1256949321"
+datestamp = "1260225034"
 

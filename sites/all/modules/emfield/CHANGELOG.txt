@@ -1,9 +1,21 @@
-/* $Id: CHANGELOG.txt,v 1.1.2.13 2009/10/29 18:29:43 aaron Exp $ */
+/* $Id: CHANGELOG.txt,v 1.1.2.16 2009/12/07 22:24:59 aaron Exp $ */
 
 /**
  *  @file
  *  Changelog for Embedded Media Field (Drupal version 6).
  */
+
+================
+ DRUPAL-6--1-18
+================
+
+#625822 by deviantintegral | aaron: fix _emfield_update_fix_data() can loop
+  infinitely.
+#621792 by aaron: Fix space after youtube link.
+
+================
+ DRUPAL-6-1--15
+================
 
 #618272 by hutch: Fixed bug in emfield.php.
 

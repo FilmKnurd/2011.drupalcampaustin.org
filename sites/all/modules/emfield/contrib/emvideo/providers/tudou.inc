@@ -1,5 +1,5 @@
 <?php
-// $Id: tudou.inc,v 1.1.2.6 2009/10/29 13:29:51 aaron Exp $
+// $Id: tudou.inc,v 1.1.2.7 2009/11/19 16:34:58 aaron Exp $
 
 /**
  * @file
@@ -60,7 +60,7 @@ function emvideo_tudou_extract($embed = '') {
   // <object width="400" height="300"><param name="movie" value="http://www.tudou.com/v/uprLNXyEGpc"></param><param name="allowScriptAccess" value="always"></param><param name="wmode" value="transparent"></param><embed src="http://www.tudou.com/v/uprLNXyEGpc" type="application/x-shockwave-flash" width="400" height="300" allowFullScreen="true" wmode="transparent" allowScriptAccess="always"></embed></object>
   return array(
     '@tudou\.com/programs/view/([^"\&/]+)@i',
-    '@value="http\://www\.tudou\.com/v/([^"\&/]+)@i'
+    '@tudou\.com/v/([^"\&/]+)@i',
   );
 }
 

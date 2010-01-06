@@ -1,5 +1,5 @@
 <?php
-// $Id: pageroute.module,v 1.71.2.18 2009/10/07 09:56:47 sgilits Exp $
+// $Id: pageroute.module,v 1.71.2.20 2009/12/12 16:46:26 sgilits Exp $
 
 /**
  * @file
@@ -50,8 +50,8 @@ function pageroute_menu() {
           'title' => $page->name,
           'page callback' => 'drupal_get_form',
           'page arguments' => array('pageroute_form', (string)$route_data->prid, $page->name, 2, 3),
-          'access callback' =>  'pageroute_access',
-          'access arguments' => array((string)$route_data->prid),
+          'access callback' =>  'pageroute_page_access',
+          'access arguments' => array((string)$route_data->prid, (string)$page->name),
           'type' => MENU_LOCAL_TASK,
           'file' => 'pageroute.route.inc',
           'weight' => $page->weight
@@ -76,7 +76,7 @@ function pageroute_menu() {
  * Implementation of pageroute_show_route()
  * Init route object and return current form
  */
-function pageroute_init_route($prid, $page_name = NULL, $uid = NULL, $nid = NULL) {
+function pageroute_init_route($prid, $uid = NULL, $nid = NULL) {
   $args = array();
 
   if (is_numeric($uid)) {
@@ -88,7 +88,6 @@ function pageroute_init_route($prid, $page_name = NULL, $uid = NULL, $nid = NULL
   }
 
   $route = &PagerouteRoute::load($prid);
-  $route->start($page_name);
   $route->args = &$args;
 
   return $route;
@@ -101,11 +100,14 @@ function pageroute_form(&$form_state, $prid = NULL, $page_name = NULL, $uid = NU
   global $user;
 
   if (!isset($form_state['storage']['route'])) {   // first call
-    $route = &pageroute_init_route($prid, $page_name, $uid, $nid);
+    $route = &pageroute_init_route($prid, $uid, $nid);
+    module_invoke_all('pageroute_view',  $route, $user, $uid, $nid);
+    $route->start($page_name);
     $form_state['storage']['route'] = &$route;
   }
   else {
     $route = &$form_state['storage']['route'];
+    module_invoke_all('pageroute_view',  $route, $user, $uid, $nid);
   }
 
   unset($form_state['values']);
@@ -123,12 +125,10 @@ function pageroute_form(&$form_state, $prid = NULL, $page_name = NULL, $uid = NU
   drupal_add_css($path, 'module', 'all', FALSE);
 
   if (isset($form_state['target'])) {
-    $route->setSuggestedPage($form_state['target'], $form_state['clicked_button']['#tab-button']);
+    $route->setSuggestedPage($form_state['target']);
 
     $uid = isset($args['uid']) ? $args['uid'] : NULL;
     $nid = isset($args['nid']) ? $args['nid'] : NULL;
-
-    module_invoke_all('pageroute_view',  $route, $user, $uid, $nid);
 
     $page_data = &$route->pageDataCurrent;
     $page_name = $page_data->name;
@@ -340,7 +340,7 @@ function pageroute_page_tab_submit($form, &$form_state) {
 }
 
 /**
- * Check if the user has access to a page
+ * Check if the user has access to a pageroute
  */
 function pageroute_access($prid) {
   global $user;
@@ -348,6 +348,17 @@ function pageroute_access($prid) {
   $route = PagerouteRoute::load($prid);
 
   return isset($route->options['access']['allowed_roles']) && array_intersect(array_keys($user->roles), $route->options['access']['allowed_roles']) ? TRUE : FALSE;
+}
+
+/**
+ * Check if the user has access to a page.
+ */
+function pageroute_page_access($prid, $pageId) {
+  global $user;
+  include_once(drupal_get_path('module', 'pageroute') .'/pageroute.route.inc');
+  $route = PagerouteRoute::load($prid);
+  module_invoke_all('pageroute_view',  $route, $user, NULL, NULL);
+  return (!isset($route->pageAccess[$pageId]) ? TRUE : $route->pageAccess[$pageId]);
 }
 
 /**
@@ -597,24 +608,6 @@ function pageroute_add_buttons(&$form, &$page, $button_name = 'page_op') {
   if ($access = user_access('administer pageroutes') && module_exists('pageroute_ui')) {
     $form['bottom']['admin'] = theme('pageroute_admin_bottom', $page->route);
   }
-}
-
-/**
- * Themes the tab-like submit buttons of a route.
- * @param $elements The form elements of the tabs
- */
-function pageroute_theme() {
-  return array(
-    'pageroute_route_tabs' => array(
-      'arguments' => array('content')
-    ),
-    'pageroute_embedded_form_reuse' => array(
-      'arguments' => array('elements' => NULL)
-    ),
-    'pageroute_admin_bottom' => array(
-      'arguments' => array('page' => NULL)
-    )
-  );
 }
 
 function theme_pageroute_route_tabs($elements) {

@@ -1,5 +1,5 @@
 <?php
-// $Id: emaudio.module,v 1.1.4.22 2009/08/25 02:45:50 aaron Exp $
+// $Id: emaudio.module,v 1.1.4.23 2009/11/19 16:54:40 aaron Exp $
 
 /**
  * @file
@@ -385,7 +385,7 @@ function emaudio_theme() {
       'file' => 'emaudio.theme.inc'
     ),
   );
-  $themes += module_invoke('emfield', 'provider_themes', 'emaudio');
+  $themes += emfield_provider_themes('emaudio');
 
   return $themes;
 }

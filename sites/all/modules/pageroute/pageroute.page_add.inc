@@ -1,10 +1,12 @@
 <?php
-// $Id: pageroute.page_add.inc,v 1.1.2.12 2009/10/17 11:49:19 sgilits Exp $
+// $Id: pageroute.page_add.inc,v 1.1.2.13 2009/11/07 13:32:09 sgilits Exp $
 
 /**
  * @file
  * Page add type
  */
+
+include_once(drupal_get_path('module', 'pageroute') .'/pageroute.route.inc');
 
 /**
  * PageroutePageAdd displays a node adding form.

@@ -1,5 +1,5 @@
 <?php
-// $Id: emfield.install,v 1.1.6.12 2009/10/05 19:05:10 aaron Exp $
+// $Id: emfield.install,v 1.1.6.14 2009/11/08 13:19:00 aaron Exp $
 
 /**
  * @file
@@ -54,9 +54,24 @@ function emfield_update_6002() {
 }
 
 /**
- *  Add a provider data version column to existing fields.
+ *  This caused an infinite loop in some cases. Redo in 6005.
  */
 function emfield_update_6003() {
+  return array();
+}
+
+/**
+ *  Rebuild themes.
+ */
+function emfield_update_6004() {
+  drupal_rebuild_theme_registry();
+  return array();
+}
+
+/**
+ *  Add a provider data version column to existing fields.
+ */
+function emfield_update_6005() {
   $ret = array();
 
   include_once(drupal_get_path('module', 'content') .'/includes/content.admin.inc');
@@ -133,14 +148,6 @@ function emfield_update_6003() {
 }
 
 /**
- *  Rebuild themes.
- */
-function emfield_update_6004() {
-  drupal_rebuild_theme_registry();
-  return array();
-}
-
-/**
  *  Batch function to retrieve the most recent data from providers.
  *
  *  @param $field
@@ -180,12 +187,17 @@ function _emfield_update_fix_data($field, $providers = array(), $old_data_keys =
   }
 
   // Work our way through the field values 50 rows at a time.
-  $limit = 50;
+  // Note that if PHP times out here, you can set the
+  // emfield_install_fix_data_rows variable in settings.php to a lower number.
+  // If you get this error, please report it so we can find a better limit
+  // to work with; I'm not sure if this value will work in the majority of
+  // cases. Thanks, Aaron.
+  $limit = variable_get('emfield_install_fix_data_rows', 50);
   if (empty($context['sandbox']['providers'])) {
-    $result = db_query_range("SELECT * FROM {{$context['sandbox']['table']}} WHERE vid > %d ORDER BY nid ASC", $context['sandbox']['current_node'], 0, $limit);
+    $result = db_query_range("SELECT * FROM {{$context['sandbox']['table']}} WHERE vid > %d ORDER BY vid ASC", $context['sandbox']['current_node'], 0, $limit);
   }
   else {
-    $result = db_query_range("SELECT * FROM {{$context['sandbox']['table']}} WHERE vid > %d AND ". $context['sandbox']['col_provider'] ." in (". $context['sandbox']['provider_placeholders'] .") ORDER BY nid ASC", $context['sandbox']['current_node'], implode(', ', $context['sandbox']['providers']), 0, $limit);
+    $result = db_query_range("SELECT * FROM {{$context['sandbox']['table']}} WHERE vid > %d AND ". $context['sandbox']['col_provider'] ." in (". $context['sandbox']['provider_placeholders'] .") ORDER BY vid ASC", $context['sandbox']['current_node'], implode(', ', $context['sandbox']['providers']), 0, $limit);
   }
   while ($row = db_fetch_array($result)) {
     // Fetch the duration from the provider.

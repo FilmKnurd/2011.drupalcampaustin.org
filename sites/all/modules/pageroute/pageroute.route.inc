@@ -1,5 +1,5 @@
 <?php
-// $Id: pageroute.route.inc,v 1.1.2.11 2009/09/15 10:07:55 fago Exp $
+// $Id: pageroute.route.inc,v 1.1.2.14 2009/12/12 16:46:26 sgilits Exp $
 /**
  * @file
  * Route
@@ -23,6 +23,7 @@ class PagerouteRoute {
     $this->path = $route_data->path;
     $this->options = $route_data->options;
     $this->pages = $route_data->pages;
+    $this->pageAccess = array();
 
     foreach ($this->pages as $page) {
       $page->route = &$this;
@@ -41,30 +42,24 @@ class PagerouteRoute {
   public static function load($prid, $reset = FALSE) {
     static $allroutes;
 
-    if (!isset($allroutes) || $reset) {
-      $allroutes = (array)cache_get('pageroute');
-    }
-
-    $allroutes_data = isset($allroutes['data']) ? (array)$allroutes['data'] : array();
-
-    if (isset($allroutes_data[$prid])) {
-      $route_data = $allroutes_data[$prid];
-    }
-    else {
-      $route_data = PagerouteRoute::loadFromDatabase($prid);
-
-      if (!$route_data) {
-        return FALSE;
+    if (!isset($allroutes) || $reset || !isset($allroutes[$prid])) {
+      $cache = cache_get('pageroute');
+      if (!$reset && !empty($cache->data) && isset($cache->data[$prid])) {
+        $allroutes = $cache->data;
       }
+      else {
+        $route_data = PagerouteRoute::loadFromDatabase($prid);
+  
+        if (!$route_data) {
+          return FALSE;
+        }
+        $allroutes[$prid] = $route_data;
 
-      $allroutes_data[$prid] = $route_data;
-      $allroutes['data'] = $allroutes_data;
-
-      cache_set('pageroute', $allroutes);
+        cache_set('pageroute', $allroutes);
+      }
     }
-
-    $route = new PagerouteRoute($route_data);
-
+    
+    $route = new PagerouteRoute($allroutes[$prid]);
     drupal_alter('pageroute', $route);
 
     return $route;
@@ -118,23 +113,24 @@ class PagerouteRoute {
    * Default page if no page was specified or access denied to specified page
    * else specified page
    */
-  public function setSuggestedPage($target = PAGEROUTE_CURRENT, $button_name = NULL) {
+  public function setSuggestedPage($target = PAGEROUTE_CURRENT, $page_name = NULL) {
     $page = &$this->pageDataCurrent;
 
     if ($page) {
-      if (isset($button_name)) {
-        $page_next = &$this->getPage($button_name, $target);
+      if (!isset($page_name)) {
+        $page_name = $page->name;
       }
-      else {
-        $page_next = &$this->getPage($page->name, $target);
-      }
-
-      if ($page_next) {
-        if (empty($this->pageAccess) || $this->pageAccess[$page_next->name]) {
-          $this->pageDataPrevious = &$this->pageDataCurrent;
-          $this->pageDataCurrent = &$page_next;
+      $i = 0;
+      do {
+        $this->pageDataPrevious = &$this->pageDataCurrent;
+        $this->pageDataCurrent = &$this->getPage($page_name, $target);
+        $name = $this->pageDataCurrent;
+        $page_name = $this->pageDataCurrent->name;
+        $i++;
+        if ($i>2) {
+          break;
         }
-      }
+      } while (isset($this->pageAccess[$page->name]) && $this->pageAccess[$this->pageDataCurrent->name]==FALSE);
     }
     else {
       $this->pageDataPrevious = &$this->pageDataCurrent;
@@ -150,7 +146,7 @@ class PagerouteRoute {
    */
   private function getDefaultPage() {
     foreach ($this->pages as $page) {
-      if (empty($this->pageAccess) || $this->pageAccess[$page->name]) {
+      if (empty($this->pageAccess) || $this->pageAccess[$page->name]!=FALSE || !isset($this->pageAccess[$page->name])) {
         return $page;
       }
     }

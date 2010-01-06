@@ -1,9 +1,23 @@
-/* $Id: CHANGELOG.txt,v 1.1.2.37 2009/10/31 00:30:24 aaron Exp $ */
+/* $Id: CHANGELOG.txt,v 1.1.2.43 2009/12/07 22:24:59 aaron Exp $ */
 
 /**
  *  @file
  *  Changelog for Embedded Video Field (emvideo).
  */
+
+================
+ DRUPAL-6--1-18
+================
+
+#612406 by cityreader: Fix RegEx pattern bug in provider Tudou.
+by aaron: Add wmode transparent to YouTube w/ raw flvplayer.
+by aaron: Add Kitten Killers to YouTube devel generate...
+#601944 by aaron: Fix EM Video 1.4 -> 1.11 update stuck.
+by aaron: Add name to youtube object w/ raw flvmediaplayer to avoid IE error.
+
+================
+ DRUPAL-6--1-15
+================
 
 by aaron: Valid W3 code for youtube flashparams when using w/ flv player.
 
