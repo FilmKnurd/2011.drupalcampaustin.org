@@ -116,6 +116,13 @@
         <?php endif; ?>
       </div>
 
+      <!-- Embedded video -->
+      <?php if ($field_session_video_rendered): ?>
+        <div class="grid-10 alpha omega">
+          <?php print $field_session_video_rendered; ?>
+        </div>
+      <?php endif; ?>
+
     </div> <!-- /.session-wrapper -->
   
     <?php if ($links): ?>
