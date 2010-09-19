@@ -4,7 +4,7 @@
 
 RewriteEngine on
 RewriteCond %{HTTP_HOST} ^(www\.)?(austincamp|austindrupalcamp)\.(org|com|net)$ [NC]
-RewriteRule ^(.*)$ http://drupalcampaustin.org/ [L,R=307]
+RewriteRule ^(.*)$ http://drupalcampaustin.org/ [L,R=301]
 RewriteCond %{HTTP_HOST} ^(www\.)?drupalcampaustin\.com$ [NC]
 RewriteRule ^(.*)$ http://drupalcampaustin.org/ [L,R=301]
 RewriteCond %{HTTP_HOST} ^www.drupalcampaustin.org$ [NC]
