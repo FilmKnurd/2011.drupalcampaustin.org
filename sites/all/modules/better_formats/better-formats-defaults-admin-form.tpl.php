@@ -1,5 +1,5 @@
 <?php
-// $Id: better-formats-defaults-admin-form.tpl.php,v 1.3.2.6 2009/06/05 23:28:55 dragonwize Exp $
+// $Id: better-formats-defaults-admin-form.tpl.php,v 1.3.2.7 2009/09/27 14:27:13 dragonwize Exp $
 
 /**
  * @file
@@ -77,7 +77,6 @@
 <?php if ($_GET['q'] === 'admin/settings/filters/defaults'): ?>
 <fieldset>
   <legend><strong><?php print t('Block defaults'); ?></strong></legend>
-  <div class="description"><?php print t('Only roles that have the "administer blocks" permission are shown.'); ?></div>
   <?php if (isset($block_default_rows)): ?>
     <table id="block-format-defaults">
       <thead>
