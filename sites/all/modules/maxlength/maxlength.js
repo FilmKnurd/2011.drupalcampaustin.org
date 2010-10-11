@@ -1,39 +1,55 @@
-/* $Id: maxlength.js,v 1.1.6.6 2008/09/29 00:14:48 acm Exp $ */
+/* $Id: maxlength.js,v 1.1.6.6.2.13 2010/06/27 07:44:50 dereine Exp $ */
 
-Drupal.maxLength_limit = function (field) {
-  var limit = field.attr("limit");
+Drupal.maxLength_limit = function (field, maxlength) {
 
   // calculate the remaining count of chars
-  var remainingCnt = limit - field.val().length;
+  var limit = maxlength.limit;
+  var length = field.val().length;
+  var remainingCount = limit - length;
 
   // if there is not remaining char, we clear additional content
-  if (remainingCnt < 0) {
+  if (remainingCount < 0) {
     field.val(field.val().substr(0, limit));
     remainingCnt = 0;
   }
 
-  // update the remaing chars text
-  $('#maxlength-'+field.attr('id').substr(5) + ' span.maxlength-counter-remaining').html(remainingCnt.toString());
+  // Update the remaing chars text.
+  maxlength.span_remaining_count.html(remainingCount.toString());
+  // And the current count.
+  if (maxlength.show_count) {
+    maxlength.span_count.html(length.toString());
+  }
 }
 
-Drupal.maxLength_change = function () {
-  var element = $(this);
-  Drupal.maxLength_limit($(this), $(this).attr("limit"));
-}
+Drupal.behaviors.maxlength = function (context) {
+  // Get all the settings, and save the limits in the fields.
+  var maxlength = {};
+  var element = {};
+  var limit = 50;
+  for (var id in Drupal.settings.maxlength) {
+    limit = Drupal.settings.maxlength[id];
+    element = $("#"+ id);
+    maxlength = $('#maxlength-' + element.attr('id').substr(5));
 
-if (Drupal.jsEnabled) {
-  $(document).ready(function(){
-    // get all the settings, and save the limits in the fields
-    for (var id in Drupal.settings.maxlength) {
-      var limit = Drupal.settings.maxlength[id];
-      var element = $("#"+ id);
-      element.attr("limit", limit);
-      // update the count at the page load
-      Drupal.maxLength_limit(element);
+    maxlength.limit = limit;
+    maxlength.show_count = false;
+    maxlength.span_remaining_count = maxlength.find('span.maxlength-counter-remaining');
+    maxlength.find('span.maxlength-count', function() {
+      maxlength.show_count = true;
+      maxlength.span_count = maxlength.find('span.maxlength-count');
+    });
 
-      element.load(Drupal.maxLength_change);
-      element.keyup(Drupal.maxLength_change);
-      element.change(Drupal.maxLength_change);
-    }
-  });
+    // Update the count at the page load.
+    Drupal.maxLength_limit(element, maxlength);
+
+    element.load(function() {
+      Drupal.maxLength_limit(element, maxlength);
+    });
+    element.keyup(function() {
+      Drupal.maxLength_limit(element, maxlength);
+    });
+    element.change(function() {
+      Drupal.maxLength_limit(element, maxlength);
+    });
+  }
 }

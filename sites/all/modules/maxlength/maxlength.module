@@ -1,5 +1,5 @@
 <?php
-// $Id: maxlength.module,v 1.11.4.11.2.6 2009/06/06 17:53:32 dereine Exp $
+// $Id: maxlength.module,v 1.11.4.11.2.12 2010/06/26 20:48:06 dereine Exp $
 /**
  * @file
  * Module to enable a max length countdown on node body and title.
@@ -59,7 +59,9 @@ function _maxlength_content_form_alter(&$form, &$form_state, $form_id) {
   _maxlength_format_element($form['title'], $form['title']['#default_value'], 'title', 'title', $type);
 
   // Update the body as needed
-  _maxlength_format_element($form['body_field']['body'], $form['body_field']['body']['#default_value'], 'body', 'body', $type);
+  if (isset($form['body_field']['body'])) {
+    _maxlength_format_element($form['body_field']['body'], $form['body_field']['body']['#default_value'], 'body', 'body', $type);
+  }
 
 
   if (module_exists('content')) {
@@ -70,7 +72,9 @@ function _maxlength_content_form_alter(&$form, &$form_state, $form_id) {
     foreach ($list as $field) {
       if (is_array($form[$field])) {
         foreach (element_children($form[$field]) as $key) {
-          _maxlength_format_element($form[$field][$key], $form[$field][$key]['value'], $field, str_replace('_', '-', $field) .'-'. $key .'-value', $type);
+          if ($form[$field][$key]['#type'] == 'text_textarea') {
+            _maxlength_format_element($form[$field][$key], $form[$field][$key]['#default_value']['value'], $field, str_replace('_', '-', $field) .'-'. $key .'-value', $type);
+          }
         }
       }
     }
@@ -89,7 +93,7 @@ function _maxlength_content_type_form_alter(&$form, &$form_state, $form_id) {
     $form['submission'][MAXLENGTH_NODE_TYPE . $label] = array(
       '#type' => 'fieldset',
       '#weight' => $weight,
-      '#title' => t('Limit !type length', array('!type ' => $label)),
+      '#title' => t('Limit !type  length', array('!type ' => $label)),
       '#collapsible' => TRUE,
       '#collapsed' => strlen(variable_get($type .'_'. $label, '')) == 0,
     );
@@ -114,7 +118,7 @@ function _maxlength_content_type_form_alter(&$form, &$form_state, $form_id) {
       '#type' => 'textarea',
       '#title' => t('!label count down message', array('!label' => ucwords($label))),
       '#default_value' => variable_get(MAXLENGTH_NODE_TYPE . $label .'_text_'. $type, 'Content limited to !limit characters, remaining: <strong>!remaining</strong>'),
-      '#description' => t('The text used in the Javascript message under the !type input, where "!limit" and "!remaining" are replaced by the appropriate numbers.', array('!type' => $label)),
+      '#description' => t('The text used in the Javascript message under the !type input, where "!limit", "!remaining" and "!count" are replaced by the appropriate numbers.', array('!type' => $label)),
     );
   }
 }
@@ -137,7 +141,7 @@ function _maxlength_cck_form_alter(&$form, &$form_state, $form_id) {
           '#type' => 'textarea',
           '#title' => t('Count down message'),
           '#default_value' => variable_get(MAXLENGTH_NODE_TYPE . $form['field_name']['#value'] .'_text', 'Content limited to !limit characters, remaining: <strong>!remaining</strong>'),
-          '#description' => t('The text used in the Javascript message under the input, where "!limit" and "!remaining" are replaced by the appropriate numbers.'),
+          '#description' => t('The text used in the Javascript message under the input, where "!limit", "!remaining" and "!count" are replaced by the appropriate numbers.'),
         );
       }
     }
@@ -172,7 +176,7 @@ function _maxlength_cck_form_submit($form, &$form_state) {
  *   Could this all be done without drupal_add_js and just theming of the form element.
  *   Can we use a theme function to let alter the placement of the maxlength text.
  */
-function _maxlength_format_element(&$element, $value = '', $field, $id, $type = '') {
+function _maxlength_format_element(&$element, $value, $field, $id, $type = '') {
   $values = _maxlength_get_values($field, $type);
 
   if ($values !== FALSE AND isset($values['limit']) AND $values['limit'] AND $values['use_js']) {
@@ -202,7 +206,7 @@ function _maxlength_format_element(&$element, $value = '', $field, $id, $type = 
     );
     drupal_add_js($js_settings, 'setting');
     $element['#suffix'] = '<div id="maxlength-'. $id .'"
-      class="maxlength-counter">'. t($values['text'], array('!limit' => $values['limit'], '!remaining' => '<span class="maxlength-counter-remaining">'. $remaining .'</span>')) .'</div>';
+      class="maxlength-counter">'. t($values['text'], array('!limit' => $values['limit'], '!count' =>'<span class="maxlength-count">'. drupal_strlen($value).'</span>', '!remaining' => '<span class="maxlength-counter-remaining">'. $remaining .'</span>')) .'</div>';
   }
 }
 
@@ -245,7 +249,12 @@ function maxlength_nodeapi(&$node, $op, $a3 = NULL, $a4 = NULL) {
       switch ($op) {
         case 'validate':
           $form = $a3;
-          if (drupal_strlen($node->$field) > $limit) {
+          // line breaks can be stored 2 or more chars, breaking the count.
+          $text = $node->$field;
+          $text = str_replace("\r\n", '#', $text); 
+          $text = str_replace("\n", '#', $text); 
+          $text = str_replace("\r", '#', $text);
+          if (drupal_strlen($text) > $limit) {
             form_set_error($field, t('The !field field has exceeded its maximum number of characters (!limit).', array('!limit' => $limit, '!field' => $field)));
           }
           break;
