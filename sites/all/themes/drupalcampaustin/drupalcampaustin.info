@@ -4,10 +4,16 @@ screenshot  = drupalcampaustin-preview.png
 core        = 6.x
 engine      = phptemplate
 
+; Remove core and contrib stylesheets
+stylesheets[all][] = user.css
+stylesheets[all][] = content_profile.css
+
 ; Stylesheets
 stylesheets[all][] = styles/reset.css
 stylesheets[all][] = styles/grid.css
 stylesheets[all][] = styles/style.css
+stylesheets[all][] = styles/user.css
+stylesheets[all][] = styles/content_profile.css
 stylesheets[all][] = styles/session-vote.css
 
 ; Stylesheets: Print

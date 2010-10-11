@@ -60,7 +60,7 @@
       <?php endif; ?>
 
       <div class="content">
-        <?php print $content; ?>
+        <?php print $field_profile_bio_rendered; ?>
       </div>
 
       <?php if ($profile_skills): ?>

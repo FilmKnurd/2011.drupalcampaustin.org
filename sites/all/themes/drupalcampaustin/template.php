@@ -72,13 +72,6 @@ function drupalcampaustin_preprocess_node(&$vars) {
 }
 
 function drupalcamp_preprocess_node_profile(&$vars, $node, $node_author) {
-  // Leave a helpful message for the user if they are viewing their own
-  // profile page
-  if ($vars['is_my_node']) {
-    drupal_set_message(t('You are viewing your <strong>profile page</strong>, which is publicly visible. You can change this information by clicking the !edit link above.', array('!edit' => l(t('edit'), 'node/' . $node->nid . '/edit'), )));
-    drupal_set_message(t('If you need to change account information (password, email address, etc.), you should visit !youraccountpage, which is not publicly visible.', array('!youraccountpage' => l(t('your account page'), 'user/' . $user->uid))));
-  }
-
   // Build a list of roles
   $roles = array();
   if (in_array('organizer', $node_author->roles)) {
@@ -303,14 +296,6 @@ function drupalcampaustin_preprocess_flag(&$vars) {
 function drupalcampaustin_profile_action_links($profile_node) {
   $profile_action_links = array();
 
-  if (drupalcampaustin_library_user_has_role('admin')) {
-    $profile_action_links[] = l(t('View account'), 'user/' . $profile_node->uid, array('attributes' => array('title' => t('View @name\'s account', array('@name' => $profile_node->title)))));
-  }
-
-  if (arg(1) != $profile_node->nid) {
-    $profile_action_links[] = l(t('View profile'), 'node/' . $profile_node->nid, array('attributes' => array('title' => t('View @name\'s profile', array('@name' => $profile_node->title)))));
-  }
-
   $profile_action_links[] = l(t('Contact'), 'user/' . $profile_node->uid . '/contact', array('attributes' => array('title' => t('Contact @name', array('@name' => $profile_node->title)))));
 
   return theme('item_list', $profile_action_links);
@@ -366,22 +351,17 @@ function drupalcampaustin_username($object) {
 
     // BEGIN CUSTOMIZATIONS
     $user = user_load($object->uid);
-    if ($user->has_profile) {
-      $name = $user->profile->title;
+    $name = $user->profile->title;
 
-      if ($name[strlen($name) - 1] == 's') {
-        $title_text = t("View @name' profile", array('@name' => $name));
-      }
-      else {
-        $title_text = t("View @name's profile", array('@name' => $name));
-      }
-
-      $output = l($name, 'node/'. $user->profile->nid, array('attributes' => array('title' => $title_text)));
+    if ($name[strlen($name) - 1] == 's') {
+      $title_text = t("View @name' profile", array('@name' => $name));
     }
-    // END CUSTOMIZATIONS
     else {
-      $output = check_plain($name);
+      $title_text = t("View @name's profile", array('@name' => $name));
     }
+
+    $output = l($name, 'node/'. $user->profile->nid, array('attributes' => array('title' => $title_text)));
+    // END CUSTOMIZATIONS
   }
   else if ($object->name) {
     // Sometimes modules display content composed by people who are
