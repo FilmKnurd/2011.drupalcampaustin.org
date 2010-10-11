@@ -1,5 +1,28 @@
 <?php
 
+/*
+ * Define constants.
+ */
+define('PRODUCT_REGISTRATION_NID', 340);
+define('PRODUCT_PARKING_VENUE_NID', 342);
+define('PARKING_OFFER_NID', 345);
+
+
+/**
+ * Implementation of hook_menu_alter().
+ */
+function drupalcampaustin_library_menu_alter(&$items) {
+//  krumo($items);
+
+  // Move /user/register to /register.
+  $items['register'] = $items['user/register'];
+  unset($items['user/register']);
+
+  // Change the menu title.
+  $items['register']['title'] = 'Register';
+}
+
+
 /**
  * Implementation of hook_block().
  */
@@ -44,22 +67,15 @@ function drupalcampaustin_library_block($op = 'list', $delta = 0, $edit = array(
   }
 }
 
+
+/*
+ */
 function drupalcampaustin_library_block_header_links($user) {
   $links = array();
 
   // Is the user logged in?
   if ($user->uid != 0) {
     $links[] = l(t('My account'), 'user/' . $user->uid);
-
-    // Has the user created a profile page?
-    if ($user->has_profile) {
-      // See drupal_get_destination() if we want to add a destination query
-      // http://api.drupal.org/api/function/drupal_get_destination/6
-      $links[] = l(t('My profile page'), 'node/' . $user->profile->nid);
-    }
-    else {
-      $links[] = l(t('Create my profile page'), 'node/add/profile');
-    }
 
     if (!$user->has_registered) {
       // Add a "cart" link if the user is mid-checkout
@@ -73,7 +89,7 @@ function drupalcampaustin_library_block_header_links($user) {
   }
   else {
     $links[] = l(t('Log in'), 'user/login');
-    $links[] = l(t('Register'), 'user/register');
+    $links[] = l(t('Register'), 'register');
   }
 
   $output = '';
@@ -88,6 +104,9 @@ function drupalcampaustin_library_block_header_links($user) {
   return $output;
 }
 
+
+/*
+ */
 function drupalcampaustin_library_block_header_ribbon($user) {
   $path = '/' . drupal_get_path('theme', 'drupalcampaustin') . '/images/';
 
@@ -97,40 +116,25 @@ function drupalcampaustin_library_block_header_ribbon($user) {
   // Is the user logged in?
   if ($user->uid != 0) {
 
-    // Has the user finished everything?
-    if ($user->has_profile && $user->has_registered) {
+    // Has the user registered?
+    if ($user->has_registered) {
       $output .= '<img src="' . $path . 'header-ribbon-done.png" class="steps" alt="' . t("You're done!") . '" />';
     }
     else {
       $output .= '<img src="' . $path . 'header-ribbon-step1-done.png" class="steps" alt="' . t('Create account: Done!') . '" />';
+      $output .= l('<img src="' . $path . 'header-ribbon-step3.png" alt="' . t('Register') . '" />', 'node/' . PRODUCT_REGISTRATION_NID, array('html' => TRUE, 'attributes' => array('title' => t('Register'))));
 
-      // Has the user created a profile page?
-      if ($user->has_profile) {
-        $output .= '<img src="' . $path . 'header-ribbon-step2-done.png" class="steps" alt="' . t('Create profile: Done!') . '" />';
-      }
-      else {
-        $output .= l('<img src="' . $path . 'header-ribbon-step2.png" class="steps" alt="' . t('Create profile') . '" />', 'node/add/profile', array('html' => TRUE, 'attributes' => array('title' => t('Create profile'))));
-      }
-
-      // Has the user registered?
-      if ($user->has_registered) {
-        $output .= '<img src="' . $path . 'header-ribbon-step3-done.png" alt="' . t('Registration: Done!') . '" />';
-      }
-      else {
-        $output .= l('<img src="' . $path . 'header-ribbon-step3.png" alt="' . t('Register') . '" />', 'node/2', array('html' => TRUE, 'attributes' => array('title' => t('Register'))));
-        
-        // Add a persistent message reminding users to register
-        // node/2 == Product page
-        // cart == Any shopping cart page
-        $path = $_GET['q'];
-        if (($path != 'node/add/profile') && ($path != 'node/2') && (arg(0) != 'cart')) {
-          drupal_set_message(t('<strong>Don\'t forget to !register!</strong>', array('!register' => l(t('register to attend DrupalCamp Austin 2009'), 'node/2'), )));
-        }
+      // Add a persistent message reminding users to register
+      // node/PRODUCT_REGISTRATION_NID == Product page
+      // cart == Any shopping cart page
+      $path = $_GET['q'];
+      if (($path != 'node/add/profile') && ($path != 'node/' . PRODUCT_REGISTRATION_NID) && (arg(0) != 'cart')) {
+        drupal_set_message(t('<strong>Don\'t forget to !register!</strong>', array('!register' => l(t('register to attend DrupalCamp Austin 2010'), 'node/' . PRODUCT_REGISTRATION_NID), )));
       }
     }
   }
   else {
-    $output .= l('<img src="' . $path . 'header-ribbon-register.png" class="steps" alt="' . t('Register') . '" />', 'user/register', array('html' => TRUE, 'attributes' => array('title' => t('Register'))));
+    $output .= l('<img src="' . $path . 'header-ribbon-register.png" class="steps" alt="' . t('Register') . '" />', 'register', array('html' => TRUE, 'attributes' => array('title' => t('Register'))));
   }
 
   $output .= '</div>';
@@ -138,13 +142,15 @@ function drupalcampaustin_library_block_header_ribbon($user) {
   return $output;
 }
 
+
+/*
+*/
 function drupalcampaustin_library_block_user_stats($user) {
   $display_views = array(
     'internal_users_registered',
     'internal_users_registered_free',
     'internal_users_unregistered',
-    'internal_users_vegetarian',
-    'internal_users_vegan',
+    // TODO: Add dietary and special needs views
   );
 
   $items = array();
@@ -162,6 +168,7 @@ function drupalcampaustin_library_block_user_stats($user) {
   return theme('item_list', $items);
 }
 
+
 /**
  * Implementation of hook_user().
  */
@@ -169,14 +176,6 @@ function drupalcampaustin_library_user($op, &$edit, &$account, $category = NULL)
   switch ($op) {
     case 'load':
       $account->profile = drupalcampaustin_library_user_profile($account->uid);
-
-      // Has the user created a profile page?
-      if (!empty($account->profile)) {
-        $account->has_profile = TRUE;
-      }
-      else {
-        $account->has_profile = FALSE;
-      }
 
       // Has the user registered?
       if (drupalcampaustin_library_user_has_role('attendee', $account)) {
@@ -186,7 +185,7 @@ function drupalcampaustin_library_user($op, &$edit, &$account, $category = NULL)
         $account->has_registered = FALSE;
       }
       break;
-
+/*
     case 'view':
       global $user;
       $account->content['summary']['#title'] = t('Account summary');
@@ -197,9 +196,13 @@ function drupalcampaustin_library_user($op, &$edit, &$account, $category = NULL)
         '#value' => drupalcampaustin_library_user_account_page($account, $user),
       );
       break;
+*/
   }
 }
 
+
+/*
+ */
 function drupalcampaustin_library_user_profile($uid) {
   $profile = content_profile_load('profile', $uid);
   if ($profile != FALSE) {
@@ -208,29 +211,6 @@ function drupalcampaustin_library_user_profile($uid) {
   return NULL;
 }
 
-function drupalcampaustin_library_user_account_page($user, $current_user) {
-  $output = '';
-
-  // Is the user viewing his/her own account page?
-  if ($user->uid == $current_user->uid) {
-    if ($user->has_profile) {
-      $output = l(t('View my profile page'), 'node/' . $user->profile->nid);
-      $output .= '<br />';
-      $output .= l(t('Edit my profile page'), 'node/' . $user->profile->nid . '/edit');
-    }
-    else {
-      $output = l(t('Create my profile page'), 'node/add/profile');
-    }
-  }
-  elseif ($user->has_profile) {
-    $output = l(t('Go to this user\'s profile page'), 'node/' . $user->profile->nid);
-  }
-  else {
-    $output = t('This user has not created a profile page');
-  }
-
-  return $output;
-}
 
 /**
  * Check to see if a user has been assigned a certain role.
@@ -252,19 +232,85 @@ function drupalcampaustin_library_user_has_role($role, $user = NULL) {
   return FALSE;
 }
 
+
 /**
  * Implementation of hook_form_alter().
-function drupalcampaustin_library_form_alter(&$form, $form_state, $form_id) {
-//  print $form_id;
-}
  */
+function drupalcampaustin_library_form_alter(&$form, $form_state, $form_id) {
+/*
+  print $form_id;
+  krumo($form);
+*/
 
+  // Is this a node editing form?
+  if ($form_id == $form['type']['#value'] . '_node_form') {
+    // Collapse the "Revision information" fieldset.
+    if (user_access('administer nodes')) {
+      $form['revision_information']['#collapsed'] = TRUE;
+    }
+    // Remove "Revision information" fieldset if the user doesn't have
+    // "administer nodes" permission.
+    else {
+      $form['revision_information']['#access'] = FALSE;
+    }
+
+    if ($form_id == 'profile_node_form') {
+      // Get rid of the input format fieldset, which appears as the result of some bug.
+      unset($form['body_field']);
+    }
+  }
+  else if ($form_id == 'uc_product_add_to_cart_form_' . PRODUCT_REGISTRATION_NID) {
+    $form['#redirect'] = 'node/' . PARKING_OFFER_NID;
+  }
+  else if ($form_id == 'user_register') {
+    // Add a new wrapping fieldset.
+    $form['group_account'] = array(
+      '#type'  => 'fieldset',
+      '#title' => t('Account information'),
+    );
+    // Copy profile node fields to the fieldset and unset them.
+    // This has to be done here instead of hook_form_FORM_ID_alter() because
+    // some form elements are only touchable here.
+    $form['group_account']['name'] = $form['name'];
+    $form['group_account']['mail'] = $form['mail'];
+    $form['group_account']['pass'] = $form['pass'];
+    $form['group_account']['timezone'] = $form['timezone'];
+    unset($form['name']);
+    unset($form['mail']);
+    unset($form['pass']);
+    unset($form['timezone']);
+  }
+}
+
+
+function drupalcampaustin_library_form_user_register_alter(&$form, &$form_state) {
+  // Rename the user registration page.
+  drupal_set_title(t('Register for DrupalCamp Austin 2010'));
+}
+
+
+function drupalcampaustin_library_form_user_login_alter(&$form, &$form_state) {
+  // Rename the log in page.
+  drupal_set_title(t('Log in'));
+}
+
+
+function drupalcampaustin_library_form_user_pass_alter(&$form, &$form_state) {
+  // Rename the password reset page.
+  drupal_set_title(t('Request new password'));
+}
+
+
+/*
 function drupalcampaustin_library_form_comment_form_alter(&$form, &$form_state) {
   unset($form['_author']);
   unset($form['comment_filter']['comment']['#title']);
   unset($form['preview']);
 }
+ */
 
+
+/*
 function drupalcampaustin_library_form_contact_mail_user_alter(&$form, &$form_state) {
   $profile = drupalcampaustin_library_user_profile(arg(1));
   if (!empty($profile)) {
@@ -274,7 +320,10 @@ function drupalcampaustin_library_form_contact_mail_user_alter(&$form, &$form_st
     $form['#redirect'] = '<front>';
   }
 }
+ */
 
+
+/*
 function drupalcampaustin_library_form_uc_cart_view_form_alter(&$form, &$form_state) {
   unset($form['update']);
   unset($form['items'][0]['remove']);
@@ -284,19 +333,4 @@ function drupalcampaustin_library_form_uc_cart_view_form_alter(&$form, &$form_st
 
   $form['items']['#columns']['desc']['cell'] = 'Description';
 }
-
-function drupalcampaustin_library_form_profile_node_form_alter(&$form, &$form_state) {
-  // Hide the extraneous title ("Name") field
-  $form['title']['#type'] = 'hidden';
-  // Add placeholder for #value
-  $form['title']['#value'] = NULL;
-  // Add a validation function that will fill in the value of the title ("Name") field
-  $form['#validate'][] = 'drupalcampaustin_library_profile_node_form_validate';
-
-  $form['revision_information']['#type'] = 'hidden';
-}
-
-function drupalcampaustin_library_profile_node_form_validate($form, &$form_state) {
-  $name = $form_state['values']['field_profile_firstname'][0]['value'] . ' ' . $form_state['values']['field_profile_lastname'][0]['value'];
-  form_set_value($form['title'], $name, $form_state);
-}
+ */
