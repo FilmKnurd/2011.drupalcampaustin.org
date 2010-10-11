@@ -1,0 +1,163 @@
+<?php
+// ; $Id: textformatter.module,v 1.1 2009/06/15 16:28:18 ebrand Exp $
+
+/**
+ * Implementation of hook_field_formatter_info().
+ */
+function textformatter_field_formatter_info() {
+  return array(
+    'text_comma' => array(
+      'label' => t('Commas'),
+      'multiple values' => CONTENT_HANDLE_MODULE,
+      'field types' => array('text')),
+
+    'text_comma_and' => array(
+      'label' => t('Commas-And'),
+       'multiple values' => CONTENT_HANDLE_MODULE,
+      'field types' => array('text')),
+
+    'text_comma_and_period' => array(
+      'label' => t('Commas-And-Period'),
+      'multiple values' => CONTENT_HANDLE_MODULE,
+      'field types' => array('text')),
+
+    'text_unordered_list' => array(
+      'label' => t('Unordered List'),
+      'multiple values' => CONTENT_HANDLE_MODULE,
+      'field types' => array('text')),
+
+    'text_ordered_list' => array(
+      'label' => t('Ordered List'),
+      'multiple values' => CONTENT_HANDLE_MODULE,
+      'field types' => array('text')),
+  );
+}
+
+/**
+ * Implementation of hook_theme().
+ */
+function textformatter_theme() {
+  return array(
+    'textformatter_formatter_text_comma' => array(
+       'arguments' => array('element' => NULL),
+      'function' => 'theme_textformatter_formatter_text_comma'),
+
+    'textformatter_formatter_text_comma_and' => array(
+      'arguments' => array('element' => NULL),
+      'function' => 'theme_textformatter_formatter_text_comma_and'),
+
+    'textformatter_formatter_text_comma_and_period' => array(
+      'arguments' => array('element' => NULL),
+      'function' => 'theme_textformatter_formatter_text_comma_and_period'),
+
+    'textformatter_formatter_text_ordered_list' => array(
+      'arguments' => array('element' => NULL),
+      'function' => 'theme_textformatter_formatter_text_orderedlist'),
+
+    'textformatter_formatter_text_unordered_list' => array(
+      'arguments' => array('element' => NULL),
+      'function' => 'theme_textformatter_formatter_text_unorderedlist'),
+  );
+}
+
+/**
+ * Return an array of the values from a text field element.
+ */
+function textformatter_formatter_get_element_values($element) {
+  // Get data out of multidimensional $element array and place it in flat $values array.
+  $values = array();
+
+  $item = $element;
+  foreach (element_children($element) as $key) {
+    unset($item[$key]);
+  }
+
+  foreach (element_children($element) as $key) {
+    $item['#item'] = $element[$key]['#item'];
+    $values[] = ($allowed =_text_allowed_values($item)) ? $allowed : $item['#item']['safe'];
+  }
+
+  // Trim values in the array.
+  $values = array_map('trim', $values);
+
+  // Kill empty values in the array.
+  $values = array_filter($values);
+
+
+  return $values;
+}
+
+/**
+ * Theme a textfield as a comma-separated list.
+ *
+ * @ingroup themeable
+ */
+function theme_textformatter_formatter_text_comma($element) {
+  $values = textformatter_formatter_get_element_values($element);
+  return implode(', ', $values);
+}
+
+/**
+ * Theme a textfield as a comma-separated list with an "and".
+ *
+ * @ingroup themeable
+ */
+function theme_textformatter_formatter_text_comma_and($element) {
+  $values = textformatter_formatter_get_element_values($element);
+
+  $phrase = "";
+  for ($i = 0; $i < count($values); $i++) {
+    if ($i == (count($values) - 2)) {
+      $phrase .= $values[$i]." and ";
+    }
+    else {
+      $phrase .= $values[$i].", ";
+    }
+  }
+
+  return $phrase;
+}
+
+/**
+ * Theme a textfield as a comma-separated list with an "and" and period.
+ *
+ * @ingroup themeable
+ */
+function theme_textformatter_formatter_text_comma_and_period($element) {
+  $values = textformatter_formatter_get_element_values($element);
+
+  $phrase = "";
+  for ($i = 0; $i < count($values); $i++) {
+    if ($i == (count($values) - 2)) {
+      $phrase .= $values[$i]." and ";
+    }
+    else if ($i == (count($values) - 1)) {
+      $phrase .= $values[$i];
+    }
+    else {
+      $phrase .= $values[$i].", ";
+    }
+  }
+
+  return $phrase.".";
+}
+
+/**
+ * Theme a textfield as an HTML ordered list.
+ *
+ * @ingroup themeable
+ */
+function theme_textformatter_formatter_text_orderedlist($element) {
+  $values = textformatter_formatter_get_element_values($element);
+  return theme('item_list', $values, NULL, 'ol');
+}
+
+/**
+ * Theme a textfield as an HTML unordered list.
+ *
+ * @ingroup themeable
+ */
+function theme_textformatter_formatter_text_unorderedlist($element) {
+  $values = textformatter_formatter_get_element_values($element);
+  return theme('item_list', $values, NULL, 'ul');
+}

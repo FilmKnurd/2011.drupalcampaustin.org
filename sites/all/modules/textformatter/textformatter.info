@@ -1,0 +1,13 @@
+; $Id: textformatter.info,v 1.1 2009/06/15 16:28:18 ebrand Exp $
+name = Text Formatter
+description = Provides a formatter for CCK text fields to render multi-value fields.
+dependencies[] = text
+package = CCK
+core = 6.x
+
+; Information added by drupal.org packaging script on 2009-06-15
+version = "6.x-1.0"
+core = "6.x"
+project = "textformatter"
+datestamp = "1245084971"
+
