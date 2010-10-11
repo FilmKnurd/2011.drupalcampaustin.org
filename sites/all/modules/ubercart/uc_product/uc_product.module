@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_product.module,v 1.14.2.37 2009/09/23 19:50:45 islandusurper Exp $
+// $Id: uc_product.module,v 1.14.2.43 2010/07/16 15:51:35 islandusurper Exp $
 
 /**
  * @file
@@ -366,7 +366,7 @@ function uc_product_node_info($reset = FALSE) {
  */
 function uc_product_forms($form_id, $args) {
   $forms = array();
-  if (is_object($args[0]) && isset($args[0]->type)) {
+  if (isset($args[0]) && isset($args[0]->nid) && isset($args[0]->type)) {
     $product = $args[0];
     if (in_array($product->type, array_keys(uc_product_node_info()))) {
       $forms['uc_product_add_to_cart_form_'. $product->nid] = array('callback' => 'uc_product_add_to_cart_form');
@@ -411,12 +411,13 @@ function uc_product_form(&$node) {
   $sign_flag = variable_get('uc_sign_after_amount', FALSE);
   $currency_sign = variable_get('uc_currency_sign', '$');
 
-  $form['title'] = array('#type' => 'textfield',
-    '#title' => $type->title_label,
+  $form['title'] = array(
+    '#type' => 'textfield',
+    '#title' => check_plain($type->title_label),
     '#required' => TRUE,
-    '#weight' => -5,
     '#default_value' => $node->title,
-    '#description' => t('Name of the product.')
+    '#maxlength' => 255,
+    '#weight' => -5,
   );
 
   if ($type->has_body) {
@@ -815,7 +816,7 @@ function uc_product_preprocess_node(&$variables) {
  *
  * @see uc_product_save_continue_submit()
  */
-function uc_product_form_alter(&$form, &$form_state, $form_id) {
+function uc_product_form_alter(&$form, $form_state, $form_id) {
   if ($form_id == 'search_form' && arg(0) == 'admin' && arg(1) == 'store' && arg(2) == 'products' && user_access('use advanced search')) {
     // Keyword boxes:
     $form['advanced'] = array(
@@ -1005,7 +1006,7 @@ function uc_product_content_extra_fields_alter(&$extra, $type_name) {
  * Reset a content type's default image field setting when that field instance
  * is removed.
  */
-function uc_product_content_fieldapi($op, &$field) {
+function uc_product_content_fieldapi($op, $field) {
   switch ($op) {
     case 'delete instance':
       if ($field->field_name == variable_get('uc_image_'. $field->type_name, NULL)) {
@@ -1385,6 +1386,9 @@ function uc_catalog_buy_it_now_form($form_state, $node) {
       'class' => 'list-add-to-cart',
     ),
   );
+
+  uc_form_alter($form, $form_state, __FUNCTION__);
+
   return $form;
 }
 
@@ -1566,7 +1570,8 @@ function theme_uc_product_dimensions($length, $width, $height, $units = NULL, $t
 }
 
 /**
- * Format a product's images with imagecache and Thickbox.
+ * Format a product's images with imagecache and an image widget
+ * (Colorbox, Thickbox, or Lightbox2).
  *
  * @ingroup themeable
  */
@@ -1736,9 +1741,9 @@ function uc_product_get_cost($node_id) {
  *   The imagecache preset used to format the image. 'product' by default.
  * @return
  *   An HTML img. When $format is not 'product', the image is a link to the
- *   'product_full' preset if a JavaScript display widget is available (Thickbox
- *   and Lightbox2 are possible). For other values of $format, the image links
- *   to the node page.
+ *   'product_full' preset if a JavaScript display widget is available
+ *   (Colorbox, Thickbox, and Lightbox2 are possible). For other values
+ *   of $format, the image links to the node page.
  */
 function uc_product_get_picture($node_id, $format = 'product') {
   $output = '';
@@ -1927,17 +1932,16 @@ function uc_product_feature_save($data) {
     }
   }
 
-  // First attempt to update an existing row.
-  db_query("UPDATE {uc_product_features} SET description = '%s' WHERE pfid = %d", $data['description'], intval($data['pfid']));
-
-  // Otherwise insert this feature as a new row.
-  if (db_affected_rows() == 0) {
+  if(!empty($data['pfid']) && db_result(db_query("SELECT COUNT(*) FROM {uc_product_features} WHERE pfid = %d", intval($data['pfid'])))) {
+    // First attempt to update an existing row.
+    db_query("UPDATE {uc_product_features} SET description = '%s' WHERE pfid = %d", $data['description'], intval($data['pfid']));
+    drupal_set_message(t('The product feature has been updated.'));
+  }
+  else {
+    // Otherwise insert this feature as a new row.
     db_query("INSERT INTO {uc_product_features} (nid, fid, description) VALUES (%d, '%s', '%s')",
              $data['nid'], $data['fid'], $data['description']);
     drupal_set_message(t('The product feature has been added.'));
-  }
-  else {
-    drupal_set_message(t('The product feature has been updated.'));
   }
 
   return 'node/'. $data['nid'] .'/edit/features';
@@ -2110,4 +2114,3 @@ function uc_product_views_api() {
     'path' => drupal_get_path('module', 'uc_product') .'/views',
   );
 }
-
