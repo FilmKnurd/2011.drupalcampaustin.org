@@ -146,6 +146,9 @@ h2 {
   line-height: 1.235em;
   color: #406f93;
   }
+  h2 a {
+    color: #406f93;
+    }
 h3 {
   font-size: 1.5em;
   line-height: 1.118em;
@@ -900,13 +903,13 @@ div.link-field-subrow {
       margin: 1px 0 0 0;
       padding: 0;
       }
-      #sidebar-left ul li a {
+      #sidebar-left ul.menu li a {
         display: block;
         padding: 4px 5px;
         text-decoration: none;
         border-bottom: 1px solid #fff;
         }
-      #sidebar-left ul li a:hover {
+      #sidebar-left ul.menu li a:hover {
         background: #fff;
         text-decoration: underline;
         }
@@ -942,7 +945,7 @@ div.link-field-subrow {
       }
       .bottom-left .facebook {
         float: left;
-        margin-right: 5px;
+        margin-right: 2px;
       }
   
 /* Also applies to front page panel */
@@ -1026,24 +1029,10 @@ ul.links li.last {
  * ------------------------------------- */
 
 .node-list {
-  border-bottom: 5px solid rgb(230,230,230); /* black 10% */
+  border-bottom: 1px solid #bdb9a5; 
   margin-bottom: 20px;
   padding-bottom: 20px;
   }
-
-/*
-.views-field-title {
-  font-size: 1.6em;
-  margin-bottom: 5px;
-  }
-  .views-field-title a {
-    font-weight: bold;
-    text-decoration: none;
-    }
-  .views-field-title a:hover {
-    text-decoration: underline;
-    }
-*/
 
 #main-content .views-row {
   margin-bottom: 20px;
@@ -1052,10 +1041,6 @@ ul.links li.last {
   #main-content #sidebar-right .panel-pane .views-row {
     margin-bottom: 0; /* Undo this for views and blocks in front-page sidebars */
     }
-
-  .view-news h2 a {
-    color: #406f93;
-  }
 
 /* Photo mosaic of all registered users */
 .view-users-registered {
@@ -1142,6 +1127,9 @@ ul.links li.last {
       list-style-type: disc;
       list-style-position: inside;
       }
+      .pane-block {
+        margin-bottom: 10px;
+      }
 
 h2.block-title,
 h2.pane-title,
@@ -1169,6 +1157,10 @@ h2.pane-title,
   }
   #who-what-where p {
     margin-bottom: 0;
+    font-family: "Tahoma", sans-serif;
+    font-size: 1.5em;
+    line-height: 1.267em;
+    margin-right: 15px;
     }
 
   #who, #what, #where {
@@ -1177,6 +1169,9 @@ h2.pane-title,
     height: 116px;
     background: url(../images/sprite.png) no-repeat;
     margin-bottom: 10px;
+    color: #fff;
+    text-align: right;
+    text-shadow: #000 2px 2px 2px;
     }
     #who {
       background-position: 0px -206px;
@@ -1187,6 +1182,55 @@ h2.pane-title,
         #where {
           background-position: 0px -438px;
           }
+          #who h2, 
+          #what h2,
+          #where h2 {
+            visibility: hidden;
+          }
+          
+  #who-what-where .register {
+    width: 250px;
+    height: 46px;
+    display: block;
+    margin: 0px auto 10px auto;
+    overflow: hidden;
+    text-indent: -9999em;
+    background: url(../images/sprite.png) 0px -553px no-repeat;
+  }
+  
+  .view-twitter-drupalatx {
+    font-family: "Tahoma", sans-serif;
+  }
+    .view-twitter-drupalatx a {
+      color: #1477b8;
+      text-decoration: none;
+    }
+  .bottom-right .view-twitter-drupalatx ul li {
+    list-style: none;
+    padding-bottom: 10px;
+    margin: 0px 25px 0px 0px;
+  }
+  #main-content .bottom-right .views-row {
+    margin-bottom: 10px;
+  } 
+  .bottom-right .view-twitter-drupalatx li.views-row {
+    background: white; 
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+  }
+  
+  .bottom-right .view-twitter-drupalatx li.views-row .field-content {
+    background: url(../images/icon-twitter.png) bottom right no-repeat;
+    display: block;
+    padding:0 40px 10px 0;
+    position:relative;
+    right: -10px;
+    top: 10px;
+    width: 330px;
+    min-height: 45px;
+  }
+
 
 /* -------------------------------------
  * end Panels
