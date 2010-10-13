@@ -96,7 +96,7 @@ function drupalcampaustin_library_block_header_links($user) {
   $output .= '<div id="header-links">';
   $output .= '<div id="header-links-right"></div>';
   $output .= '<div id="header-links-text">';
-  $output .= implode(' <span>|</span> ', $links);
+  $output .= implode('', $links);
   $output .= '</div>';
   $output .= '<div id="header-links-left"></div>';
   $output .= '</div>';

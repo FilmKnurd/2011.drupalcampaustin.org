@@ -23,6 +23,7 @@ stylesheets[all][] = styles/session-vote.css
 regions[sidebar_1]     = "Sidebar 1"
 regions[sidebar_2]     = "Sidebar 2"
 regions[content]       = "Content"
+regions[user_menu]     = "User Menu"
 regions[header]        = "Header"
 
 ; Features (enabled)

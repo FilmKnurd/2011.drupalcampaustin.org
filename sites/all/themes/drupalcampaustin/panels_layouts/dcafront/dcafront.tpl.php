@@ -1,11 +1,8 @@
 <?php
-// $Id: panels-threecol-33-34-33.tpl.php,v 1.1.2.2 2009/04/30 20:41:45 merlinofchaos Exp $
+// dcafront.tpl.php
 /**
  * @file
- * Template for a 3 column panel layout.
- *
- * This template provides a three column panel display layout, with
- * each column roughly equal in width.
+ * Template for a 2 column panel layout. First Column is split
  *
  * Variables:
  * - $id: An optional CSS id to use for the layout.
@@ -19,33 +16,26 @@
 
 <div class="panel-display" <?php if (!empty($css_id)) { print "id=\"$css_id\""; } ?>>
 
-  <div id="panel-front-top" class="panels-row grid-17">
+  <div id="panel-front-left" class="panel grid-12">
   
     <div class="panel-panel grid-10 alpha">
+    
+      <div class="top-left" id="featured"><?php print $content['left_top']; ?></div>
       
-      <div class="inside" id="featured"><?php print $content['top_left']; ?></div>
+      <div class="panels-row grid-5 alpha">
+        <div class="bottom-left"><?php print $content['bottom_left']; ?></div>
+      </div>
+      
+      <div class="panel-panel grid-5 alpha omega clearfix">
+        <div class="bottom-right"><?php print $content['bottom_right']; ?></div>
+      </div>
+      
+    </div>
+    
+    <div id="sidebar-right" class="panel-panel grid-2 alpha omega">
+      <div class="clearfix"><?php print $content['sidebar_right']; ?></div>
     </div>
   
-    <div class="panel-panel grid-7 omega">
-      <div class="inside"><?php print $content['top_right']; ?></div>
-    </div>
-  
-  </div><!-- /#panel-front-top -->
-
-  <div id="panel-front-bottom" class="panels-row grid-17">
-
-    <div id="sidebar-0" class="panel-panel grid-10 alpha">
-      <div class="inside"><?php print $content['bottom_left']; ?></div>
-    </div>
-
-    <div id="sidebar-1" class="panel-panel grid-4">
-      <div class="inside"><?php print $content['bottom_right1']; ?></div>
-    </div>
-
-    <div id="sidebar-2" class="panel-panel grid-3 omega">
-      <div class="inside"><?php print $content['bottom_right2']; ?></div>
-    </div>
-  
-  </div><!-- /#panel-front-bottom -->
+  </div><!-- /#panel-front-wrapper -->
 
 </div>

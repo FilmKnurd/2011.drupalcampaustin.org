@@ -10,11 +10,10 @@ function drupalcampaustin_dcafront_panels_layouts() {
     'theme' => 'dcafront',
     'css' => 'dcafront.css',
     'panels' => array(
-      'top_left' => t('Top left'),
-      'top_right' => t('Top right'),
+      'left_top' => t('Left Top'),
       'bottom_left' => t('Bottom left'),
-      'bottom_right1' => t('Bottom right 1'),
-      'bottom_right2' => t('Bottom right 2')
+      'bottom_right' => t('Bottom right'),
+      'sidebar_right' => t('Sidebar Right')
      ),
   );
 

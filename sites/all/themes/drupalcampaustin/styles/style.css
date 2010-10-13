@@ -1,31 +1,22 @@
 /* =====================================
  * Colors
  * -------------------------------------
-  
-   logo light blue      rgb(204,230,248)   #CCE6F8
-   logo med blue        rgb(166,205,237)   #A6CDED
-   logo dark blue       rgb(65,110,146)    #416E92
-   logo green           rgb(105,169,97)    #69A761
-
-   green (light)        #639B15             Grass
-   green (dark)         #456E0C
    
-   beige (header)        rgb(224,222,169)   #E0DEA9
-   
-   brown (light)        rgb(171,154,110)    #AB9A6E
-   brown (medium)       rgb(138,108,33)     #8A6C21
-   brown (dark)         rgb(73,59,34)       #493B22
-   
+   blue                 #406f93
+   lightblue            #e0f4ff
+   green                #526e54
+                      
+   TAN:               
+   lightest             #f3f1e5
+   medium               #e0dbc3
+   dark                 #989480
+   darkest              #737061
+     
    black 90%            rgb(26,26,26)
    black 80%            rgb(51,51,51)       body text
    black 70%            rgb(77,77,77)
    black 60%            rgb(102,102,102)    body text (light)
    black 50%            rgb(128,128,128)
-   black 40%            rgb(153,153,153)
-   black 30%            rgb(179,179,179)
-   black 20%            rgb(204,204,204)
-   black 10%            rgb(230,230,230)
-   black 5%             rgb(242,242,242)
 
    -------------------------------------
    Help, messages, and warnings
@@ -49,7 +40,6 @@
  * -------------------------------------
  * end Colors
  * ===================================== */
-
 
 
 /* =====================================
@@ -102,10 +92,25 @@
  * ===================================== */
 
 
-
 /* =====================================
  * Typography
  * ------------------------------------- */
+
+@font-face {
+	font-family: 'LeagueGothic';
+	src: url('../fonts/League_Gothic-webfont.eot');
+	src: local('☺'), url('../fonts/League_Gothic-webfont.woff') format('woff'), url('../fonts/League_Gothic-webfont.ttf') format('truetype'), url('../fonts/League_Gothic-webfont.svg#webfont') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'ChunkFive';
+	src: url('../fonts/Chunkfive-webfont.eot');
+	src: local('☺'), url('../fonts/Chunkfive-webfont.woff') format('woff'), url('../fonts/Chunkfive-webfont.ttf') format('truetype'), url('../fonts/Chunkfive-webfont.svg#webfont') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
 
 .b, .strong {
   font-weight: bold;
@@ -113,46 +118,57 @@
 
 body {
   color: rgb(51,51,51); /* black 80%; body text */
-  font-size: 10px;
-  font-family: "Helvetica Neue", Arial, Verdana, sans-serif;
+  font-size: 62.5%;
+  font-family: Georgia, Times, serif;
   }
 
 a {
-  color: rgb(65,110,146);
-  text-decoration: none;
+  color: #526e54;
+  text-decoration: underline;
   }
   a:hover {
-    text-decoration: underline;
+    text-decoration: none;
     }
 
 h1 {
-  font-size: 2.4em;
+  font-family: 'LeagueGothic';
+  font-size: 2.1em;
+  color: #526e54;
+  line-height: 1.286em;
+  font-weight: normal;
   }
 h2, h3, h4, h5, h6 {
   margin-bottom: 10px;
+  font-family: "Tahoma", sans-serif;
   }
 h2 {
-  font-size: 1.8em;
-  color: #8A6C21;
+  font-size: 1.7em;
+  line-height: 1.235em;
+  color: #406f93;
   }
 h3 {
   font-size: 1.5em;
-  color: #69A961;
+  line-height: 1.118em;
+  color: #526e54;
   }
 h4 {
-  font-size: 1.25em;
+  font-size: 1.4em;
+  line-height: 1.214em;
+  color: #406f93;
   }
 
 h1#page-title {
-  background: #E0DEA9 none repeat scroll 0 0;
-  color: #8A6C21;
+  background: #ffffff none repeat scroll 0 0;
+  color: #737061;
+  font-size: 3em;
   padding: 10px;
   margin-bottom: 10px;
+  text-transform: uppercase;
   }
 
 .text-standard {
   font-size: 1.3em;
-  line-height: 1.3em;
+  line-height: 1.308em;
   }
 
 #main {
@@ -162,23 +178,31 @@ h1#page-title {
   #main-content ul,
   #main-content ol,
   #main-content blockquote,
-  #main-content table {
+  #main-content table, 
+  #main-content dl {
     font-size: 1.3em;
-    line-height: 1.3em;
+    line-height: 1.308em;
     margin-bottom: 1.3em;
     }
   #main-content ul ul,
   #main-content ol ol,
   #main-content ul ol,
-  #main-content ol ul {
+  #main-content ol ul, 
+  #main-content dl dt, 
+  #main-content dl dd {
     font-size: 1em;
     margin-bottom: 0;
     }
   #main-content table p,
   #main-content table ul,
   #main-content table ol,
-  #main-content table blockquote {
+  #main-content table blockquote, 
+  #main-content table input {
     font-size: 1em;
+    }
+    
+    #main-content dl dd {
+      margin-bottom: 0.5em;
     }
 
 /* -------------------------------------
@@ -186,12 +210,12 @@ h1#page-title {
  * ===================================== */
 
 
-
 /* =====================================
  * Tables
  * ------------------------------------- */
 
 #main-content table {
+  font-size: 1em;
   }
   #main-content table tr {
     }
@@ -204,29 +228,31 @@ h1#page-title {
  * ===================================== */
 
 
-
 /* =====================================
  * Global styles
  * ------------------------------------- */
 
 body {
+  background: #e0f4ff url(../images/site-bg.jpg) bottom center no-repeat;
   }
 
-  #page {
-    }
+  #page {}
 
-    #header-wrapper {
-      height: 240px;
-      background-color: #E0DFA9;
-      }
+    #header-wrapper {}
       #header-container {
-        background: url(../images/DCA_header_wrapper_bg.jpg) top center no-repeat;
-        height: 240px;
+        background: url(../images/bg-header.png) top center no-repeat;
+        height: 330px;
+        position: relative;
         }
 
         #logo {
-          margin-top: 10px;
-          height: 190px; /* Total height: 200px */
+          height: 148px;
+          width: 426px;
+          background: url(../images/sprite.png) 0px 0px no-repeat;
+          position: absolute;
+          text-indent: -99999em;
+          top: 65px;
+          left: 10px;
           }
 
         #header {
@@ -235,24 +261,15 @@ body {
 
           #header-links {
             float: right;
-            height: 20px;
-            margin-top: 10px;
-            margin-right: 10px;
-            font-size: 1.1em;
-            color: rgb(166,205,237); /* black 60%; body text (light) */
             letter-spacing: .05em;
+            font-size: 1.1em;
+            margin-right: 5px;
             }
-          #header-links div {
-            float: right;
-            height: 20px;
-            }
+         
+            #header-links-text {}
             #header-links-left {
               width: 5px;
               background: transparent url(../images/header-links-left.png) top right no-repeat;
-              }
-            #header-links-text {
-              padding: 4px 5px 0 5px;
-              background: transparent url(../images/header-links-bg.png) top right repeat-x;
               }
             #header-links-right {
               width: 5px;
@@ -271,6 +288,20 @@ body {
             #header-links span {
               padding: 0 2px;
               }
+              
+              #header-links-text a {
+                color: #dbdbdb;
+                font-family: "Tahoma", sans-serif;
+                text-transform: uppercase;
+                border-radius: 10px;
+                -moz-border-radius: 10px;
+                -webkit-border-radius: 10px;
+                padding: 2px 10px;
+                font-weight: normal;
+                background-color: #676767;
+                margin-right: 5px;
+                line-height: 1.8em;
+              }
 
           #header-ribbon {
             float: right;
@@ -288,13 +319,15 @@ body {
               }
 
     #main-wrapper {
-      background: #639B15 url(../images/page-bg.png) top center repeat-x;
       min-height: 600px;
       }
 
       #main-container {
-        background-color: #FFFFFF;
+        background: url(../images/bg-main.jpg) top left repeat;
         padding-top: 10px;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
         }
 
         .column {
@@ -303,17 +336,131 @@ body {
 
         #main {
           }
+        
+        .not-front #main-content {
+          background: #fff;
+          padding: 10px;
+        }
+          
+        .panels-row.grid-5 {
+          width: 390px;
+        }
 
     #footer-wrapper {
-      height: 25px;
       padding-top: 25px;
-      background: #493B22 url(../images/footer-bg.png) top left repeat-x;
+      height: 90px;
       }
 
 /* -------------------------------------
  * end Global styles
  * ===================================== */
 
+
+/* =====================================
+ * Primary/secondary links
+ * ------------------------------------- */
+
+#primary-wrapper {
+  margin: 0 auto;
+  text-align: center;
+  background: url(../images/bg-primary.jpg) top left repeat;
+  height: 28px;
+  padding-top: 8px;
+  margin-bottom: 12px;
+  box-shadow: 0px 2px 2px #000;
+  -moz-box-shadow: 0px 2px 2px #000;
+  -webkit-box-shadow: 0px 2px 2px #000;
+  border-radius: 0px 0px 5px 5px;
+  -moz-border-radius: 0px 0px 5px 5px;
+  -webkit-border-radius: 0px 0px 5px 5px;
+  }
+
+  #primary-menu {
+    font-family: 'LeagueGothic';
+    letter-spacing: 0.1em;
+  }
+  #primary-menu ul.links {
+  }
+  
+  #primary-menu ul.links li {        
+    margin-right: 2px;
+    float: left;
+    }
+    #primary-menu ul.links li.active {
+      color: #e0f4ff;
+      border-bottom: 2px #e0f4ff solid;
+      }
+
+    #primary-menu ul.links li.first {
+      margin-left: 20px;
+      }
+
+    #primary-menu ul.links a {
+      color: #efefef;
+      font-size: 2.1em;
+      text-transform: uppercase;
+      padding: 5px 10px;
+      text-decoration: none;
+      }
+    #primary-menu ul.links a:hover {
+      color: #e0f4ff;
+      text-decoration: none;
+      }
+
+
+#secondary-wrapper {
+  font-size: 1.4em;
+  font-weight: bold;
+  margin: 5px 0 10px 0;
+  }
+  #secondary-links ul.links {}    
+      #secondary-links ul.links li {
+        padding: 2px 5px;
+        }
+        #secondary-links ul.links li.active {
+          background-color: #526e54;
+          }
+        #secondary-links ul.links li a.active {
+          color: white;
+          }
+ 
+
+/* -------------------------------------
+ * end Primary/secondary links
+ * ===================================== */
+
+
+/* =====================================
+ * Footer links
+ * ------------------------------------- */
+ 
+#footer-wrapper { 
+  color: #ffffff;
+  font-size: 1.1em;
+  }
+  #footer-wrapper a {
+    color: #fae3b4;
+    }
+
+#footer-message {
+  float: left;
+  }
+
+#footer-menu {
+  float: right;
+  }
+  #footer-menu ul {
+    text-align: right;
+    }
+    #footer-menu ul li {
+      display: inline;
+      margin-left: 10px;
+      }
+
+  
+ /* -------------------------------------
+ * end Footer links
+ * ===================================== */
 
 
 /* =====================================
@@ -421,7 +568,6 @@ tr.drag-previous {
  * ===================================== */
 
 
-
 /* =====================================
  * Tabs
  * ------------------------------------- */
@@ -446,8 +592,8 @@ tr.drag-previous {
         margin: 0 5px 5px 0;
         padding: 2px 6px;
         border: none;
-        background: #E0DEA9;
-        color: #8A6C21;
+        background: #f3f1e5;
+        color: #737061;
         text-transform: uppercase;
         font-weight: bold;
         letter-spacing: .05em;
@@ -457,7 +603,7 @@ tr.drag-previous {
       ul.primary li a:focus,
       ul.secondary li a:hover,
       ul.secondary li a:focus {
-        background-color: #AB9A6E;
+        background-color: #e0dbc3;
         color: #FFFFFF;
         }
     ul.primary li.active,
@@ -466,7 +612,7 @@ tr.drag-previous {
       ul.primary li.active a,
       ul.secondary li.active a {
         color: #FFFFFF;
-        background: #8A6C21;
+        background: #737061;
         border: none;
         }
 
@@ -496,110 +642,12 @@ tr.drag-previous {
  * ===================================== */
 
 
-
-/* =====================================
- * Primary/secondary links
- * ------------------------------------- */
-
-#primary-wrapper {
-  background-color: #456E0C;
-  }
-
-  #primary-container {
-  margin: 0 auto;
-  text-align: center;
-  }
-  #primary-container ul.links li {
-    padding: 10px 0;
-    background: transparent url(../images/nav-tab.png) top left no-repeat;
-    margin-right: 5px;
-    width: 150px;
-    float: left;
-    }
-    #primary-container ul.links li.active {
-      background: transparent url(../images/nav-tab-active.png) top left no-repeat;
-      }
-
-    #primary-container ul.links li.first {
-      margin-left: 20px;
-      }
-
-    #primary-container ul.links a {
-      color: #777777;
-      font-size: 1.4em;
-      text-transform: uppercase;
-      font-weight: bold;
-      padding-left: 15px;
-      }
-    #primary-container ul.links a:hover {
-      color: #456E0C;
-      text-decoration: none;
-      }
-
-
-#secondary-wrapper {
-  font-size: 1.4em;
-  font-weight: bold;
-  margin: 5px 0 10px 0;
-  }
-  #secondary-links ul.links {}    
-      #secondary-links ul.links li {
-        padding: 2px 5px;
-        }
-        #secondary-links ul.links li.active {
-          background-color: #639B15;
-          }
-        #secondary-links ul.links li a.active {
-          color: white;
-          }
- 
-
-/* -------------------------------------
- * end Primary/secondary links
- * ===================================== */
-
-
-
-/* =====================================
- * Footer links
- * ------------------------------------- */
- 
-#footer-wrapper { 
-  color: #AB9A6E;
-  font-size: 1.1em;
-  }
-  #footer-wrapper a {
-    color: rgb(230,230,230); /* black 10% */
-    }
-
-#footer-message {
-  float: left;
-  }
-
-#footer-menu {
-  float: right;
-  }
-  #footer-menu ul {
-    text-align: right;
-    }
-    #footer-menu ul li {
-      display: inline;
-      margin-left: 10px;
-      }
-
-  
- /* -------------------------------------
- * end Footer links
- * ===================================== */
-
-
-
 /* =====================================
  * Forms
  * ------------------------------------- */
 
 fieldset {
-  border: 2px solid #E0DEA9;
+  border: 2px solid #f3f1e5;
   padding: 10px;
   margin-bottom: 20px;
   }
@@ -608,25 +656,25 @@ fieldset {
     padding: 0 5px;
     font-size: 1.3em;
     font-weight: bold;
-    color: #8A6C21
+    color: #737061
     }
 
 label {
 	margin-bottom: 4px;
-	color: #639B15;
+	color: #526e54;
   font-size: 1.3em;
   }
 
 input,
 textarea {
-  padding: 2px 6px;
-  border: 2px solid #A6CDED;
-  background: #CCE6F8;
-  color: #416E92;
+  padding: 4px 6px;
+  border: 2px solid #989480;
+  background: #f3f1e5;
+  color: #2b2b2b;
   }
 input:focus,
 textarea:focus {
-  border-color: #416E92;
+  border-color: #989480;
   }
 
 input {
@@ -640,16 +688,17 @@ input {
     cursor: pointer;
     }
   input.form-submit:hover {
-    border-color: #416E92;
+    border-color: #737061;
     }
 
 textarea {
   font-size: 1.4em;
+  font-family: Georgia, serif;
   }
   textarea#edit-body,
   textarea#edit-teaser-js,
   textarea#edit-comment {
-    width: 564px;
+    width: 544px;
     }
   textarea#edit-comment {
     height: 100px;
@@ -675,7 +724,7 @@ div.description {
   margin-bottom: 10px;
   font-size: 1.2em;
   line-height: 1.25em;
-  color: #8A6C21;
+  color: #737061;
   }
   div.form-item div.description {
     margin: 2px 0 0 0;
@@ -706,7 +755,7 @@ div.description {
   span.password-strength,
   span.password-confirm {
     font-size: 1.1em;
-    color: #8A6C21;
+    color: #737061;
     }
 
 div.form-checkboxes {
@@ -751,7 +800,7 @@ div.maxlength-counter {
 div.link-field-subrow {
   margin-bottom: 10px;
   padding-bottom: 10px;
-  border-bottom: 1px solid #E0DEA9;
+  border-bottom: 1px solid #f3f1e5;
   }
 
 #main-content ul.tips,
@@ -775,13 +824,13 @@ div.link-field-subrow {
  * ------------------------------------- */
 
 #recommended {
-  background-color: #E0DEA9;
+  background-color: #f3f1e5;
   padding: 10px;
   -moz-border-radius: 5px;
   margin-bottom: 10px;
   }
   #recommended a {
-    color: #8A6C21;
+    color: #737061;
     font-size: .9em;
     font-weight: lighter;
     }
@@ -807,57 +856,65 @@ div.link-field-subrow {
  * Sidebars
  * ------------------------------------- */
 
-#sidebar-1 {
+#sidebar-left {
+  width: 190px;
   }
-  #sidebar-1 .block {
+  #sidebar-left .block {
     margin-bottom: 10px;
     }
+    #sidebar-left .block .content {
+/*
+      background-color: #f3f1e5;
+      border-radius: 5px;
+      -moz-border-radius: 5px;
+      -webkit-border-radius: 5px;
+*/
+    }
   
-  #sidebar-1 p,
-  #sidebar-1 ul,
-  #sidebar-1 ol {
+  #sidebar-left p,
+  #sidebar-left ul,
+  #sidebar-left ol {
     font-size: 1.2em;
     line-height: 1.2em;
     }
-  #sidebar-1 p {
+  #sidebar-left p {
     margin-bottom: .6em;
     }
-  #sidebar-1 ul ul,
-  #sidebar-1 ol ol,
-  #sidebar-1 ul ol,
-  #sidebar-1 ol ul {
+  #sidebar-left ul ul,
+  #sidebar-left ol ol,
+  #sidebar-left ul ol,
+  #sidebar-left ol ul {
     font-size: 1em;
     margin-bottom: 0;
     }
 
-  #sidebar-1 .block ul { /* specificity required to undo system style */
+  #sidebar-left .block ul { /* specificity required to undo system style */
     padding: 0;
     }
-  #sidebar-1 ul,
-  #sidebar-1 ol {
+  #sidebar-left ul,
+  #sidebar-left ol {
     padding: 0;
     }
-    #sidebar-1 ul li {
+    #sidebar-left ul li {
       list-style: none;
       margin: 1px 0 0 0;
       padding: 0;
       }
-      #sidebar-1 ul li a {
+      #sidebar-left ul li a {
         display: block;
-        background: rgb(242,242,242); /* black 5% */
-        padding: 3px 5px;
+        padding: 4px 5px;
         text-decoration: none;
+        border-bottom: 1px solid #fff;
         }
-      #sidebar-1 ul li a:hover {
-        background: rgb(230,230,230); /* black 10% */
+      #sidebar-left ul li a:hover {
+        background: #fff;
         text-decoration: underline;
         }
 
-  #sidebar-1 .item-list ul {
+  #sidebar-left .item-list ul {
     }
-    #sidebar-1 .item-list ul li {
-      background: rgb(242,242,242); /* black 5% */
-      padding: 3px 5px;
+    #sidebar-left .item-list ul li {
+      padding: 4px 5px;
       }
 
     /* Undo some .item-list styline for links-only lists */
@@ -866,32 +923,46 @@ div.link-field-subrow {
       padding: 0;
       }
 
-/* Twitter block */
-#sidebar-1 div.view-id-twitter_drupalatx {
-  }
-  #sidebar-1 div.view-id-twitter_drupalatx ul li a {
-    display: inline;
-    background: none;
-    padding: 0;
-    }
-  #sidebar-1 div.view-id-twitter_drupalatx ul li a:hover {
-    background: none;
-    }
+/* Twitter block */    
 
-/* Also applies to front page panel */
-#sidebar-2 {
-  background: url(../images/sponsor-bg.png) top left;
-  }
-  #sidebar-2 h2 {
-    margin: 5px;
-    padding: 5px;
-    font-size: 1em;
-    background: #E0DEA9;
-    text-transform: uppercase;
-    letter-spacing: .05em;
-    color: #8A6C21;
+  .twitter, 
+  .facebook {
+    display: block;
+    overflow: hidden;
+    text-indent: -9999em;
+    height: 57px;
+    width: 194px;
+    background: url(../images/sprite.png) no-repeat; 
     }
-  #sidebar-2 img {
+    .twitter {
+      background-position: -194px -149px;
+      }
+      .facebook {
+        background-position: 0px -149px;
+      }
+      .bottom-left .facebook {
+        float: left;
+        margin-right: 5px;
+      }
+  
+/* Also applies to front page panel */
+#sidebar-right {
+  width: 150px;
+  }
+  #sidebar-right h2 {
+    font-family: 'LeagueGothic';
+    margin: 0px;
+    padding: 5px;
+    font-size: 2em;
+    background: #e0dbc3;
+    text-transform: uppercase;
+    text-align: center;
+    letter-spacing: .05em;
+    color: #b3ad92;
+    font-weight: normal;
+    border-bottom: 1px solid #b9b59c;
+    }
+  #sidebar-right img {
     display: block;
     margin: 0 auto 5px auto;
     }
@@ -907,7 +978,7 @@ div.link-field-subrow {
  * ------------------------------------- */
 
 #main-content .content h2 {
-  color: #8A6C21;
+  color: #737061;
   font-size: 2em;
   }
 
@@ -918,11 +989,9 @@ div.link-field-subrow {
 
 #main-content .submitted {
   margin-bottom: 5px;
-  border-top: 1px solid rgb(204,204,204);
-  border-bottom: 1px solid rgb(204,204,204);
   font-size: 1.1em;
   line-height: 1.5em;
-  color: rgb(102,102,102);
+  color: #5d5945;
   }
 
 #main-content .content ul {
@@ -952,7 +1021,6 @@ ul.links li.last {
  * ===================================== */
 
 
-
 /* =====================================
  * Views
  * ------------------------------------- */
@@ -980,10 +1048,14 @@ ul.links li.last {
 #main-content .views-row {
   margin-bottom: 20px;
   }
-  #main-content #sidebar-1 .panel-pane .views-row,
-  #main-content #sidebar-2 .panel-pane .views-row {
+  #main-content #sidebar-left .panel-pane .views-row,
+  #main-content #sidebar-right .panel-pane .views-row {
     margin-bottom: 0; /* Undo this for views and blocks in front-page sidebars */
     }
+
+  .view-news h2 a {
+    color: #406f93;
+  }
 
 /* Photo mosaic of all registered users */
 .view-users-registered {
@@ -1074,44 +1146,47 @@ ul.links li.last {
 h2.block-title,
 h2.pane-title,
 #who-what-where h2 {
-  color: rgb(105,169,97);
-  font-weight: bold;
   text-transform: uppercase;
   }
 
 /* Panel Front Top */
 #panel-front-top {
-  border-bottom: 5px solid rgb(230,230,230); /* black 10% */
-  margin-bottom: 20px;
-  padding-bottom: 20px;
+  margin-bottom: 10px;
   }
 
 /* Panel Front Bottom */
 #panel-front-bottom {
   }
-  #sidebar-0 .panel-pane,
-  #sidebar-1 .panel-pane {
+  #sidebar-left .panel-pane {
     margin-bottom: 20px;
     }
 
 /* Who? What? Where? block */
 #who-what-where {
-  border-bottom: 5px solid rgb(230,230,230); /* black 10% */
-  margin-bottom: 20px;
-  padding-bottom: 20px;
+  padding: 10px 10px 0px 10px;
+  margin-bottom: 10px;
+  background-color: #f3f1e5;
   }
   #who-what-where p {
     margin-bottom: 0;
     }
 
   #who, #what, #where {
-    float: left;
-    width: 180px;
-    margin-right: 20px;
+    overflow: hidden;
+    width: 370px;
+    height: 116px;
+    background: url(../images/sprite.png) no-repeat;
+    margin-bottom: 10px;
     }
-    #where {
-      margin-right: 0;
+    #who {
+      background-position: 0px -206px;
       }
+      #what {
+        background-position: 0px -322px;
+        }
+        #where {
+          background-position: 0px -438px;
+          }
 
 /* -------------------------------------
  * end Panels
