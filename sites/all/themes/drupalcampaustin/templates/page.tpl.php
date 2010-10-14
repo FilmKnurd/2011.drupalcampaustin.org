@@ -39,9 +39,6 @@
           <?php print $header; ?>
         </div> <!-- /#header -->
         
-      <div class="ddbc">Design Development Business Community</div>
-      <div class="time-cost"></div>
-        
       </div> <!-- /#header-container -->
     </div> <!-- /#header-wrapper -->
 

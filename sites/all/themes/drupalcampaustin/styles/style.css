@@ -244,7 +244,7 @@ body {
     #header-wrapper {}
       #header-container {
         background: url(../images/bg-header.png) top center no-repeat;
-        height: 330px;
+        height: 260px;
         position: relative;
         }
 
@@ -315,28 +315,6 @@ body {
               margin-bottom: 20px;
               }
               
-    .ddbc, 
-    .time-cost {
-      display: block;
-      overflow: hidden;
-      position: absolute;
-      text-indent: -9999em;
-      }
-      .ddbc {
-        background: url(../images/ddbc.png) top center no-repeat;
-        width: 630px;
-        height: 35px;
-        bottom: 35px;
-      }
-      
-      .time-cost {
-        width: 260px;
-        height: 98px;
-        bottom: 15px;
-        right: 30px;
-        background: url(../images/sprite.png) 0px -600px no-repeat;
-      }
-
     #main-wrapper {
       min-height: 600px;
       }
@@ -1547,12 +1525,3 @@ table.uc-order-history th, table.uc-order-history td {
 /* -------------------------------------
  * End Ubercart style
  * ===================================== */
- 
- 
-/* BATZ! */
-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-}
-
