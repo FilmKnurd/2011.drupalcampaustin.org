@@ -54,7 +54,7 @@
   <div class="sponsor-wrapper profile-style clearfix">
 
     <!-- Left column -->
-    <div class="grid-7 alpha">
+    <div class="grid-7 alpha omega">
       <?php if ($sponsor_level): ?>
         <div class="header header-text">
           <?php print $sponsor_level; ?>
@@ -74,7 +74,7 @@
     </div>
   
     <!-- Right column -->
-    <div class="grid-3 omega">
+    <div class="grid-3 alpha omega">
       <div class="picture"><?php print $field_sponsor_logo_rendered ; ?></div>
   
       <?php if (!$teaser && $sponsor_web_links): ?>
