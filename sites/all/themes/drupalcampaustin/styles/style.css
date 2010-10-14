@@ -981,7 +981,11 @@ div.link-field-subrow {
     }
   #sidebar-right img {
     display: block;
-    margin: 0 auto 5px auto;
+    margin: 0 auto 1px auto;
+    }
+    
+    #sidebar-right .sponsors {
+      margin-bottom: 5px;
     }
 
 /* -------------------------------------
