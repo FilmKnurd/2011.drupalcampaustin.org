@@ -704,22 +704,23 @@ textarea:focus {
   }
 
 input {
-  font-weight: bold;
   }
   input.form-text {
-    font-size: 1.6em;
+    font-size: 1.3em;
     }
   input.form-submit {
-    font-size: 1.4em;
+    font-size: 1.7em;
     cursor: pointer;
+    font-family: "ChunkFive";
+    color: #806146;
     }
   input.form-submit:hover {
     border-color: #737061;
     }
 
 textarea {
-  font-size: 1.4em;
-  font-family: Georgia, serif;
+  font-size: 1.3em;
+  font-family: "Tahoma", sans-serif;
   }
   textarea#edit-body,
   textarea#edit-teaser-js,
@@ -888,13 +889,13 @@ div.link-field-subrow {
   #sidebar-left .block {
     margin-bottom: 10px;
     }
-    #sidebar-left .block .content {
-/*
-      background-color: #f3f1e5;
-      border-radius: 5px;
-      -moz-border-radius: 5px;
-      -webkit-border-radius: 5px;
-*/
+  
+  #sidebar-left h2 {
+    font-size: 1.4em;
+    line-height: 1.214em;
+    padding: 5px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #fff;
     }
   
   #sidebar-left p,
@@ -944,10 +945,20 @@ div.link-field-subrow {
       }
 
     /* Undo some .item-list styline for links-only lists */
-    #block-views-news-block_1 .item-list ul li {
+    .front #block-views-news-block_1 .item-list ul li {
       background: none;
       padding: 0;
       }
+      
+  #sidebar-left .view-twitter-drupalatx {
+    background-color: #f3f1e5;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    }
+    #sidebar-left .view-twitter-drupalatx .item-list ul li {
+      border-bottom: 1px solid #B9B59C;
+    }
 
 /* Twitter block */    
 
@@ -1228,11 +1239,12 @@ h2.pane-title,
       color: #1477b8;
       text-decoration: none;
     }
-  .bottom-right .view-twitter-drupalatx ul li {
-    list-style: none;
-    padding-bottom: 10px;
-    margin: 0px 25px 0px 0px;
-  }
+    .bottom-right .view-twitter-drupalatx ul li {
+      list-style: none;
+      padding-bottom: 10px;
+      margin: 0px 25px 0px 0px;
+    }
+    
   #main-content .bottom-right .views-row {
     margin-bottom: 10px;
   } 
@@ -1253,7 +1265,6 @@ h2.pane-title,
     width: 330px;
     min-height: 45px;
   }
-
 
 /* -------------------------------------
  * end Panels
