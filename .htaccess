@@ -27,9 +27,10 @@ AuthName "Development instance authentication"
 Require valid-user
 
 # Allow access for either the production site or an HTTP authenticated user.
-Order Deny,Allow
-Deny from all
-Allow from env=PRODUCTION_SITE
+# Order Deny,Allow
+# Deny from all
+# Allow from env=PRODUCTION_SITE
+Allow from all
 
 # Allow either user authentication or production site access
 Satisfy Any

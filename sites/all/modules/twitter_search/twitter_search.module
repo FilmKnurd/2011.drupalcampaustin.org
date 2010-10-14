@@ -1,0 +1,176 @@
+<?php
+// $Id: twitter_search.module,v 1.1.2.2 2010/02/28 19:22:55 dragonwize Exp $
+
+/**
+ * @file
+ *  Adds search API features to the Twitter module.
+ */
+
+/**
+ * Implementation of hook_perm().
+ */
+function twitter_search_perm() {
+  return array('administer twitter search');
+}
+
+/**
+ * Implementation of hook_views_api().
+ *
+ */
+function twitter_search_views_api() {
+  return array('api' => '2.0');
+}
+
+/**
+ * Implementation of hook_menu().
+ */
+function twitter_search_menu() {
+  $items = array();
+	$items['admin/settings/twitter_search'] = array(
+		'title' => 'Twitter search',
+		'description' => 'Settings for the site\'s Twitter search integration.',
+		'page callback' => 'twitter_search_list_page',
+		'type' => MENU_NORMAL_ITEM,
+		'access arguments' => array('administer twitter search'),
+    'file' => 'twitter_search.pages.inc',
+	);
+  $items['admin/settings/twitter_search/list'] = array(
+    'title' => 'List',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'weight' => -25,
+  );
+  $items['admin/settings/twitter_search/add'] = array(
+    'title' => 'Add Twitter search text',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('twitter_search_add_form'),
+    'type' => MENU_LOCAL_TASK,
+    'access arguments' => array('administer twitter search'),
+    'file' => 'twitter_search.pages.inc',
+  );
+  $items['admin/settings/twitter_search/delete/%'] = array(
+    'title' => 'Delete Twitter search text',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('twitter_search_delete_confirm'),
+    'type' => MENU_CALLBACK,
+    'access arguments' => array('administer twitter search'),
+    'file' => 'twitter_search.pages.inc',
+  );
+	return $items;
+}
+
+
+/**
+ * Implementation of hook_cron()
+ *
+ * Imports new Twitter search statuses for site searches.
+ */
+function twitter_search_cron() {
+  if (!variable_get('twitter_import', TRUE)) {
+    return;
+  }
+
+  module_load_include('inc', 'twitter');
+
+  // Get a list of search strings to update.
+  $sql = "SELECT twitter_search_id, search, last_twitter_id
+          FROM {twitter_search}
+          ORDER BY last_refresh";
+  $results = db_query_range($sql, 0, 20);
+
+  while ($search = db_fetch_array($results)) {
+    $statuses = twitter_search_fetch_search($search);
+
+    if (!empty($statuses)) {
+      // Store last time search was fetched so that we grab new searches
+      // first. Also store the last twitter id for each search so that we only
+      // pull updated tweets.
+      $sql = "UPDATE {twitter_search}
+              SET last_twitter_id = %n, last_refresh = %d
+              WHERE search = '%s'";
+      db_query($sql, $statuses[0]['twitter_id'], $_SERVER['REQUEST_TIME'], $search['search']);
+    }
+  }
+}
+
+/**
+ * Implement the "search" method from Twitter.
+ *
+ * @see http://apiwiki.twitter.com/Twitter-Search-API-Method%3A+search
+ *
+ * @param $search
+ *  Assoc array containing search string, search id, and last twitter id.
+ * @param $cache
+ *  Boolean. Whether or not to cache the Twitter statues.
+ */
+function twitter_search_fetch_search($search, $cache = TRUE) {
+  module_load_include('inc', 'twitter');
+
+  $url = 'http://search.twitter.com/search.json?q=' . urlencode($search['search']);
+  if ($search['last_twitter_id']) {
+    $url .= '&since_id=' . $search['last_twitter_id'];
+  }
+  $response = drupal_http_request($url, array(), 'GET');
+
+  if (_twitter_request_failure($response)) {
+    return array();
+  }
+  else {
+    // Process the response
+    $results = _twitter_search_convert_json_to_array($response->data);
+    if ($cache) {
+      foreach($results as $status) {
+        twitter_cache_status($status);
+
+        // Store Twitter ID to map to searchs.
+        $row = array(
+          'twitter_id' => $status['twitter_id'],
+          'twitter_search_id' => $search['twitter_search_id'],
+        );
+        drupal_write_record('twitter_search_tweet', $row);
+      }
+    }
+    return $results;
+  }
+}
+
+/**
+ * Internal JSON munging code.
+ *
+ * @param $data
+ *  JSON string returned by Twitter.
+ */
+function _twitter_search_convert_json_to_array($data) {
+  $results = array();
+  $json = json_decode($data);
+
+  if (!empty($json->results)) {
+    foreach($json->results as $status) {
+      $results[] = array(
+        'twitter_id' => $status->id,
+        'screen_name' => $status->from_user,
+        'created_at' => $status->created_at,
+        'created_time' => strtotime($status->created_at),
+        'text' => html_entity_decode($status->text),
+        'source' => html_entity_decode($status->source),
+        'in_reply_to_status_id' => isset($status->to_id) ? $status->to_id : NULL,
+        'in_reply_to_user_id' => $status->to_user_id,
+        'in_reply_to_screen_name' => isset($status->to_user) ? $status->to_user : NULL,
+        'truncated' => 0,
+      );
+
+      // If the screen name isn't already cached, save a partial user object with the tweet.
+      if (!db_result(db_query("SELECT * from {twitter} WHERE screen_name = '%s' LIMIT 1", $status->from_user))) {
+        $account = array(
+          'twitter_uid' => $status->from_user_id,
+          'screen_name' => $status->from_user,
+          'profile_image_url' => $status->profile_image_url,
+          'protected' => FALSE,
+          'last_refresh' => strtotime($status->created_at),
+        );
+        twitter_cache_account($account);
+      }
+    }
+  }
+
+  return $results;
+}
