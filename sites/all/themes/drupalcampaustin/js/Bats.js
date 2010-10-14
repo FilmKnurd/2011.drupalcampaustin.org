@@ -233,6 +233,7 @@ $.fn.bats = function(before, delay, after) {
       
       setTimeout(function() {
         clearInterval(interval);
+        if (renderer) renderer.clear();
         after();
       }, delay);
       
@@ -241,7 +242,16 @@ $.fn.bats = function(before, delay, after) {
   });
 };
 
-function bats(x, y) {
+function bats() {
+  // Don't ever do this...
+  var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+  var is_ff = navigator.userAgent.toLowerCase().indexOf('firefox') > -1;
+  if (!is_chrome && !is_ff) {
+    return;
+  }
+  
+  var num = is_chrome ? 150 : 50;
+  
 	camera = new THREE.Camera( 75, SCREEN_WIDTH / SCREEN_HEIGHT, 1, 10000 );
 	camera.position.z = 450;
 
@@ -249,12 +259,8 @@ function bats(x, y) {
 
 	birds = [];
 	boids = [];
-
-  if (!$("#register-button").length) {
-    return;
-  }
-
-	for ( var i = 0; i < 150; i ++ ) {
+  
+	for ( var i = 0; i < num; i ++ ) {
 		boid = boids[ i ] = new Boid();
 		boid.position.x = mouseX - SCREEN_WIDTH_HALF; //* Math.random();
 		boid.position.y = - mouseY + SCREEN_HEIGHT_HALF; //* Math.random();
@@ -272,7 +278,8 @@ function bats(x, y) {
 		// bird.scale.x = bird.scale.y = bird.scale.z = 10;
 		scene.addObject( bird );
 	}
-
+  
+  if (renderer) renderer.clear();
 	renderer = new THREE.CanvasRenderer();
 	// renderer.autoClear = false;
 	renderer.setSize( SCREEN_WIDTH, SCREEN_HEIGHT );
@@ -280,7 +287,7 @@ function bats(x, y) {
 	document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 	$("body").prepend( renderer.domElement );
 
-	var interval = setInterval( loop, 1000 / 200 );
+	return setInterval( loop, 1000 / 200 );
 }
 
 function onDocumentMouseMove( event ) {
@@ -321,9 +328,7 @@ $(function() {
     mouseY = e.clientY;
   });
   
-  $("a[title='Register']").bats(function() {}, 2000, function() {
-    window.location = window.location.protocol + "//" + window.location.hostname + "/register/admission";
-  });
+  $("#footer-wrapper").bats(function() {}, 10000, function() {});
 });
 
 })(jQuery);
