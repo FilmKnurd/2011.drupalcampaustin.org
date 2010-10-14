@@ -1382,8 +1382,10 @@ h2.pane-title,
     font-family: "ChunkFive";
     text-align: center;
     background: #fff;
-    line-height: 1.5em;
+    line-height: 2em;
     font-size: 1.3em;
+    display: block;
+    margin-bottom: 1px;
   }
 
 /* -------------------------------------
