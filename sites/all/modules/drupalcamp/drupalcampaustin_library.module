@@ -4,7 +4,7 @@
  * Define constants.
  */
 define('PRODUCT_ADMISSION_NID', 340);
-define('PRODUCT_PARKING_VENUE_NID', 342);
+define('PRODUCT_PARKING_NID', 342);
 define('PARKING_OFFER_NID', 345);
 
 
@@ -119,7 +119,7 @@ function drupalcampaustin_library_block_header_ribbon($user) {
     // Has the user registered?
     if ($user->has_registered) {
       $output .= '<img src="' . $path . 'register-done.png" class="steps" alt="' . t("You're done!") . '" />';
-      $output .= l('<img src="' . $path . 'register-done-parking.png" class="steps" alt="' . t('Need parking?') . '" />', 'node/' . PRODUCT_PARKING_VENUE_NID, array('html' => TRUE, 'attributes' => array('title' => t('Need parking?'))));
+      $output .= l('<img src="' . $path . 'register-done-parking.png" class="steps" alt="' . t('Need parking?') . '" />', 'node/' . PRODUCT_PARKING_NID, array('html' => TRUE, 'attributes' => array('title' => t('Need parking?'))));
     }
     else {
       $output .= l('<img src="' . $path . 'register-almost-done.png" alt="' . t('Register') . '" />', 'node/' . PRODUCT_ADMISSION_NID, array('html' => TRUE, 'attributes' => array('title' => t('Register'))));
@@ -128,8 +128,14 @@ function drupalcampaustin_library_block_header_ribbon($user) {
       // node/PRODUCT_ADMISSION_NID == Product page
       // cart == Any shopping cart page
       $path = $_GET['q'];
-      if (($path != 'node/add/profile') && ($path != 'node/' . PRODUCT_ADMISSION_NID) && (arg(0) != 'cart')) {
-        drupal_set_message(t('<strong>Don\'t forget to !register!</strong>', array('!register' => l(t('register to attend DrupalCamp Austin 2010'), 'node/' . PRODUCT_ADMISSION_NID), )));
+      $excluded_paths = array(
+        'node/add/profile',
+        'node/' . PRODUCT_ADMISSION_NID,
+        'node/' . PRODUCT_PARKING_NID,
+        'node/' . PARKING_OFFER_NID,
+      );
+      if (!in_array($path, $excluded_paths) && (arg(0) != 'cart')) {
+        drupal_set_message(t("<strong>Don't forget to !purchase-admission!</strong>", array('!purchase-admission' => l(t('purchase admission to DrupalCamp Austin 2010'), 'node/' . PRODUCT_ADMISSION_NID), )));
       }
     }
   }
