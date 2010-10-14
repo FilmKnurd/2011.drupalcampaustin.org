@@ -26,11 +26,13 @@
  */
 ?>
 <?php if (!$field_empty) : ?>
-  <?php $count = 1;
-  foreach ($items as $delta => $item) :
-    if (!$item['empty']) : ?>
-      <?php print $item['view']; ?>
-    <?php $count++;
-    endif;
-  endforeach;?>
+  <?php
+    $count = 1;
+    foreach ($items as $delta => $item) :
+      if (!$item['empty']) : ?>
+        <?php print $item['view']; ?>
+      <?php $count++;
+      endif;
+    endforeach
+  ;?>
 <?php endif; ?>

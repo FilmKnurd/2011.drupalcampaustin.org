@@ -24,6 +24,6 @@
   <?php if ($id == 'field_user_picture_fid'): ?>
     <div class="picture"><?php print l($field->content, 'user/' . $row->uid, array('html' => TRUE)); ?></div>
   <?php elseif ($id == 'title'): ?>
-    <div class="profile-link"><?php print l($field->content, 'user/' . $row->uid); ?></div>
+    <div class="profile-link"><?php print l($field->raw, 'user/' . $row->uid); ?></div>
   <?php endif; ?>
 <?php endforeach; ?>

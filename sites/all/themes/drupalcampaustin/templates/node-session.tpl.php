@@ -70,11 +70,13 @@
           </div>
         </div>
       </div>
-  
+
+<?php /* Hiding the voting stuff until it's live.  
       <!-- Right column -->
       <div class="grid-3 omega">
         <div class="vote"><?php print $vote; ?></div>
       </div>
+*/ ?>
 
     </div> <!-- /.session-teaser-wrapper -->
 
@@ -83,7 +85,7 @@
     <div class="session-wrapper profile-style clearfix">
 
       <!-- Left column -->
-      <div class="grid-7 alpha">
+      <div class="grid-7 alpha omega">
         <div class="submitted">
           <?php print $name; ?>
           <?php if ($field_session_date_rendered): ?>
@@ -104,9 +106,12 @@
       </div>
   
       <!-- Right column -->
-      <div class="grid-3 omega">
+      <div class="grid-3 alpha omega">
+
+<?php /* Hiding the voting stuff until it's live.  
         <div class="vote"><?php print $vote; ?></div>
-  
+*/ ?>
+
         <div class="picture"><?php print $profile_picture; ?></div>
   
         <?php if ($profile_action_links): ?>

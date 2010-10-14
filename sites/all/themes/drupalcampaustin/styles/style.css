@@ -1081,11 +1081,12 @@ ul.links li.last {
         width: 110px;
         }
       .view-users-registered .picture {
+        background: rgb(204,204,204);
         }
         .view-users-registered .picture img {
           display: block;
-          padding: 4px;
-          border: 1px solid rgb(204,204,204); /* black 20% */
+          margin: 0 auto;
+          padding: 5px;
           }
       .view-users-registered .profile-link {
         }
@@ -1362,11 +1363,12 @@ h2.pane-title,
       }
 
   .profile-style .picture {
+    background: rgb(204,204,204);
     }
     .profile-style .picture img {
       display: block;
-      padding: 4px;
-      border: 1px solid rgb(204,204,204); /* black 20% */
+      margin: 0 auto;
+      padding: 5px;
       }
 
   .profile-wrapper {

@@ -188,10 +188,10 @@ function drupalcamp_preprocess_node_session(&$vars, $node, $node_author) {
   }
 
   if ($node->teaser) {
-    $vars['profile_picture'] = drupalcampaustin_profile_picture($node_author->profile, TRUE, 'user_picture_50x50');
+    $vars['profile_picture'] = drupalcampaustin_profile_picture($node_author, $node_author->profile, TRUE, 'user_picture_50x50');
   }
   else {
-    $vars['profile_picture'] = drupalcampaustin_profile_picture($node_author->profile);
+    $vars['profile_picture'] = drupalcampaustin_profile_picture($node_author, $node_author->profile);
   }
 
   $vars['profile_action_links'] = drupalcampaustin_profile_action_links($node_author->profile);
@@ -258,12 +258,12 @@ function drupalcampaustin_preprocess_comment(&$vars) {
     }
   }
 
-  $vars['profile_picture'] = drupalcampaustin_profile_picture($comment_author->profile, TRUE, 'user_picture_50x50');
+  $vars['profile_picture'] = drupalcampaustin_profile_picture($comment_author, $comment_author->profile, TRUE, 'user_picture_50x50');
 
   $vars['comment_classes'] = implode(' ', $comment_classes);
 }
 
-function drupalcampaustin_profile_picture($profile_node, $linked = TRUE, $preset = NULL) {
+function drupalcampaustin_profile_picture($user, $profile_node, $linked = TRUE, $preset = NULL) {
   $profile_node_built = node_build_content($profile_node);
 
   if (!empty($preset)) {
@@ -274,7 +274,7 @@ function drupalcampaustin_profile_picture($profile_node, $linked = TRUE, $preset
   }
 
   if ($linked) {
-    return l($picture, 'node/' . $profile_node->nid, array('html' => TRUE, 'attributes' => array('title' => t('View @name\'s profile', array('@name' => $profile_node->title)), 'rel' => 'nofollow')));
+    return l($picture, 'user/' . $user->uid, array('html' => TRUE, 'attributes' => array('title' => t('View @name\'s profile', array('@name' => $profile_node->title)), 'rel' => 'nofollow')));
   }
 
   return $picture;
@@ -360,7 +360,7 @@ function drupalcampaustin_username($object) {
       $title_text = t("View @name's profile", array('@name' => $name));
     }
 
-    $output = l($name, 'node/'. $user->profile->nid, array('attributes' => array('title' => $title_text)));
+    $output = l($name, 'user/'. $user->uid, array('attributes' => array('title' => $title_text)));
     // END CUSTOMIZATIONS
   }
   else if ($object->name) {

@@ -60,11 +60,11 @@
           <?php print $sponsor_level; ?>
         </div>
       <?php endif; ?>
-    
+
       <div class="content">
         <?php print $content; ?>
       </div>
-  
+
       <?php if (!$teaser && $sponsor_attendees): ?>
         <div class="link-columns">
           <div class="header">Attendees</div>
@@ -72,11 +72,11 @@
         </div>
       <?php endif; ?>
     </div>
-  
+
     <!-- Right column -->
     <div class="grid-3 alpha omega">
       <div class="picture"><?php print $field_sponsor_logo_rendered ; ?></div>
-  
+
       <?php if (!$teaser && $sponsor_web_links): ?>
         <div class="web-links">
           <?php print $sponsor_web_links; ?>
