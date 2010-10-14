@@ -5,7 +5,9 @@ $(function() {
   var $bat = $("<div />")
     .attr("id", "secret-bat")
     .appendTo("#footer-container")
-    .bats(function() {}, 10000, function() {});
+    .bats(function() {}, 5000, function() {
+      $("canvas.bats").remove();
+    });
   
   var canvas = $("<canvas />").addClass("clouds").prependTo("body"),
       WIDTH = canvas.width(),

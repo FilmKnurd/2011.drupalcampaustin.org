@@ -10,8 +10,8 @@ Cloud.prototype = {
     
     this.image = new Image();
     this.image.src = Math.round(Math.random() * 2)
-      ? "sites/all/themes/drupalcampaustin/images/cloud-left.png"
-      : "sites/all/themes/drupalcampaustin/images/cloud-right.png";
+      ? "/sites/all/themes/drupalcampaustin/images/cloud-left.png"
+      : "/sites/all/themes/drupalcampaustin/images/cloud-right.png";
     
     this.image.onload = function() {
       self.width = Math.round(self.image.width * Math.random());
