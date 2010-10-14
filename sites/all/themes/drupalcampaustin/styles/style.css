@@ -988,6 +988,14 @@ div.link-field-subrow {
     #sidebar-right .logos {
       margin-bottom: 5px;
     }
+    
+    #sidebar .bat-sponsor {
+      display: block;
+      font-family: "ChunkFive";
+      background: #fff;
+      text-align: center;
+      line-height: 2em;
+    }
 
 /* -------------------------------------
  * End Sidebars
