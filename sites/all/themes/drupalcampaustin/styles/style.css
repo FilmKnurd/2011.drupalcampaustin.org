@@ -1527,3 +1527,13 @@ table.uc-order-history th, table.uc-order-history td {
 /* -------------------------------------
  * End Ubercart style
  * ===================================== */
+ 
+canvas.clouds {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 330px;
+  width: 100%;
+  top: 45px;
+}
+

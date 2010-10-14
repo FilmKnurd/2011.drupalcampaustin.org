@@ -327,8 +327,6 @@ $(function() {
     mouseX = e.clientX;
     mouseY = e.clientY;
   });
-  
-  $("#footer-wrapper").bats(function() {}, 10000, function() {});
 });
 
 })(jQuery);

@@ -24,6 +24,8 @@ scripts[] = js/Three.js
 scripts[] = js/Bird.js
 scripts[] = js/Stats.js
 scripts[] = js/Bats.js
+scripts[] = js/Clouds.js
+scripts[] = js/main.js
 
 ; Regions
 regions[sidebar_1]     = "Sidebar 1"
