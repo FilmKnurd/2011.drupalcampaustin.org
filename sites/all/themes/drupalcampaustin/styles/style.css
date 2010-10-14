@@ -581,6 +581,7 @@ tr.drag-previous {
 
 .tabs {
   margin: 10px 0;
+  font-family: "Tahoma", sans-serif;
   }
 
   ul.primary, /* Also ul.tabs */
@@ -597,7 +598,7 @@ tr.drag-previous {
       ul.secondary li a {
         float: left;
         margin: 0 5px 5px 0;
-        padding: 2px 6px;
+        padding: 4px 6px;
         border: none;
         background: #f3f1e5;
         color: #737061;
@@ -605,6 +606,9 @@ tr.drag-previous {
         font-weight: bold;
         letter-spacing: .05em;
         line-height: 1.5em;
+        border-radius: 5px;
+        -moz-border-radius: 5px;
+        -webkit-border-radius: 5px;
         }
       ul.primary li a:hover,
       ul.primary li a:focus,
@@ -625,7 +629,6 @@ tr.drag-previous {
 
   ul.primary { /* Also ul.tabs */
     padding-top: 5px;
-    background: url(../images/sponsor-bg.png) top left;
     }
 
   ul.secondary { /* Also ul.tabs */
