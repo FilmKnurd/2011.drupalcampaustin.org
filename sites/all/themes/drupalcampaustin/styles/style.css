@@ -326,13 +326,13 @@ body {
         background: url(../images/ddbc.png) top center no-repeat;
         width: 630px;
         height: 35px;
-        bottom: 30px;
+        bottom: 35px;
       }
       
       .time-cost {
         width: 260px;
-        height: 88px;
-        bottom: 25px;
+        height: 98px;
+        bottom: 15px;
         right: 30px;
         background: url(../images/sprite.png) 0px -600px no-repeat;
       }
@@ -495,6 +495,9 @@ div.help, div.messages, div.warning {
   padding: 1em 1em 1em 3em;
   font-size: 1.3em;
   line-height: 1.3em;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
   }
   div.help a, div.messages a, div.warning a {
     font-weight: bold;

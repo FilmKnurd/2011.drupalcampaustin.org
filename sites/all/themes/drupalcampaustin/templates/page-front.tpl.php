@@ -54,7 +54,7 @@
           <?php endif; ?>
 
           <?php if ($messages || $help): ?>
-            <div class="grid-16">
+            <div class="grid-12">
               <?php print $messages; ?>
               <?php print $help; ?>
             </div>
