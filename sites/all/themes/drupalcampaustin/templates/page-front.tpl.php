@@ -36,7 +36,7 @@
           <a id="logo" href="<?php print $front_page; ?>" title="DrupalCamp Austin" rel="home nofollow">DrupalCamp Austin</a>
         </div> <!-- /#logo -->
 
-        <div id="header" class="prefix-8 grid-8 clearfix">
+        <div id="header" class="grid-7 prefix-9 omega">
           <?php print $header; ?>
         </div> <!-- /#header -->
         

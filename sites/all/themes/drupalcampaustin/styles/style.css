@@ -256,6 +256,7 @@ body {
           text-indent: -99999em;
           top: 65px;
           left: 10px;
+          z-index: 10;
           }
 
         #header {
@@ -307,13 +308,14 @@ body {
               }
 
           #header-ribbon {
-            position:absolute;
-            top: 65px;
-            left: 0px;
+            text-align: center;
+            padding: 10px;
+            margin-top: 48px;
+            background-color: rgba(255,255,255,0.5);
+            border-radius: 10px;
+              -moz-border-radius: 10px;
+              -webkit-border-radius: 10px;
             }
-            #header-ribbon img.steps {
-              margin-bottom: 20px;
-              }
               
     #main-wrapper {
       min-height: 600px;

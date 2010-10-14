@@ -111,7 +111,7 @@ function drupalcampaustin_library_block_header_ribbon($user) {
   $path = '/' . drupal_get_path('theme', 'drupalcampaustin') . '/images/';
 
   $output = '';
-  $output .= '<div id="header-ribbon" class="grid-7 prefix-9">';
+  $output .= '<div id="header-ribbon">';
 
   // Is the user logged in?
   if ($user->uid != 0) {
