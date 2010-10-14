@@ -962,6 +962,9 @@ div.link-field-subrow {
         float: left;
         margin-right: 2px;
       }
+      .not-front .facebook {
+        margin-bottom: 5px;
+      }
   
 /* Also applies to front page panel */
 #sidebar-right {
