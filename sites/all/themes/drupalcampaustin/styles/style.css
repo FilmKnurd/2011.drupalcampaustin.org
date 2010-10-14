@@ -148,6 +148,7 @@ h2 {
   }
   h2 a {
     color: #406f93;
+    text-decoration: none;
     }
 h3 {
   font-size: 1.5em;
