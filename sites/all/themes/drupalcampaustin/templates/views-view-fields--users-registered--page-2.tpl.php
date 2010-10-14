@@ -18,12 +18,12 @@
  *
  * @ingroup views_templates
  */
-
-$name = $row->node_users_node_data_field_profile_firstname_field_profile_firstname_value . ' ' . $row->node_users_node_data_field_profile_firstname_field_profile_lastname_value;
-$name_link = l($name, 'node/' . $row->node_users_nid);
 ?>
 
 <?php foreach ($fields as $id => $field): ?>
-    <div class="picture"><?php print $field->content; ?></div>
-    <div class="profile-link"><?php print $name_link; ?></div>
+  <?php if ($id == 'field_user_picture_fid'): ?>
+    <div class="picture"><?php print l($field->content, 'user/' . $row->uid, array('html' => TRUE)); ?></div>
+  <?php elseif ($id == 'title'): ?>
+    <div class="profile-link"><?php print l($field->content, 'user/' . $row->uid); ?></div>
+  <?php endif; ?>
 <?php endforeach; ?>
