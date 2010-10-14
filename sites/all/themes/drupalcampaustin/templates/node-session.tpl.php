@@ -54,7 +54,7 @@
     <div class="session-teaser-wrapper profile-style clearfix">
 
       <!-- Left column -->
-      <div class="grid-7 alpha">
+      <div>
         <div class="picture"><?php print $profile_picture; ?></div>
     
         <div class="info">

@@ -307,19 +307,35 @@ body {
               }
 
           #header-ribbon {
-            float: right;
-            width: 200px;
-            height: 190px;
-            padding-top: 10px;
-            background: url(../images/header-ribbon-bg.png) top right no-repeat;
+            position:absolute;
+            right:0;
+            top:100px;
             }
-            #header-ribbon img {
-              display: block;
-              margin: 0 auto 5px auto;
-              }
             #header-ribbon img.steps {
               margin-bottom: 20px;
               }
+              
+    .ddbc, 
+    .time-cost {
+      display: block;
+      overflow: hidden;
+      position: absolute;
+      text-indent: -9999em;
+      }
+      .ddbc {
+        background: url(../images/ddbc.png) top center no-repeat;
+        width: 630px;
+        height: 35px;
+        bottom: 30px;
+      }
+      
+      .time-cost {
+        width: 260px;
+        height: 88px;
+        bottom: 25px;
+        right: 30px;
+        background: url(../images/sprite.png) 0px -600px no-repeat;
+      }
 
     #main-wrapper {
       min-height: 600px;
@@ -444,6 +460,10 @@ body {
   #footer-wrapper a {
     color: #fae3b4;
     }
+
+  #footer-container {
+    margin-top: 60px;
+  }
 
 #footer-message {
   float: left;
@@ -1236,6 +1256,61 @@ h2.pane-title,
  * end Panels
  * ===================================== */
 
+
+/* =====================================
+ * Quicktabs
+ * ------------------------------------- */
+
+.quicktabs_wrapper {}
+
+  .quicktabs_main {
+    background: #fff;
+    padding: 10px;
+  }
+
+  #main-content ul.quicktabs_tabs, 
+  ul.quicktabs_tabs {
+    font-family: 'LeagueGothic';
+    font-weight: normal;
+    display: block;
+    overflow: hidden;
+    margin: 0!important;
+  }  
+  ul.quicktabs_tabs li {
+    font-size: 2.308em;
+    padding: 0px;
+    display: block;
+    float: left;
+    text-transform: uppercase;
+    }
+    ul.quicktabs_tabs li a {
+      display: block;
+      width: 190px;
+      margin: 0;
+      line-height: 35px;
+      padding-top: 5px;
+      color: #737061;
+      background-color: #989480;
+      text-align: center;
+      text-decoration: none;
+      -moz-box-shadow: 2px -2px 5px #737061 inset;
+      -webkit-box-shadow: 2px -2px 5px #737061 inset;
+      box-shadow: 2px -2px 5px #737061 inset;
+    }
+    ul.quicktabs_tabs li.active a {
+      background-color: #fff;
+      -moz-box-shadow: none;
+      -webkit-box-shadow: none;
+      box-shadow: none;
+      }
+      ul.quicktabs_tabs li a:hover {
+        background-color: #b3ad92;
+      }
+
+
+/* -------------------------------------
+ * end Quicktabs
+ * ===================================== */
 
 
 /* =====================================

@@ -111,7 +111,7 @@ function drupalcampaustin_library_block_header_ribbon($user) {
   $path = '/' . drupal_get_path('theme', 'drupalcampaustin') . '/images/';
 
   $output = '';
-  $output .= '<div id="header-ribbon">';
+  $output .= '<div id="header-ribbon" class="grid-6">';
 
   // Is the user logged in?
   if ($user->uid != 0) {
@@ -121,8 +121,8 @@ function drupalcampaustin_library_block_header_ribbon($user) {
       $output .= '<img src="' . $path . 'header-ribbon-done.png" class="steps" alt="' . t("You're done!") . '" />';
     }
     else {
-      $output .= '<img src="' . $path . 'header-ribbon-step1-done.png" class="steps" alt="' . t('Create account: Done!') . '" />';
-      $output .= l('<img src="' . $path . 'header-ribbon-step3.png" alt="' . t('Register') . '" />', 'node/' . PRODUCT_REGISTRATION_NID, array('html' => TRUE, 'attributes' => array('title' => t('Register'))));
+      $output .= '<div class="steps" alt="' . t('Create account: Done!') . '"></div>';
+      $output .= l('<img src="' . $path . 'register-btn.png" alt="' . t('Register') . '" />', 'node/' . PRODUCT_REGISTRATION_NID, array('html' => TRUE, 'attributes' => array('title' => t('Register'))));
 
       // Add a persistent message reminding users to register
       // node/PRODUCT_REGISTRATION_NID == Product page
@@ -134,7 +134,7 @@ function drupalcampaustin_library_block_header_ribbon($user) {
     }
   }
   else {
-    $output .= l('<img src="' . $path . 'header-ribbon-register.png" class="steps" alt="' . t('Register') . '" />', 'register', array('html' => TRUE, 'attributes' => array('title' => t('Register'))));
+    $output .= l('<img src="' . $path . 'register-btn.png" class="steps" alt="' . t('Register') . '" />', 'register', array('html' => TRUE, 'attributes' => array('title' => t('Register'))));
   }
 
   $output .= '</div>';
@@ -142,9 +142,7 @@ function drupalcampaustin_library_block_header_ribbon($user) {
   return $output;
 }
 
-
-/*
-*/
+/* */
 function drupalcampaustin_library_block_user_stats($user) {
   $display_views = array(
     'internal_users_registered',

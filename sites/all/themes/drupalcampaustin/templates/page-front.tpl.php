@@ -39,7 +39,8 @@
         <div id="header" class="prefix-8 grid-8 clearfix">
           <?php print $header; ?>
         </div> <!-- /#header -->
-       
+       <div class="ddbc">Design Development Business Community</div>
+       <div class="time-cost"></div>
         </div>
       </div> <!-- /#header-container -->
     </div> <!-- /#header-wrapper -->
