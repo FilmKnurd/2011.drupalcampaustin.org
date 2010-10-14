@@ -1,6 +1,12 @@
+
 (function($, undefined) {
 
 $(function() {
+
+  var $bat = $("<div />")
+    .attr("id", "secret-bat")
+    .appendTo("#footer-container")
+    .bats(function() {}, 10000, function() {});
 
   var canvas = $("<canvas />").addClass("clouds").prependTo("body"),
       WIDTH = canvas.width(),

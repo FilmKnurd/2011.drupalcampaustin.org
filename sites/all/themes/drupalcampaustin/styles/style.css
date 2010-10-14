@@ -1527,6 +1527,11 @@ table.uc-order-history th, table.uc-order-history td {
 /* -------------------------------------
  * End Ubercart style
  * ===================================== */
+canvas.bats {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
  
 canvas.clouds {
   position: absolute;
@@ -1536,4 +1541,15 @@ canvas.clouds {
   width: 100%;
   top: 45px;
 }
+
+#secret-bat {
+  position: relative;
+  top: -70px;
+  left: 630px;
+  width: 159px;
+  height: 71px;
+  background-image: url("../images/bat-1.png");
+  float: left;
+}
+
 

@@ -9,9 +9,9 @@ var Boid = function() {
 	    _height = window.innerHeight, 
 	    _depth = 150, 
 	    _goal, 
-	    _neighborhoodRadius = 50,
-	    _maxSpeed = 4, 
-	    _maxSteerForce = 0.5, 
+	    _neighborhoodRadius = 30,
+	    _maxSpeed = 5, 
+	    _maxSteerForce = 0.6, 
 	    _avoidWalls = true;
 
 	this.position = new THREE.Vector3();
@@ -208,10 +208,8 @@ var Boid = function() {
 	}
 }
 
-var mouseX, mouseY;
-
-var SCREEN_WIDTH = window.innerWidth,
-SCREEN_HEIGHT = window.innerHeight,
+var SCREEN_WIDTH = document.documentElement.offsetWidth,
+SCREEN_HEIGHT = document.documentElement.offsetHeight,
 SCREEN_WIDTH_HALF = SCREEN_WIDTH  / 2,
 SCREEN_HEIGHT_HALF = SCREEN_HEIGHT / 2;
 
@@ -250,6 +248,11 @@ function bats() {
     return;
   }
   
+  SCREEN_WIDTH = $(document).width();
+  SCREEN_HEIGHT = $(document).height();
+  SCREEN_WIDTH_HALF = SCREEN_WIDTH  / 2;
+  SCREEN_HEIGHT_HALF = SCREEN_HEIGHT / 2;
+  
   var num = is_chrome ? 150 : 50;
   
 	camera = new THREE.Camera( 75, SCREEN_WIDTH / SCREEN_HEIGHT, 1, 10000 );
@@ -262,9 +265,9 @@ function bats() {
   
 	for ( var i = 0; i < num; i ++ ) {
 		boid = boids[ i ] = new Boid();
-		boid.position.x = mouseX - SCREEN_WIDTH_HALF; //* Math.random();
-		boid.position.y = - mouseY + SCREEN_HEIGHT_HALF; //* Math.random();
-		boid.position.z = 0; //Math.random() * 400 - 200;
+		boid.position.x = 120;
+		boid.position.y = -400;
+		boid.position.z = 0;
 		boid.velocity.x = Math.random() * 2 - 1;
 		boid.velocity.y = Math.random() * 2 - 1;
 		boid.velocity.z = Math.random() * 2 - 1;
@@ -275,16 +278,16 @@ function bats() {
 		bird.phase = Math.floor( Math.random() * 62.83 );
 		bird.position = boids[ i ].position;
 		bird.doubleSided = true;
-		// bird.scale.x = bird.scale.y = bird.scale.z = 10;
 		scene.addObject( bird );
 	}
   
   if (renderer) renderer.clear();
 	renderer = new THREE.CanvasRenderer();
-	// renderer.autoClear = false;
 	renderer.setSize( SCREEN_WIDTH, SCREEN_HEIGHT );
-
+	
 	document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+	$("canvas.bats").remove();
+	$(renderer.domElement).addClass("bats");
 	$("body").prepend( renderer.domElement );
 
 	return setInterval( loop, 1000 / 200 );
@@ -319,14 +322,3 @@ function loop() {
 
 	renderer.render( scene, camera );
 }
-
-(function($) {
-
-$(function() {
-  $(document).mousemove(function(e) {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-  });
-});
-
-})(jQuery);
