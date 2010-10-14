@@ -148,7 +148,6 @@ h2 {
   }
   h2 a {
     color: #406f93;
-    text-decoration: none;
     }
 h3 {
   font-size: 1.5em;
@@ -1082,12 +1081,11 @@ ul.links li.last {
         width: 110px;
         }
       .view-users-registered .picture {
-        background: rgb(204,204,204);
         }
         .view-users-registered .picture img {
           display: block;
-          margin: 0 auto;
-          padding: 5px;
+          padding: 4px;
+          border: 1px solid rgb(204,204,204); /* black 20% */
           }
       .view-users-registered .profile-link {
         }
@@ -1364,29 +1362,16 @@ h2.pane-title,
       }
 
   .profile-style .picture {
-    background: rgb(204,204,204);
     }
     .profile-style .picture img {
       display: block;
-      margin: 0 auto;
-      padding: 5px;
+      padding: 4px;
+      border: 1px solid rgb(204,204,204); /* black 20% */
       }
 
   .profile-wrapper {
     margin-bottom: 20px;
     }
-  
-  /* bat sponsor links */
-  a.bat-sponsor {
-    color: #406f93;
-    font-family: "ChunkFive";
-    text-align: center;
-    background: #fff;
-    line-height: 2em;
-    font-size: 1.3em;
-    display: block;
-    margin-bottom: 1px;
-  }
 
 /* -------------------------------------
  * end Profile, sponsor, and session
@@ -1557,12 +1542,19 @@ canvas.clouds {
   top: 45px;
 }
 
-#secret-bat {
+#footer-container {
   position: relative;
-  top: -70px;
-  left: 630px;
+}
+
+#secret-bat {
+  position: absolute;
+  background-repeat: no-repeat;
+  top: -50px;
+  left: 655px;
   width: 159px;
   height: 71px;
   background-image: url("../images/bat-1.png");
   float: left;
 }
+
+
