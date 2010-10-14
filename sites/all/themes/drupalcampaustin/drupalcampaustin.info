@@ -19,6 +19,12 @@ stylesheets[all][] = styles/session-vote.css
 ; Stylesheets: Print
 ; stylesheets[print][] = styles/style-print.css
 
+; Scripts
+scripts[] = js/Three.js
+scripts[] = js/Bird.js
+scripts[] = js/Stats.js
+scripts[] = js/Bats.js
+
 ; Regions
 regions[sidebar_1]     = "Sidebar 1"
 regions[sidebar_2]     = "Sidebar 2"

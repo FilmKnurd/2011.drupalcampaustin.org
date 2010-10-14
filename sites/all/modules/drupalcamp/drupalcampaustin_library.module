@@ -134,7 +134,7 @@ function drupalcampaustin_library_block_header_ribbon($user) {
     }
   }
   else {
-    $output .= l('<img src="' . $path . 'register-btn.png" class="steps" alt="' . t('Register') . '" />', 'register', array('html' => TRUE, 'attributes' => array('title' => t('Register'))));
+    $output .= l('<img src="' . $path . 'register-btn.png" class="steps" alt="' . t('Register') . '" />', 'register', array('html' => TRUE, 'attributes' => array('title' => t('Register'), 'id' => 'register-button')));
   }
 
   $output .= '</div>';

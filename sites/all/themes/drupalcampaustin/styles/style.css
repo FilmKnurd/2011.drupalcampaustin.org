@@ -1536,3 +1536,12 @@ table.uc-order-history th, table.uc-order-history td {
 /* -------------------------------------
  * End Ubercart style
  * ===================================== */
+ 
+ 
+/* BATZ! */
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
