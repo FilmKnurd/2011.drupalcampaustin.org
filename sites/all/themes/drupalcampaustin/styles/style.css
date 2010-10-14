@@ -148,6 +148,7 @@ h2 {
   }
   h2 a {
     color: #406f93;
+    text-decoration: none;
     }
 h3 {
   font-size: 1.5em;
@@ -1374,6 +1375,16 @@ h2.pane-title,
   .profile-wrapper {
     margin-bottom: 20px;
     }
+  
+  /* bat sponsor links */
+  a.bat-sponsor {
+    color: #406f93;
+    font-family: "ChunkFive";
+    text-align: center;
+    background: #fff;
+    line-height: 1.5em;
+    font-size: 1.3em;
+  }
 
 /* -------------------------------------
  * end Profile, sponsor, and session
@@ -1553,5 +1564,3 @@ canvas.clouds {
   background-image: url("../images/bat-1.png");
   float: left;
 }
-
-
