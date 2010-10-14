@@ -253,7 +253,7 @@ function bats() {
   SCREEN_WIDTH_HALF = SCREEN_WIDTH  / 2;
   SCREEN_HEIGHT_HALF = SCREEN_HEIGHT / 2;
   
-  var num = is_chrome ? 150 : 10;
+  var num = is_chrome ? 150 : 20;
   
 	camera = new THREE.Camera( 75, SCREEN_WIDTH / SCREEN_HEIGHT, 1, 10000 );
 	camera.position.z = 450;
