@@ -3,7 +3,7 @@
 /*
  * Define constants.
  */
-define('PRODUCT_REGISTRATION_NID', 340);
+define('PRODUCT_ADMISSION_NID', 340);
 define('PRODUCT_PARKING_VENUE_NID', 342);
 define('PARKING_OFFER_NID', 345);
 
@@ -122,14 +122,14 @@ function drupalcampaustin_library_block_header_ribbon($user) {
     }
     else {
       $output .= '<div class="steps" alt="' . t('Create account: Done!') . '"></div>';
-      $output .= l('<img src="' . $path . 'register-btn.png" alt="' . t('Register') . '" />', 'node/' . PRODUCT_REGISTRATION_NID, array('html' => TRUE, 'attributes' => array('title' => t('Register'))));
+      $output .= l('<img src="' . $path . 'register-btn.png" alt="' . t('Register') . '" />', 'node/' . PRODUCT_ADMISSION_NID, array('html' => TRUE, 'attributes' => array('title' => t('Register'))));
 
       // Add a persistent message reminding users to register
-      // node/PRODUCT_REGISTRATION_NID == Product page
+      // node/PRODUCT_ADMISSION_NID == Product page
       // cart == Any shopping cart page
       $path = $_GET['q'];
-      if (($path != 'node/add/profile') && ($path != 'node/' . PRODUCT_REGISTRATION_NID) && (arg(0) != 'cart')) {
-        drupal_set_message(t('<strong>Don\'t forget to !register!</strong>', array('!register' => l(t('register to attend DrupalCamp Austin 2010'), 'node/' . PRODUCT_REGISTRATION_NID), )));
+      if (($path != 'node/add/profile') && ($path != 'node/' . PRODUCT_ADMISSION_NID) && (arg(0) != 'cart')) {
+        drupal_set_message(t('<strong>Don\'t forget to !register!</strong>', array('!register' => l(t('register to attend DrupalCamp Austin 2010'), 'node/' . PRODUCT_ADMISSION_NID), )));
       }
     }
   }
@@ -249,23 +249,30 @@ function drupalcampaustin_library_form_alter(&$form, $form_state, $form_id) {
       $form['revision_information']['#access'] = FALSE;
     }
 
+    // Make changes to the profile node form, which appears inside the
+    // registration and account/profile editing forms.
     if ($form_id == 'profile_node_form') {
       // Get rid of the input format fieldset, which appears as the result of some bug.
       unset($form['body_field']);
     }
   }
-  else if ($form_id == 'uc_product_add_to_cart_form_' . PRODUCT_REGISTRATION_NID) {
+  // Make the admission product node redirect to the parking info page.
+  // The following has to be done here instead of hook_form_FORM_ID_alter()
+  // because the NID stored in the constant may change.
+  else if ($form_id == 'uc_product_add_to_cart_form_' . PRODUCT_ADMISSION_NID) {
     $form['#redirect'] = 'node/' . PARKING_OFFER_NID;
   }
+  // Make changes to the user registration form.
+  // The following has to be done here instead of hook_form_FORM_ID_alter()
+  // because some form elements are only touchable here.
   else if ($form_id == 'user_register') {
     // Add a new wrapping fieldset.
     $form['group_account'] = array(
       '#type'  => 'fieldset',
       '#title' => t('Account information'),
     );
-    // Copy profile node fields to the fieldset and unset them.
-    // This has to be done here instead of hook_form_FORM_ID_alter() because
-    // some form elements are only touchable here.
+
+    // Copy account information fields to their own fieldset and unset them.
     $form['group_account']['name'] = $form['name'];
     $form['group_account']['mail'] = $form['mail'];
     $form['group_account']['pass'] = $form['pass'];
