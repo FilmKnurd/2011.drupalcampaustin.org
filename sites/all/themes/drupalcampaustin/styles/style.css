@@ -309,6 +309,7 @@ body {
           #header-ribbon {
             position:absolute;
             top: 65px;
+            left: 0px;
             }
             #header-ribbon img.steps {
               margin-bottom: 20px;
