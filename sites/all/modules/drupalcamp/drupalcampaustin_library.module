@@ -118,11 +118,11 @@ function drupalcampaustin_library_block_header_ribbon($user) {
 
     // Has the user registered?
     if ($user->has_registered) {
-      $output .= '<img src="' . $path . 'header-ribbon-done.png" class="steps" alt="' . t("You're done!") . '" />';
+      $output .= '<img src="' . $path . 'register-done.png" class="steps" alt="' . t("You're done!") . '" />';
+      $output .= l('<img src="' . $path . 'register-done-parking.png" class="steps" alt="' . t('Need parking?') . '" />', 'node/' . PRODUCT_PARKING_VENUE_NID, array('html' => TRUE, 'attributes' => array('title' => t('Need parking?'))));
     }
     else {
-      $output .= '<div class="steps" alt="' . t('Create account: Done!') . '"></div>';
-      $output .= l('<img src="' . $path . 'register-btn.png" alt="' . t('Register') . '" />', 'node/' . PRODUCT_ADMISSION_NID, array('html' => TRUE, 'attributes' => array('title' => t('Register'))));
+      $output .= l('<img src="' . $path . 'register-almost-done.png" alt="' . t('Register') . '" />', 'node/' . PRODUCT_ADMISSION_NID, array('html' => TRUE, 'attributes' => array('title' => t('Register'))));
 
       // Add a persistent message reminding users to register
       // node/PRODUCT_ADMISSION_NID == Product page
@@ -134,7 +134,7 @@ function drupalcampaustin_library_block_header_ribbon($user) {
     }
   }
   else {
-    $output .= l('<img src="' . $path . 'register-btn.png" class="steps" alt="' . t('Register') . '" />', 'register', array('html' => TRUE, 'attributes' => array('title' => t('Register'), 'id' => 'register-button')));
+    $output .= l('<img src="' . $path . 'register.png" class="steps" alt="' . t('Register') . '" />', 'register', array('html' => TRUE, 'attributes' => array('title' => t('Register'), 'id' => 'register-button')));
   }
 
   $output .= '</div>';
