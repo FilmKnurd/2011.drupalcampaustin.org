@@ -308,8 +308,7 @@ body {
 
           #header-ribbon {
             position:absolute;
-            right:0;
-            top:100px;
+            top: 65px;
             }
             #header-ribbon img.steps {
               margin-bottom: 20px;
