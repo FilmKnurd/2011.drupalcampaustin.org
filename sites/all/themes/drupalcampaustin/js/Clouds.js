@@ -17,7 +17,7 @@ Cloud.prototype = {
       self.width = Math.round(self.image.width * Math.random());
       self.height = Math.round(self.width * (self.image.height / self.image.width));
       
-      self.rate = Math.ceil(self.height * .8 / 10);
+      self.rate = Math.ceil(self.height * .3 / 10);
     };
     
     this.rate = Math.round(Math.random() + 1 * 4);
