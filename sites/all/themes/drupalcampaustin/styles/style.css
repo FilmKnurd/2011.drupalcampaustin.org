@@ -1349,6 +1349,9 @@ h2.pane-title,
       ul.quicktabs_tabs li a:hover {
         background-color: #b3ad92;
       }
+      ul.quicktabs_tabs li.active a:hover {
+        background-color: #fff;
+      }
 
 
 /* -------------------------------------
