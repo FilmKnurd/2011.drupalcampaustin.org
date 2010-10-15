@@ -1,17 +1,17 @@
 /* =====================================
  * Colors
  * -------------------------------------
-   
+
    blue                 #406f93
    lightblue            #e0f4ff
    green                #526e54
-                      
-   TAN:               
+
+   TAN:
    lightest             #f3f1e5
    medium               #e0dbc3
    dark                 #989480
    darkest              #737061
-     
+
    black 90%            rgb(26,26,26)
    black 80%            rgb(51,51,51)       body text
    black 70%            rgb(77,77,77)
@@ -182,7 +182,7 @@ h1#page-title {
   #main-content ul,
   #main-content ol,
   #main-content blockquote,
-  #main-content table, 
+  #main-content table,
   #main-content dl {
     font-size: 1.3em;
     line-height: 1.308em;
@@ -191,8 +191,8 @@ h1#page-title {
   #main-content ul ul,
   #main-content ol ol,
   #main-content ul ol,
-  #main-content ol ul, 
-  #main-content dl dt, 
+  #main-content ol ul,
+  #main-content dl dt,
   #main-content dl dd {
     font-size: 1em;
     margin-bottom: 0;
@@ -200,11 +200,11 @@ h1#page-title {
   #main-content table p,
   #main-content table ul,
   #main-content table ol,
-  #main-content table blockquote, 
+  #main-content table blockquote,
   #main-content table input {
     font-size: 1em;
     }
-    
+
     #main-content dl dd {
       margin-bottom: 0.5em;
     }
@@ -270,21 +270,19 @@ body {
             font-size: 1.1em;
             margin-right: 5px;
             }
-         
-            #header-links-text {}
-            #header-links-left {
-              width: 5px;
-              background: transparent url(../images/header-links-left.png) top right no-repeat;
-              }
-            #header-links-right {
-              width: 5px;
-              background: transparent url(../images/header-links-right.png) top left no-repeat;
-              }
 
             #header-links a {
-              color: rgb(65,110,146); /* black 80%; body text */
               text-decoration: none;
-              font-weight: bold;
+              color: #dbdbdb;
+              font-family: "Tahoma", sans-serif;
+              text-transform: uppercase;
+              border-radius: 10px;
+              -moz-border-radius: 10px;
+              -webkit-border-radius: 10px;
+              padding: 2px 10px;
+              background-color: #676767;
+              margin-right: 5px;
+              line-height: 1.8em;
               }
             #header-links a:hover,
             #header-links a:focus {
@@ -292,20 +290,6 @@ body {
               }
             #header-links span {
               padding: 0 2px;
-              }
-              
-              #header-links-text a {
-                color: #dbdbdb;
-                font-family: "Tahoma", sans-serif;
-                text-transform: uppercase;
-                border-radius: 10px;
-                -moz-border-radius: 10px;
-                -webkit-border-radius: 10px;
-                padding: 2px 10px;
-                font-weight: normal;
-                background-color: #676767;
-                margin-right: 5px;
-                line-height: 1.8em;
               }
 
           #header-ribbon {
@@ -317,7 +301,7 @@ body {
               -moz-border-radius: 10px;
               -webkit-border-radius: 10px;
             }
-              
+
     #main-wrapper {
       min-height: 600px;
       }
@@ -336,12 +320,12 @@ body {
 
         #main {
           }
-        
+
         .not-front #main-content {
           background: #fff;
           padding: 10px;
         }
-          
+
         .panels-row.grid-5 {
           width: 390px;
         }
@@ -384,8 +368,8 @@ body {
   }
   #primary-menu ul.links {
   }
-  
-  #primary-menu ul.links li {        
+
+  #primary-menu ul.links li {
     margin-right: 2px;
     float: left;
     }
@@ -416,7 +400,7 @@ body {
   font-weight: bold;
   margin: 5px 0 10px 0;
   }
-  #secondary-links ul.links {}    
+  #secondary-links ul.links {}
       #secondary-links ul.links li {
         padding: 2px 5px;
         }
@@ -427,7 +411,7 @@ body {
           color: white;
           text-decoration: none;
           }
- 
+
 
 /* -------------------------------------
  * end Primary/secondary links
@@ -437,8 +421,8 @@ body {
 /* =====================================
  * Footer links
  * ------------------------------------- */
- 
-#footer-wrapper { 
+
+#footer-wrapper {
   color: #ffffff;
   font-size: 1.1em;
   }
@@ -474,7 +458,7 @@ body {
       margin-left: 10px;
       }
 
-  
+
  /* -------------------------------------
  * end Footer links
  * ===================================== */
@@ -889,7 +873,7 @@ div.link-field-subrow {
   #sidebar-left .block {
     margin-bottom: 10px;
     }
-  
+
   #sidebar-left h2 {
     font-size: 1.4em;
     line-height: 1.214em;
@@ -897,7 +881,7 @@ div.link-field-subrow {
     margin-bottom: 5px;
     border-bottom: 1px solid #fff;
     }
-  
+
   #sidebar-left p,
   #sidebar-left ul,
   #sidebar-left ol {
@@ -972,16 +956,16 @@ div.link-field-subrow {
     border-bottom: 1px solid #B9B59C;
     }
 
-/* Twitter block */    
+/* Twitter block */
 
-  .twitter, 
+  .twitter,
   .facebook {
     display: block;
     overflow: hidden;
     text-indent: -9999em;
     height: 57px;
     width: 194px;
-    background: url(../images/sprite.png) no-repeat; 
+    background: url(../images/sprite.png) no-repeat;
     }
     .twitter {
       background-position: -194px -149px;
@@ -996,7 +980,7 @@ div.link-field-subrow {
       .not-front .facebook {
         margin-bottom: 5px;
       }
-  
+
 /* Also applies to front page panel */
 #sidebar-right {
   width: 150px;
@@ -1018,11 +1002,11 @@ div.link-field-subrow {
     display: block;
     margin: 0 auto 1px auto;
     }
-    
+
     #sidebar-right .logos {
       margin-bottom: 5px;
     }
-    
+
     #sidebar-right a.bat-sponsor {
       display: block;
       font-family: "ChunkFive";
@@ -1092,7 +1076,7 @@ ul.links li.last {
  * ------------------------------------- */
 
 .node-list {
-  border-bottom: 1px solid #bdb9a5; 
+  border-bottom: 1px solid #bdb9a5;
   margin-bottom: 20px;
   padding-bottom: 20px;
   }
@@ -1245,12 +1229,12 @@ h2.pane-title,
         #where {
           background-position: 0px -438px;
           }
-          #who h2, 
+          #who h2,
           #what h2,
           #where h2 {
             visibility: hidden;
           }
-          
+
   #who-what-where .register {
     width: 250px;
     height: 46px;
@@ -1260,7 +1244,7 @@ h2.pane-title,
     text-indent: -9999em;
     background: url(../images/sprite.png) 0px -553px no-repeat;
   }
-  
+
   .view-twitter-drupalatx {
     font-family: "Tahoma", sans-serif;
   }
@@ -1273,17 +1257,17 @@ h2.pane-title,
       padding-bottom: 10px;
       margin: 0px 25px 0px 0px;
     }
-    
+
   #main-content .bottom-right .views-row {
     margin-bottom: 10px;
-  } 
+  }
   .bottom-right .view-twitter-drupalatx li.views-row {
-    background: white; 
+    background: white;
     border-radius: 10px;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
   }
-  
+
   .bottom-right .view-twitter-drupalatx li.views-row .field-content {
     background: url(../images/icon-twitter.png) bottom right no-repeat;
     display: block;
@@ -1311,14 +1295,14 @@ h2.pane-title,
     padding: 10px;
   }
 
-  #main-content ul.quicktabs_tabs, 
+  #main-content ul.quicktabs_tabs,
   ul.quicktabs_tabs {
     font-family: 'LeagueGothic';
     font-weight: normal;
     display: block;
     overflow: hidden;
     margin: 0!important;
-  }  
+  }
   ul.quicktabs_tabs li {
     font-size: 2.308em;
     padding: 0px;
@@ -1362,7 +1346,7 @@ h2.pane-title,
 /* =====================================
  * Profile, sponsor, and session styles
  * ------------------------------------- */
- 
+
 .profile-style {
   }
 
@@ -1503,7 +1487,7 @@ h2.pane-title,
 /* =====================================
  * Schedule table style
  * ------------------------------------- */
- 
+
 .schedule-table {
   width: 100%;
   font-size: 1.2em;
@@ -1517,7 +1501,7 @@ h2.pane-title,
     .schedule-table tr.even {
       background-color: rgb(213,234,212);
       }
-    
+
     .schedule-table tr.row-tracks {
       background-color: #416E92;
       color: white;
@@ -1558,7 +1542,7 @@ h2.pane-title,
 /* =====================================
  * Ubercart style
  * ------------------------------------- */
- 
+
 #cart-form-pane {
   font-size: 1.4em;
   }
@@ -1571,11 +1555,11 @@ h2.pane-title,
     #cart-form-buttons .form-submit {
       margin-right: 0;
       }
-      
+
 table.uc-order-history th, table.uc-order-history td {
   padding: 5px;
   }
-  
+
 /* -------------------------------------
  * End Ubercart style
  * ===================================== */
@@ -1589,7 +1573,7 @@ canvas.bats {
   top: 0;
   left: 0;
   }
- 
+
 canvas.clouds {
   position: absolute;
   top: 0;
