@@ -422,6 +422,7 @@ body {
           }
         #secondary-links ul.links li a.active {
           color: white;
+          text-decoration: none;
           }
  
 
@@ -445,6 +446,15 @@ body {
   #footer-container {
     margin-top: 60px;
   }
+
+#footer-message,
+#footer-menu {
+  font-family: Arial, sans;
+  }
+  #footer-message a,
+  #footer-menu a {
+    text-decoration: none;
+    }
 
 #footer-message {
   float: left;
