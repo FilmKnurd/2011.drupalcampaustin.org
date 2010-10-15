@@ -98,7 +98,7 @@
         <?php endif; ?>
 
         <?php if ($footer_message): ?>
-          <div id="footer-message" class="grid-12">
+          <div id="footer-message" class="grid-11 prefix-1">
             <?php print $footer_message; ?>
           </div> <!-- /# footer-message -->
         <?php endif; ?>
