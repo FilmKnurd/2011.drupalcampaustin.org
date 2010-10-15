@@ -346,10 +346,13 @@ body {
           width: 390px;
         }
 
-    #footer-wrapper {
-      padding-top: 25px;
-      height: 90px;
+    #footer-container {
+      position: relative;
       }
+      #footer-wrapper {
+        padding-top: 25px;
+        height: 90px;
+        }
 
 /* -------------------------------------
  * end Global styles
@@ -1573,11 +1576,16 @@ table.uc-order-history th, table.uc-order-history td {
 /* -------------------------------------
  * End Ubercart style
  * ===================================== */
+
+/* =========================================
+ * We can't stop here. This is bat country.
+ * -------------------------------------- */
+
 canvas.bats {
   position: absolute;
   top: 0;
   left: 0;
-}
+  }
  
 canvas.clouds {
   position: absolute;
@@ -1586,11 +1594,7 @@ canvas.clouds {
   height: 250px;
   width: 100%;
   top: 45px;
-}
-
-#footer-container {
-  position: relative;
-}
+  }
 
 #secret-bat {
   position: absolute;
@@ -1601,6 +1605,6 @@ canvas.clouds {
   height: 71px;
   background-image: url("../images/bat-1.png");
   float: left;
-}
-
+  cursor: pointer;
+  }
 
