@@ -629,10 +629,10 @@ tr.drag-previous {
 
   ul.primary { /* Also ul.tabs */
     padding-top: 5px;
-    border-bottom: 1px solid #fff;
     }
 
   ul.secondary { /* Also ul.tabs */
+    border-top: 1px solid #fff;
     }
     ul.secondary li {
       border: none;
