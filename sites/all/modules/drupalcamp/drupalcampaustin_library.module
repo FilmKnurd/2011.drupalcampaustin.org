@@ -48,18 +48,21 @@ function drupalcampaustin_library_block($op = 'list', $delta = 0, $edit = array(
         $block = array(
           'subject' => '',
           'content' => drupalcampaustin_library_block_header_links($user_loaded),
+          'cache' => BLOCK_CACHE_PER_USER,
         );
         break;
       case 'dca_header_ribbon':
         $block = array(
           'subject' => '',
           'content' => drupalcampaustin_library_block_header_ribbon($user_loaded),
+          'cache' => BLOCK_CACHE_PER_USER,
         );
         break;
       case 'dca_user_stats':
         $block = array(
           'subject' => 'User stats',
           'content' => drupalcampaustin_library_block_user_stats($user_loaded),
+          'cache' => BLOCK_CACHE_PER_USER,
         );
         break;
     }
@@ -148,6 +151,7 @@ function drupalcampaustin_library_block_header_ribbon($user) {
   return $output;
 }
 
+
 /* */
 function drupalcampaustin_library_block_user_stats($user) {
   $display_views = array(
@@ -189,18 +193,14 @@ function drupalcampaustin_library_user($op, &$edit, &$account, $category = NULL)
         $account->has_registered = FALSE;
       }
       break;
-    /*
     case 'view':
-      global $user;
-      $account->content['summary']['#title'] = t('Account summary');
-      $account->content['summary']['#weight'] = -10;
-      $account->content['summary']['user_profile'] = array(
-        '#type' => 'user_profile_item',
-        '#title' => t('Profile page'),
-        '#value' => drupalcampaustin_library_user_account_page($account, $user),
-      );
+      // Set title to the user's full name.
+      drupal_set_title($account->profile->title);
+      // Get rid of that stupid "Member since" section.
+      unset($account->content['summary']);
+      // Move profile to the top;
+      $account->content['content_profile']['#weight'] = -10;
       break;
-      */
   }
 }
 
@@ -213,6 +213,7 @@ function drupalcampaustin_library_user_profile($uid) {
   }
   return NULL;
 }
+
 
 /**
  * Check to see if a user has been assigned a certain role.
@@ -233,6 +234,7 @@ function drupalcampaustin_library_user_has_role($role, $user = NULL) {
   }
   return FALSE;
 }
+
 
 /**
  * Implementation of hook_form_alter().
@@ -305,6 +307,7 @@ function drupalcampaustin_library_form_user_pass_alter(&$form, &$form_state) {
   drupal_set_title(t('Request new password'));
 }
 
+
 /*
 function drupalcampaustin_library_form_comment_form_alter(&$form, &$form_state) {
   unset($form['_author']);
@@ -312,6 +315,7 @@ function drupalcampaustin_library_form_comment_form_alter(&$form, &$form_state) 
   unset($form['preview']);
 }
  */
+
 
 /*
 function drupalcampaustin_library_form_contact_mail_user_alter(&$form, &$form_state) {
@@ -324,6 +328,7 @@ function drupalcampaustin_library_form_contact_mail_user_alter(&$form, &$form_st
   }
 }
  */
+
 
 /*
 function drupalcampaustin_library_form_uc_cart_view_form_alter(&$form, &$form_state) {
