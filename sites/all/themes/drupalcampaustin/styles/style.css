@@ -346,10 +346,13 @@ body {
           width: 390px;
         }
 
-    #footer-wrapper {
-      padding-top: 25px;
-      height: 90px;
+    #footer-container {
+      position: relative;
       }
+      #footer-wrapper {
+        padding-top: 25px;
+        height: 90px;
+        }
 
 /* -------------------------------------
  * end Global styles
@@ -422,6 +425,7 @@ body {
           }
         #secondary-links ul.links li a.active {
           color: white;
+          text-decoration: none;
           }
  
 
@@ -445,6 +449,15 @@ body {
   #footer-container {
     margin-top: 60px;
   }
+
+#footer-message,
+#footer-menu {
+  font-family: Arial, sans;
+  }
+  #footer-message a,
+  #footer-menu a {
+    text-decoration: none;
+    }
 
 #footer-message {
   float: left;
@@ -931,12 +944,6 @@ div.link-field-subrow {
       padding: 4px 5px;
       }
 
-    /* Undo some .item-list styline for links-only lists */
-    .front #block-views-news-block_1 .item-list ul li {
-      background: none;
-      padding: 0;
-      }
-      
   #sidebar-left .view-twitter-drupalatx {
     background-color: #f3f1e5;
     border-radius: 5px;
@@ -945,6 +952,24 @@ div.link-field-subrow {
     }
     #sidebar-left .view-twitter-drupalatx .item-list ul li {
       border-bottom: 1px solid #B9B59C;
+    }
+
+/* News */
+
+
+.front #block-views-news-block_1 .item-list ul li { /* Undo some .item-list styline for links-only lists */
+  background: none;
+  padding: 0;
+  }
+
+#sidebar-left .view-display-id-block_1 {
+  background-color: #f3f1e5;
+  border-radius: 5px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  }
+  #sidebar-left .view-display-id-block_1 .item-list ul li {
+    border-bottom: 1px solid #B9B59C;
     }
 
 /* Twitter block */    
@@ -1551,11 +1576,16 @@ table.uc-order-history th, table.uc-order-history td {
 /* -------------------------------------
  * End Ubercart style
  * ===================================== */
+
+/* =========================================
+ * We can't stop here. This is bat country.
+ * -------------------------------------- */
+
 canvas.bats {
   position: absolute;
   top: 0;
   left: 0;
-}
+  }
  
 canvas.clouds {
   position: absolute;
@@ -1564,11 +1594,7 @@ canvas.clouds {
   height: 250px;
   width: 100%;
   top: 45px;
-}
-
-#footer-container {
-  position: relative;
-}
+  }
 
 #secret-bat {
   position: absolute;
@@ -1579,6 +1605,6 @@ canvas.clouds {
   height: 71px;
   background-image: url("../images/bat-1.png");
   float: left;
-}
-
+  cursor: pointer;
+  }
 
