@@ -634,6 +634,7 @@ tr.drag-previous {
   ul.secondary { /* Also ul.tabs */
     border-top: 1px solid #fff;
     padding-top: 5px;
+    margin-top: 0px;
     }
     ul.secondary li {
       border: none;
