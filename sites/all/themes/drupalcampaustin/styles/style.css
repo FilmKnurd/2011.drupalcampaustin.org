@@ -1274,22 +1274,18 @@ h2.pane-title,
     margin-bottom: 10px;
   }
   .bottom-right .view-twitter-drupalatx li.views-row {
-    background: white;
+    background: url(../images/icon-twitter.png) white bottom right no-repeat;
     border-radius: 10px;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
-  }
-
-  .bottom-right .view-twitter-drupalatx li.views-row .field-content {
-    background: url(../images/icon-twitter.png) bottom right no-repeat;
-    display: block;
-    padding:0 40px 10px 0;
+    padding: 0 40px 10px 0;
     position:relative;
     right: -10px;
     top: 10px;
     width: 330px;
     min-height: 45px;
-  }
+    }
+
 
 /* -------------------------------------
  * end Panels
