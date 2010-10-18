@@ -1257,7 +1257,7 @@ h2.pane-title,
     background: url(../images/sprite.png) 0px -553px no-repeat;
   }
 
-  .view-twitter-drupalatx {
+.view-twitter-drupalatx {
     font-family: "Tahoma", sans-serif;
   }
     .view-twitter-drupalatx a {
@@ -1269,22 +1269,27 @@ h2.pane-title,
       padding-bottom: 10px;
       margin: 0px 25px 0px 0px;
     }
-
+    
   #main-content .bottom-right .views-row {
     margin-bottom: 10px;
-  }
+  } 
   .bottom-right .view-twitter-drupalatx li.views-row {
-    background: url(../images/icon-twitter.png) white bottom right no-repeat;
+    background: white; 
     border-radius: 10px;
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
-    padding: 0 40px 10px 0;
+  }
+  
+  .bottom-right .view-twitter-drupalatx li.views-row .field-content {
+    background: url(../images/icon-twitter.png) bottom right no-repeat;
+    display: block;
+    padding:0 40px 10px 0;
     position:relative;
     right: -10px;
     top: 10px;
     width: 330px;
     min-height: 45px;
-    }
+  }
 
 
 /* -------------------------------------
