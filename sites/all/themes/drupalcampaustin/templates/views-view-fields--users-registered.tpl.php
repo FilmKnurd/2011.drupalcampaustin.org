@@ -1,5 +1,4 @@
 <?php
-// $Id: views-view-fields.tpl.php,v 1.6 2008/09/24 22:48:21 merlinofchaos Exp $
 /**
  * @file views-view-fields.tpl.php
  * Default simple view template to all the fields as a row.
@@ -18,12 +17,15 @@
  *
  * @ingroup views_templates
  */
+
+  // Capture the user ID.
+  $uid = $row->uid;
 ?>
 
 <?php foreach ($fields as $id => $field): ?>
   <?php if ($id == 'field_user_picture_fid'): ?>
-    <div class="picture"><?php print l($field->content, 'user/' . $row->uid, array('html' => TRUE)); ?></div>
+    <div class="picture"><?php print l($field->content, 'user/' . $uid, array('html' => TRUE)); ?></div>
   <?php elseif ($id == 'title'): ?>
-    <div class="profile-link"><?php print l($field->raw, 'user/' . $row->uid); ?></div>
+    <div class="profile-link"><?php print l($field->raw, 'user/' . $uid); ?></div>
   <?php endif; ?>
 <?php endforeach; ?>
