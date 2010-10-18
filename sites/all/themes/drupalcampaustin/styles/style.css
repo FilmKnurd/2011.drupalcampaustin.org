@@ -1089,40 +1089,51 @@ ul.links li.last {
     margin-bottom: 0; /* Undo this for views and blocks in front-page sidebars */
     }
 
-/* Photo mosaic of all registered users */
-.view-users-registered {
+/* Photo mosaic of users */
+.view-users-registered,
+.view-users-individual-sponsors {
   }
 
   /* undo default sizing of tables in #main-content */
-  #main-content .view-users-registered table {
+  #main-content .view-users-registered table,
+  #main-content .view-users-individual-sponsors table {
     font-size: 1em;
     line-height: normal;
     }
-    #main-content .view-users-registered table tbody tr td {
+    #main-content .view-users-registered table tbody tr td,
+    #main-content .view-users-individual-sponsors table tbody tr td {
       padding: 0 0 10px 0;
       }
 
-  .view-users-registered table {
+  .view-users-registered table,
+  .view-users-individual-sponsors table {
     width: 100%;
     }
-    .view-users-registered table tbody tr td {
+    .view-users-registered table tbody tr td,
+    .view-users-individual-sponsors table tbody tr td {
       width: 20%;
       }
       .view-users-registered .picture,
-      .view-users-registered .profile-link {
+      .view-users-registered .profile-link,
+      .view-users-individual-sponsors .picture,
+      .view-users-individual-sponsors .profile-link {
         margin: 0 auto;
         width: 110px;
         }
-      .view-users-registered .picture {
+      .view-users-registered .picture,
+      .view-users-individual-sponsors .picture {
         }
-        .view-users-registered .picture img {
+        .view-users-registered .picture img,
+        .view-users-individual-sponsors .picture img {
           display: block;
           padding: 4px;
           border: 1px solid rgb(204,204,204); /* black 20% */
           }
-      .view-users-registered .profile-link {
+      .view-users-registered .profile-link,
+      .view-users-individual-sponsors .profile-link {
         }
-        .view-users-registered .profile-link a {
+        .view-users-registered .profile-link a,
+        .view-users-individual-sponsors .profile-link a {
           display: block;
           background: rgb(242,242,242); /* black 5% */
           padding: 3px 5px;
@@ -1130,7 +1141,8 @@ ul.links li.last {
           font-size: 1.2em;
           line-height: 1.2em;
           }
-        .view-users-registered .profile-link a:hover {
+        .view-users-registered .profile-link a:hover,
+        .view-users-individual-sponsors .profile-link a:hover {
           background: rgb(230,230,230); /* black 10% */
           }
 
