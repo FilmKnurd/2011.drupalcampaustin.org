@@ -30,12 +30,15 @@ function drupalcampaustin_library_block($op = 'list', $delta = 0, $edit = array(
   if ($op == 'list') {
     $blocks['dca_header_links'] = array(
       'info' => t('DCA: Header links'),
+      'cache' => BLOCK_CACHE_PER_USER,
     );
     $blocks['dca_header_ribbon'] = array(
       'info' => t('DCA: Header ribbon'),
+      'cache' => BLOCK_CACHE_PER_USER,
     );
     $blocks['dca_user_stats'] = array(
       'info' => t('DCA: User stats'),
+      'cache' => BLOCK_CACHE_PER_USER,
     );
     return $blocks;
   }
