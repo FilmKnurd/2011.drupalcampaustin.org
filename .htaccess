@@ -20,7 +20,7 @@ SetEnvIfNoCase Host .+ PRODUCTION_SITE
 SetEnvIfNoCase Host fkbuild\.com$ !PRODUCTION_SITE
 
 # Configure basic authentication.
-AuthUserFile /home/fk/domains/fk.fkbuild.com/public_html/.htpasswd
+AuthUserFile /home/fk/domains/fkbuild.com/public_html/.htpasswd
 AuthGroupFile /dev/null
 AuthType Basic
 AuthName "Development instance authentication"
