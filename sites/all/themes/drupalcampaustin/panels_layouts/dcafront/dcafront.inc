@@ -13,6 +13,7 @@ function drupalcampaustin_dcafront_panels_layouts() {
       'left_top' => t('Left Top'),
       'bottom_left' => t('Bottom left'),
       'bottom_right' => t('Bottom right'),
+      'bottom_2column' => t('Bottom 2column'),
       'sidebar_right' => t('Sidebar Right')
      ),
   );
