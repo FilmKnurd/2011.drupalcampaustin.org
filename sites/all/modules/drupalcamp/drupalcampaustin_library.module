@@ -154,9 +154,10 @@ function drupalcampaustin_library_block_header_ribbon($user) {
 /* */
 function drupalcampaustin_library_block_user_stats($user) {
   $display_views = array(
-    'internal_users_registered',
-    'internal_users_registered_free',
-    'internal_users_unregistered',
+    'internal_users',
+//    'internal_users_registered',
+//    'internal_users_registered_free',
+//    'internal_users_unregistered',
     // TODO: Add dietary and special needs views
   );
 
