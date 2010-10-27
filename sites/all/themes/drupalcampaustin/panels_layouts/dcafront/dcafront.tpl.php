@@ -30,6 +30,10 @@
         <div class="bottom-right"><?php print $content['bottom_right']; ?></div>
       </div>
       
+      <div class="panel-panel grid-10 alpha omega clearfix">
+        <div class="bottom-2column"><?php print $content['bottom_2column']; ?></div>
+      </div>
+      
     </div>
     
     <div id="sidebar-right" class="panel-panel grid-2 alpha omega">
