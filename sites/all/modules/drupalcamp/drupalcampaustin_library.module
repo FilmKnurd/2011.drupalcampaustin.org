@@ -81,8 +81,6 @@ function drupalcampaustin_library_block_header_links($user) {
 
   // Is the user logged in?
   if ($user->uid != 0) {
-    $links[] = l(t('My account'), 'user/' . $user->uid);
-
     if (!$user->has_registered) {
       // Add a "cart" link if the user is mid-checkout
       $cart = uc_cart_get_contents();
@@ -91,6 +89,8 @@ function drupalcampaustin_library_block_header_links($user) {
       }
     }
 
+    $links[] = l(t('Submit a session'), 'node/add/session');
+    $links[] = l(t('My account'), 'user/' . $user->uid);
     $links[] = l(t('Log out'), 'logout');
   }
   else {
