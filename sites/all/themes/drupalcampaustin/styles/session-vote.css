@@ -5,38 +5,22 @@
   margin-bottom: 0;
   }
 
+  .vote .vote-form {
+    height: 24px;
+    padding: 33px 9px 0px 9px;
+    border: 1px solid rgb(204,204,204); /* black 20% */
+    background: url(../images/sprite.png) -275px -562px no-repeat;
+    }
   .vote img {
     display: block;
     padding: 4px;
     border: 1px solid rgb(204,204,204); /* black 20% */
     }
-
-  .vote .flag-wrapper {
+    
+    .vote .description {
+      display: none;
     }
 
-    .vote .flag-link {
-      height: 60px;
-      margin-bottom: 1px;
-      }
-      .vote .flag {
-        }
-        .vote .flag img {
-          }
-
-    .vote .flag-message {
-      display: none;
-      min-height: 13px;
-      padding: 3px 3px 3px 5px;
-      background: rgb(242,242,242); /* black 5% */
-      font-size: 1.1em;
-      line-height: 1.2em;
-      }
-
-    .vote .flag-throbber {
-      float: right;
-      height: 13px;
-      width: 13px;
-      }
-    .vote .flag-waiting .flag-throbber {
-      background: url(../images/session-vote-throbber.gif) no-repeat right center;
-      }
+.front #quicktabs_tabpage_1_1 .grid-3 {
+  display: none;
+}

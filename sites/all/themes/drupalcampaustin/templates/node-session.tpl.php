@@ -54,9 +54,9 @@
     <div class="session-teaser-wrapper profile-style clearfix">
 
       <!-- Left column -->
-      <div>
+      <div class="grid-content">
         <div class="picture"><?php print $profile_picture; ?></div>
-    
+
         <div class="info">
           <h2 class="title"><a href="<?php print $node_url; ?>" title="<?php print $title; ?>"><?php print $title; ?></a></h2>
           <div class="submitted">
@@ -71,12 +71,17 @@
         </div>
       </div>
 
-<?php /* Hiding the voting stuff until it's live.  
-      <!-- Right column -->
-      <div class="grid-3 omega">
-        <div class="vote"><?php print $vote; ?></div>
-      </div>
-*/ ?>
+      <?php if ($vote || $attend): ?>
+        <!-- Right column -->
+        <div class="grid-3 omega">
+          <?php if ($vote): ?>
+            <div class="vote"><?php print $vote; ?></div>
+          <?php endif; ?>
+          <?php if ($attend): ?>
+            <div class="attend"><?php print $attend; ?></div>
+          <?php endif; ?>
+        </div>
+      <?php endif; ?>
 
     </div> <!-- /.session-teaser-wrapper -->
 
@@ -85,7 +90,7 @@
     <div class="session-wrapper profile-style clearfix">
 
       <!-- Left column -->
-      <div class="grid-7 alpha omega">
+      <div class="grid-content">
         <div class="submitted">
           <?php print $name; ?>
           <?php if ($field_session_date_rendered): ?>
@@ -106,11 +111,13 @@
       </div>
   
       <!-- Right column -->
-      <div class="grid-3 alpha omega">
-
-<?php /* Hiding the voting stuff until it's live.  
-        <div class="vote"><?php print $vote; ?></div>
-*/ ?>
+      <div class="grid-3 omega">
+        <?php if ($vote): ?>
+          <div class="vote"><?php print $vote; ?></div>
+        <?php endif; ?>
+        <?php if ($attend): ?>
+          <div class="attend"><?php print $attend; ?></div>
+        <?php endif; ?>
 
         <div class="picture"><?php print $profile_picture; ?></div>
   

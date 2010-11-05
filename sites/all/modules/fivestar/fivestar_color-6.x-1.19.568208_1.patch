@@ -1,0 +1,11 @@
+--- fivestar_color.inc.OLD	2010-07-08 11:00:49.000000000 +1000
++++ fivestar_color.inc	2009-07-01 11:13:01.000000000 +1000
+@@ -101,7 +101,7 @@
+  * Theme color form.
+  */
+ function theme_fivestar_color_form($form) {
+-  if ($form['#access'] == FALSE) {
++  if (isset($form['#access']) && $form['#access'] == FALSE) {
+     return '';
+   }
+ 

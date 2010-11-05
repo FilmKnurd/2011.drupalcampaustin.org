@@ -1154,8 +1154,8 @@ ul.links li.last {
 .session-teaser-wrapper {
   }
   .session-teaser-wrapper .picture {
-    width: 60px;
     float: left;
+    width: 60px;
     }
   .session-teaser-wrapper .info {
     margin-left: 70px;
@@ -1403,11 +1403,11 @@ h2.pane-title,
       float: left;
       }
     .profile-style .link-columns .item-list ul li.odd {
-      width: 199px;
+      width: 189px;
       margin-right: 1px;
       }
     .profile-style .link-columns .item-list ul li.even {
-      width: 200px;
+      width: 190px;
       }
 
   .profile-style .picture {
