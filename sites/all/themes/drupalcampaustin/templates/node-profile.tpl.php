@@ -52,7 +52,7 @@
   <div class="profile-wrapper profile-style clearfix">
 
     <!-- Left column -->
-    <div class="grid-7 alpha omega">
+    <div class="grid-content">
       <?php if ($roles): ?>
         <div class="header header-text">
           <?php print $roles; ?>
@@ -72,7 +72,7 @@
     </div>
   
     <!-- Right column -->
-    <div class="grid-3 alpha omega">
+    <div class="grid-3 omega">
       <div class="picture"><?php print $profile_picture; ?></div>
 
       <?php if ($profile_action_links): ?>

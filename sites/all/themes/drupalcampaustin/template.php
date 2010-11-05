@@ -1,10 +1,15 @@
 <?php
 
+define('SESSION_VOTING_OPEN', TRUE);
+define('SESSION_ATTENDANCE_OPEN', FALSE);
+
+
 function drupalcampaustin_preprocess(&$vars, $hook) {
   if (($hook == 'box') && ($vars['title'] == 'Post new comment')) {
     $vars['template_files'][] = 'box-comment_form';
   }
 }
+
 
 function drupalcampaustin_preprocess_node(&$vars) {
   global $user;
@@ -70,6 +75,7 @@ function drupalcampaustin_preprocess_node(&$vars) {
 
   $vars['node_classes'] = implode(' ', $node_classes);
 }
+
 
 function drupalcamp_preprocess_node_profile(&$vars, $node, $node_author) {
   // Build a list of roles
@@ -142,6 +148,7 @@ function drupalcamp_preprocess_node_profile(&$vars, $node, $node_author) {
   }
 }
 
+
 function drupalcamp_preprocess_node_sponsor(&$vars, $node, $node_author) {
   // Add sponsor level text
   $vars['sponsor_level'] = $vars['field_sponsor_level'][0]['view'];
@@ -174,19 +181,38 @@ function drupalcamp_preprocess_node_sponsor(&$vars, $node, $node_author) {
   }
 }
 
+
 function drupalcamp_preprocess_node_session(&$vars, $node, $node_author) {
   global $user;
 
-  if (drupalcampaustin_library_user_has_role('attendee', $user)) {
-    $vars['vote'] = flag_create_link('session_vote', $node->nid);
-  }
-  elseif ($user->uid != 0) {
-    $vars['vote'] = l('<img src="/' . path_to_theme() . '/images/session-vote-login.png" alt="Register to vote" />', 'products/drupalcamp-austin-2009-registration', array('html' => TRUE));
-  }
-  else {
-    $vars['vote'] = l('<img src="/' . path_to_theme() . '/images/session-vote-login.png" alt="Log in to vote" />', 'user/login', array('html' => TRUE));
+  // Add session voting if it's open.
+  if (SESSION_VOTING_OPEN) {
+    if (user_access('rate content') && fivestar_validate_target('node', $node->nid)) {
+      // Display the Fivestar rating.
+      $vars['vote'] = '<div class="vote-form">' . fivestar_widget_form($node) . '</div>';
+    }
+    elseif ($user->uid != 0) {
+      $vars['vote'] = l('<img src="/' . path_to_theme() . '/images/session-vote-purchase.png" alt="' . t('You must purchase admission to vote on sessions') . '" />', 'register/admission', array('html' => TRUE));
+    }
+    else {
+      $vars['vote'] = l('<img src="/' . path_to_theme() . '/images/session-vote-login.png" alt="' . t('You must be logged in and registered to vote on sessions') . '" />', 'user/login', array('html' => TRUE));
+    }
   }
 
+  // Add session attendance flag if it's open.
+  if (SESSION_ATTENDANCE_OPEN) {
+    if (drupalcampaustin_library_user_has_role('attendee', $user)) {
+      $vars['attend'] = flag_create_link('session_attend', $node->nid);
+    }
+    elseif ($user->uid != 0) {
+      $vars['attend'] = l('<img src="/' . path_to_theme() . '/images/session-attend-purchase.png" alt="' . t('You must purchase admission to attend sessions') . '" />', 'register/admission', array('html' => TRUE));
+    }
+    else {
+      $vars['attend'] = l('<img src="/' . path_to_theme() . '/images/session-attend-login.png" alt="' . t('You must be logged in and registered to attend sessions') . '" />', 'user/login', array('html' => TRUE));
+    }
+  }
+
+  // Add the user picture.
   if ($node->teaser) {
     $vars['profile_picture'] = drupalcampaustin_profile_picture($node_author, $node_author->profile, TRUE, 'user_picture_50x50');
   }
@@ -194,8 +220,10 @@ function drupalcamp_preprocess_node_session(&$vars, $node, $node_author) {
     $vars['profile_picture'] = drupalcampaustin_profile_picture($node_author, $node_author->profile);
   }
 
+  // Add user "action" links (contact, etc.).
   $vars['profile_action_links'] = drupalcampaustin_profile_action_links($node_author->profile);
 }
+
 
 function drupalcampaustin_preprocess_comment_wrapper(&$vars) {
   $node = $vars['node'];
@@ -205,6 +233,7 @@ function drupalcampaustin_preprocess_comment_wrapper(&$vars) {
     $vars['comments_exist'] = TRUE;
   }
 }
+
 
 function drupalcampaustin_preprocess_comment(&$vars) {
   global $user;
@@ -263,6 +292,7 @@ function drupalcampaustin_preprocess_comment(&$vars) {
   $vars['comment_classes'] = implode(' ', $comment_classes);
 }
 
+
 function drupalcampaustin_profile_picture($user, $profile_node, $linked = TRUE, $preset = NULL) {
   $profile_node_built = node_build_content($profile_node);
 
@@ -280,11 +310,12 @@ function drupalcampaustin_profile_picture($user, $profile_node, $linked = TRUE, 
   return $picture;
 }
 
+
 function drupalcampaustin_preprocess_flag(&$vars) {
   $flag = $vars['flag'];
 
-  if ($flag->name == 'session_vote') {
-    $image_file = path_to_theme() . '/images/session-vote-' . ($vars['action'] == 'flag' ? 'yes' : 'no') . '.png';
+  if ($flag->name == 'session_attend') {
+    $image_file = path_to_theme() . '/images/session-attend-' . ($vars['action'] == 'flag' ? 'yes' : 'no') . '.png';
     // Uncomment the following line when debugging.
     // drupal_set_message("Flag is looking for '$image_file'...");
     if (file_exists($image_file)) {
@@ -293,6 +324,7 @@ function drupalcampaustin_preprocess_flag(&$vars) {
   }
 }
 
+
 function drupalcampaustin_profile_action_links($profile_node) {
   $profile_action_links = array();
 
@@ -300,6 +332,7 @@ function drupalcampaustin_profile_action_links($profile_node) {
 
   return theme('item_list', $profile_action_links);
 }
+
 
 function drupalcampaustin_serialize($items) {
   $output = '';
@@ -384,6 +417,7 @@ function drupalcampaustin_username($object) {
   return $output;
 }
 
+
 /**
  * Override theme_node_submitted().
  */
@@ -395,6 +429,7 @@ function drupalcampaustin_node_submitted($node) {
     ));
 }
 
+
 /**
  * Override theme_comment_submitted().
  */
@@ -405,6 +440,7 @@ function drupalcampaustin_comment_submitted($comment) {
       '@date' => format_date($comment->timestamp, 'custom', 'l, F jS, Y'),
     ));
 }
+
 
 /**
  * Override theme_status_messages().
@@ -448,6 +484,7 @@ function drupalcampaustin_status_messages($display = NULL) {
   return $output;
 }
 
+
 /**
  * Override theme_help().
  *
@@ -461,6 +498,7 @@ function drupalcampaustin_help() {
     return '<div class="help">'. $help .'</div>';
   }
 }
+
 
 function drupalcampaustin_item_list($items = array(), $title = NULL, $type = 'ul', $attributes = NULL) {
   $output = '<div class="item-list">';
@@ -516,6 +554,7 @@ function drupalcampaustin_item_list($items = array(), $title = NULL, $type = 'ul
 
   return $output;
 }
+
 
 function drupalcampaustin_menu_local_tasks() {
   $output = '';

@@ -15,6 +15,7 @@ stylesheets[all][] = styles/style.css
 stylesheets[all][] = styles/user.css
 stylesheets[all][] = styles/content_profile.css
 stylesheets[all][] = styles/session-vote.css
+stylesheets[all][] = styles/session-attend.css
 
 ; Stylesheets: Print
 ; stylesheets[print][] = styles/style-print.css

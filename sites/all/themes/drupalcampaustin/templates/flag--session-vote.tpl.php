@@ -1,6 +1,4 @@
 <?php
-// $Id: flag.tpl.php,v 1.1.2.6 2008/12/03 14:10:00 mooffie Exp $
-
 /**
  * @file
  * Default theme implementation to display a flag link, and a message after the action
@@ -41,7 +39,7 @@
 ?>
 <div class="flag-wrapper flag-<?php print $flag_name_css; ?> clearfix">
   <div class="flag-link">
-    <a href="<?php print $link_href; ?>" title="<?php print $link_title; ?>" class="<?php print $flag_classes ?>"><?php print $link_text; ?></a>
+    <a href="<?php print $link_href; ?>" title="<?php print $link_title; ?>" class="<?php print $flag_classes ?>" rel="nofollow"><?php print $link_text; ?></a>
   </div>
 
   <div class="flag-message flag-<?php print $last_action; ?>-message">

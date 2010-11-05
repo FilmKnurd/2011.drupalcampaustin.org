@@ -1,0 +1,42 @@
+.attend {
+  margin-bottom: 10px;
+  }
+.session-teaser-wrapper .attend {
+  margin-bottom: 0;
+  }
+
+  .attend img {
+    display: block;
+    padding: 4px;
+    border: 1px solid rgb(204,204,204); /* black 20% */
+    }
+
+  .attend .flag-wrapper {
+    }
+
+    .attend .flag-link {
+      height: 60px;
+      margin-bottom: 1px;
+      }
+      .attend .flag {
+        }
+        .attend .flag img {
+          }
+
+    .attend .flag-message {
+      display: none;
+      min-height: 13px;
+      padding: 3px 3px 3px 5px;
+      background: rgb(242,242,242); /* black 5% */
+      font-size: 1.1em;
+      line-height: 1.2em;
+      }
+
+    .attend .flag-throbber {
+      float: right;
+      height: 13px;
+      width: 13px;
+      }
+    .attend .flag-waiting .flag-throbber {
+      background: url(../images/session-vote-throbber.gif) no-repeat right center;
+      }
