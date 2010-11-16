@@ -48,9 +48,9 @@
         <div id="main" class="column grid-10 clearfix">
 
         <?php if ($secondary_links): ?>
-          <div id="secondary-wrapper">
-            <div id="secondary-links">
-                <?php print theme('links', $secondary_links, array('class' => 'links secondary-links')); ?>
+          <div id="secondary-wrapper" >
+            <div id="secondary-links" class="clearfix">
+                <?php print theme('links', $secondary_links, array('class' => 'links secondary-links clearfix')); ?>
             </div> <!-- /#secondary-links -->
           </div> <!-- /#secondary-wrapper -->
         <?php endif; ?>

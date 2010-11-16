@@ -398,17 +398,25 @@ body {
 #secondary-wrapper {
   font-size: 1.4em;
   font-weight: bold;
-  margin: 5px 0 10px 0;
+  margin: 5px 0 10px;
   }
   #secondary-links ul.links {}
-      #secondary-links ul.links li {
-        padding: 2px 5px;
+      #secondary-links ul.links li {}
+        #secondary-links ul.links li a {
+          padding: 8px 10px;
+          float: left;
+          background-color: #fff;
+          margin-right: 1px;
         }
-        #secondary-links ul.links li.active {
+        #secondary-links ul.links li a:hover {
+          background-color: #869987;
+          color: #fff;
+        }
+        #secondary-links ul.links li.active a {
           background-color: #526e54;
           }
         #secondary-links ul.links li a.active {
-          color: white;
+          color: #fff;
           text-decoration: none;
           }
 
@@ -913,15 +921,24 @@ div.link-field-subrow {
       }
       #sidebar-left ul.menu li a {
         display: block;
-        padding: 4px 5px;
+        padding: 8px;
         text-decoration: none;
-        border-bottom: 1px solid #fff;
+        background: #406F93;
+        color: #fff;
+        font-size: 1.2em;
+        border-radius: 4px;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
         }
       #sidebar-left ul.menu li a:hover {
-        background: #fff;
-        text-decoration: underline;
+        background: #799ab3;
+        color: #fff;
         }
-
+      #sidebar-left ul.menu li.active-trail a {
+        background: #fff;
+        color: #406F93;
+      }
+      
   #sidebar-left .item-list ul {
     }
     #sidebar-left .item-list ul li {
