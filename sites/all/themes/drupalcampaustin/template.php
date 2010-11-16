@@ -1,7 +1,7 @@
 <?php
 
-define('SESSION_VOTING_OPEN', TRUE);
-define('SESSION_ATTENDANCE_OPEN', FALSE);
+define('SESSION_VOTING_OPEN', FALSE);
+define('SESSION_ATTENDANCE_OPEN', TRUE);
 
 
 function drupalcampaustin_preprocess(&$vars, $hook) {
