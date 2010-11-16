@@ -1501,50 +1501,57 @@ h2.pane-title,
  * Schedule table style
  * ------------------------------------- */
 
-.schedule-table {
+#main-content .schedule-table {
   width: 100%;
   font-size: 1.2em!important;
   border-top: 1px solid #CCC;
   margin-bottom: 20px;
   line-height: 1.2em;
   }
-    .schedule-table tr.odd {
+    #main-content .schedule-table tr.odd {
       background-color: #FFF;
       }
-    .schedule-table tr.even {
+    #main-content .schedule-table tr.even {
       background-color: rgb(213,234,212);
       }
 
-    .schedule-table tr.row-tracks {
+    #main-content .schedule-table tr.row-tracks {
       background-color: #416E92;
       color: white;
       }
-    .schedule-table tr.row-rooms {
+    #main-content .schedule-table tr.row-rooms {
       background-color: #A6CDED;
       }
 
-      .schedule-table th,
-      .schedule-table td {
+      #main-content .schedule-table th,
+      #main-content .schedule-table td {
         padding: 10px 5px;
         border-left: 1px solid #CCC;
         text-align: center;
         }
 
-      .schedule-table tr.row-tracks th,
-      .schedule-table tr.row-rooms th {
+      #main-content .schedule-table tr.row-tracks th,
+      #main-content .schedule-table tr.row-rooms th {
         padding: 5px;
         }
 
-      .schedule-table th.col1, .schedule-table td.col1 { /* First column */
-        width: 20%;
+      #main-content .schedule-table th.col1,
+      #main-content .schedule-table td.col1 {
+        width: 17%;
         border-left: none;
         }
-       .schedule-table th.col2, .schedule-table td.col2 { /* Second column */
-          width: 40%;
-        }
-       .schedule-table th.col3, .schedule-table td.col3 { /* Third column */
-          width: 40%;
-        }
+       #main-content .schedule-table th.col2,
+       #main-content .schedule-table td.col2,
+       #main-content .schedule-table th.col3,
+       #main-content .schedule-table td.col3,
+       #main-content .schedule-table th.col4,
+       #main-content .schedule-table td.col4 {
+          width: 22%;
+          }
+       #main-content .schedule-table th.col5,
+       #main-content .schedule-table td.col5 {
+          width: 17%;
+          }
 
 /* -------------------------------------
  * End Schedule table style
