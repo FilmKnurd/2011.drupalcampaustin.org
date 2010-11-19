@@ -1273,6 +1273,11 @@ h2.pane-title,
     text-indent: -9999em;
     background: url(../images/sprite.png) 0px -553px no-repeat;
   }
+  
+.panel-pane.news {
+  background-color: #fff;
+  padding: 10px;
+}
 
 .view-twitter-drupalatx {
     font-family: "Tahoma", sans-serif;
