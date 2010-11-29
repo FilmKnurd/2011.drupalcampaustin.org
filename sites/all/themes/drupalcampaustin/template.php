@@ -1,9 +1,5 @@
 <?php
 
-define('SESSION_VOTING_OPEN', FALSE);
-define('SESSION_ATTENDANCE_OPEN', TRUE);
-
-
 function drupalcampaustin_preprocess(&$vars, $hook) {
   if (($hook == 'box') && ($vars['title'] == 'Post new comment')) {
     $vars['template_files'][] = 'box-comment_form';

@@ -7,6 +7,10 @@ define('PRODUCT_ADMISSION_NID', 340);
 define('PRODUCT_PARKING_NID', 342);
 define('PARKING_OFFER_NID', 345);
 
+define('REGISTRATION_OPEN', FALSE);
+define('SESSION_VOTING_OPEN', FALSE);
+define('SESSION_ATTENDANCE_OPEN', FALSE);
+
 
 /**
  * Implementation of hook_menu_alter().
@@ -115,35 +119,41 @@ function drupalcampaustin_library_block_header_ribbon($user) {
   $output = '';
   $output .= '<div id="header-ribbon">';
 
-  // Is the user logged in?
-  if ($user->uid != 0) {
-
-    // Has the user registered?
-    if ($user->has_registered) {
-      $output .= '<img src="' . $path . 'register-done.png" class="steps" alt="' . t("You're done!") . '" />';
-      $output .= l('<img src="' . $path . 'register-done-parking.png" class="steps" alt="' . t('Need parking?') . '" />', 'node/' . PRODUCT_PARKING_NID, array('html' => TRUE, 'attributes' => array('title' => t('Need parking?'))));
-    }
-    else {
-      $output .= l('<img src="' . $path . 'register-almost-done.png" alt="' . t('Register') . '" />', 'node/' . PRODUCT_ADMISSION_NID, array('html' => TRUE, 'attributes' => array('title' => t('Register'))));
-
-      // Add a persistent message reminding users to register
-      // node/PRODUCT_ADMISSION_NID == Product page
-      // cart == Any shopping cart page
-      $path = $_GET['q'];
-      $excluded_paths = array(
-        'node/add/profile',
-        'node/' . PRODUCT_ADMISSION_NID,
-        'node/' . PRODUCT_PARKING_NID,
-        'node/' . PARKING_OFFER_NID,
-      );
-      if (!in_array($path, $excluded_paths) && (arg(0) != 'cart')) {
-        drupal_set_message(t("<strong>Don't forget to !purchase-admission!</strong>", array('!purchase-admission' => l(t('purchase admission to DrupalCamp Austin 2010'), 'node/' . PRODUCT_ADMISSION_NID), )));
+  // Is registration open?
+  if (REGISTRATION_OPEN) {
+    // Is the user logged in?
+    if ($user->uid != 0) {
+  
+      // Has the user registered?
+      if ($user->has_registered) {
+        $output .= '<img src="' . $path . 'register-done.png" class="steps" alt="' . t("You're done!") . '" />';
+        $output .= l('<img src="' . $path . 'register-done-parking.png" class="steps" alt="' . t('Need parking?') . '" />', 'node/' . PRODUCT_PARKING_NID, array('html' => TRUE, 'attributes' => array('title' => t('Need parking?'))));
+      }
+      else {
+        $output .= l('<img src="' . $path . 'register-almost-done.png" alt="' . t('Register') . '" />', 'node/' . PRODUCT_ADMISSION_NID, array('html' => TRUE, 'attributes' => array('title' => t('Register'))));
+  
+        // Add a persistent message reminding users to register
+        // node/PRODUCT_ADMISSION_NID == Product page
+        // cart == Any shopping cart page
+        $path = $_GET['q'];
+        $excluded_paths = array(
+          'node/add/profile',
+          'node/' . PRODUCT_ADMISSION_NID,
+          'node/' . PRODUCT_PARKING_NID,
+          'node/' . PARKING_OFFER_NID,
+        );
+        if (!in_array($path, $excluded_paths) && (arg(0) != 'cart')) {
+          drupal_set_message(t("<strong>Don't forget to !purchase-admission!</strong>", array('!purchase-admission' => l(t('purchase admission to DrupalCamp Austin 2010'), 'node/' . PRODUCT_ADMISSION_NID), )));
+        }
       }
     }
+    else {
+      $output .= l('<img src="' . $path . 'register.png" class="steps" alt="' . t('Register') . '" />', 'register', array('html' => TRUE, 'attributes' => array('title' => t('Register'), 'id' => 'register-button')));
+    }
   }
+  // Registration is closed
   else {
-    $output .= l('<img src="' . $path . 'closed.png" class="steps" alt="' . t('Registration is closed') . '" />', 'front', array('html' => TRUE, 'attributes' => array('title' => t('Registration is closed'), 'id' => 'closed-button')));
-    /* $output .= l('<img src="' . $path . 'register.png" class="steps" alt="' . t('Register') . '" />', 'register', array('html' => TRUE, 'attributes' => array('title' => t('Register'), 'id' => 'register-button'))); */
+    $output .= '<img src="' . $path . 'closed.png" class="steps" id="close-button" alt="' . t('Registration is closed') . '" />';
   }
 
   $output .= '</div>';
