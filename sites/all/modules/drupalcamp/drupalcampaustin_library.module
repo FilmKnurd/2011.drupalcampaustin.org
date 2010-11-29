@@ -142,7 +142,8 @@ function drupalcampaustin_library_block_header_ribbon($user) {
     }
   }
   else {
-    $output .= l('<img src="' . $path . 'register.png" class="steps" alt="' . t('Register') . '" />', 'register', array('html' => TRUE, 'attributes' => array('title' => t('Register'), 'id' => 'register-button')));
+    $output .= l('<img src="' . $path . 'closed.png" class="steps" alt="' . t('Registration is closed') . '" />', 'front', array('html' => TRUE, 'attributes' => array('title' => t('Registration is closed'), 'id' => 'closed-button')));
+    /* $output .= l('<img src="' . $path . 'register.png" class="steps" alt="' . t('Register') . '" />', 'register', array('html' => TRUE, 'attributes' => array('title' => t('Register'), 'id' => 'register-button'))); */
   }
 
   $output .= '</div>';
