@@ -143,7 +143,7 @@ function drupalcampaustin_library_block_header_ribbon($user) {
           'node/' . PARKING_OFFER_NID,
         );
         if (!in_array($path, $excluded_paths) && (arg(0) != 'cart')) {
-          drupal_set_message(t("<strong>Don't forget to !purchase-admission!</strong>", array('!purchase-admission' => l(t('purchase admission to DrupalCamp Austin 2010'), 'node/' . PRODUCT_ADMISSION_NID), )));
+          drupal_set_message(t("<strong>Don't forget to !purchase-admission!</strong>", array('!purchase-admission' => l(t('purchase admission to DrupalCamp Austin 2011'), 'node/' . PRODUCT_ADMISSION_NID), )));
         }
       }
     }
@@ -305,7 +305,7 @@ function drupalcampaustin_library_form_alter(&$form, $form_state, $form_id) {
 
 function drupalcampaustin_library_form_user_register_alter(&$form, &$form_state) {
   // Rename the user registration page.
-  drupal_set_title(t('Register for DrupalCamp Austin 2010'));
+  drupal_set_title(t('Register for DrupalCamp Austin 2011'));
 }
 
 function drupalcampaustin_library_form_user_login_alter(&$form, &$form_state) {
