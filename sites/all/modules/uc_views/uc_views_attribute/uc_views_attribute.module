@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_views_attribute.module,v 1.1.2.1 2009/09/22 07:32:01 madsph Exp $
+// $Id: uc_views_attribute.module,v 1.1.2.2 2009/12/21 23:09:52 hanoii Exp $
 
 /**
  * Implementation of hook_views_api().
@@ -11,5 +11,3 @@ function uc_views_attribute_views_api() {
   );
 }
 
-
-?>

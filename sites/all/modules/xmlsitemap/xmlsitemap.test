@@ -1,5 +1,4 @@
 <?php
-// $Id: xmlsitemap.test,v 1.1.2.70 2010/08/30 05:31:36 davereid Exp $
 
 /**
  * @file
@@ -14,16 +13,9 @@
 class XMLSitemapTestHelper extends DrupalWebTestCase {
   protected $admin_user;
 
-  function setUp() {
-    // Call parent::setUp() allowing test cases to pass further modules.
-    $modules = func_get_args();
+  function setUp($modules = array()) {
     array_unshift($modules, 'xmlsitemap');
-
-    $parent_callback = 'parent::setUp';
-    if (version_compare(PHP_VERSION, '5.3.0', '<')) {
-      $parent_callback = array($this, 'parent::setUp');
-    }
-    call_user_func_array($parent_callback, $modules);
+    parent::setUp($modules);
 
     // Reset any of our module's static variables.
     xmlsitemap_static_reset();
@@ -98,13 +90,6 @@ class XMLSitemapTestHelper extends DrupalWebTestCase {
     variable_set('xmlsitemap_generated_last', 0);
     $this->cronRun();
     $this->assertTrue(variable_get('xmlsitemap_generated_last', 0) && !variable_get('xmlsitemap_regenerate_needed', FALSE), t('XML sitemaps regenerated and flag cleared.'));
-  }
-
-  /**
-   * Runs cron in the Drupal installed by Simpletest.
-   */
-  protected function cronRun() {
-    $this->drupalGet($GLOBALS['base_url'] . '/cron.php', array('external' => TRUE));
   }
 
   protected function assertSitemapLink($entity_type, $entity_id = NULL) {
@@ -722,8 +707,9 @@ class XMLSitemapFunctionalTest extends XMLSitemapTestHelper {
     );
   }
 
-  function setUp() {
-    parent::setUp('path');
+  function setUp($modules = array()) {
+    $modules[] = 'path';
+    parent::setUp($modules);
     $this->admin_user = $this->drupalCreateUser(array('access content', 'administer site configuration', 'administer xmlsitemap'));
     $this->drupalLogin($this->admin_user);
   }
@@ -791,13 +777,6 @@ class XMLSitemapFunctionalTest extends XMLSitemapTestHelper {
     $this->assertResponse(200);
     $this->assertNoXMLSitemapProblems();
 
-    // Test anonymous users access to sitemap.xml.
-    $anon_permissions = db_result(db_query("SELECT perm FROM {permission} WHERE rid = %d", DRUPAL_ANONYMOUS_RID));
-    db_query("UPDATE {permission} SET perm = '' WHERE rid = %d", DRUPAL_ANONYMOUS_RID);
-    $this->assertXMLSitemapProblems(t('In order to allow search engines to view the XML sitemap and content on your site, the anonymous user role must have the access content permission.'));
-    db_query("UPDATE {permission} SET perm = '%s' WHERE rid = %d", $anon_permissions, DRUPAL_ANONYMOUS_RID);
-    $this->assertNoXMLSitemapProblems();
-
     // Test chunk count > 1000.
     // Test directory not writable.
   }
@@ -813,8 +792,9 @@ class XMLSitemapRobotsTxtIntegrationTest extends XMLSitemapTestHelper {
     );
   }
 
-  function setUp() {
-    parent::setUp('robotstxt');
+  function setUp($modules = array()) {
+    $modules[] = 'robotstxt';
+    parent::setUp($modules);
   }
 
   function testRobotsTxt() {

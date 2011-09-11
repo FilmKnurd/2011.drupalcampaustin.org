@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_views_attribute.views.inc,v 1.1.2.3 2009/12/03 12:48:31 madsph Exp $
+// $Id: uc_views_attribute.views.inc,v 1.1.2.5 2010/04/29 13:38:55 hanoii Exp $
 /**
  * @file
  * Views 2 hooks and callback registries.
@@ -57,6 +57,32 @@ function uc_views_attribute_views_data() {
     ),
   );
 
+  $data['uc_product_adjustments']['combination_sell_price'] = array(
+    'title' => t('Sell price w/attributes adjustment'),
+    'help' => t('The sell price of the product with all the price adjustments from its combination of attributes.'),
+    'field' => array(
+      'additional fields' => array(
+        'combination',
+      ),
+      'handler' => 'uc_views_attribute_handler_field_combination_price',
+      'price' => 'sell_price',
+      'float' => TRUE,
+    ),
+  );
+
+  $data['uc_product_adjustments']['combination_cost_price'] = array(
+    'title' => t('Cost price w/attributes adjustment'),
+    'help' => t('The cost price of the product with all the price adjustments from its combination of attributes.'),
+    'field' => array(
+      'additional fields' => array(
+        'combination',
+      ),
+      'handler' => 'uc_views_attribute_handler_field_combination_price',
+      'price' => 'cost',
+      'float' => TRUE,
+    ),
+  );
+
   // Add stock relationship to the adjustments table
   $data['uc_product_stock']['sku']['relationship'] = array(
     'base' => 'uc_product_adjustments',
@@ -70,7 +96,7 @@ function uc_views_attribute_views_data() {
   $data['uc_order_products']['attributes'] = array(
     'title' => t('Product attributes'),
     'help' => t('List of attribute selection for the ordered product.'),
-    'group' => t('Order product'),
+    'group' => t('Ubercart order product'),
     'field' => array(
       'table' => 'uc_order_products',
       'field' => 'data',
@@ -93,6 +119,7 @@ function uc_views_attribute_views_handlers() {
       // fields
       'uc_views_attribute_handler_field_combination' => array('parent' => 'views_handler_field'),
       'uc_views_attribute_handler_field_order_product_attribute' => array('parent' => 'views_handler_field'),
+      'uc_views_attribute_handler_field_combination_price' => array('parent' => 'uc_views_handler_field_money_amount'),
       //fiters
       'uc_views_attribute_handler_filter_attr' => array('parent' => 'views_handler_filter_in_operator',),
     ),

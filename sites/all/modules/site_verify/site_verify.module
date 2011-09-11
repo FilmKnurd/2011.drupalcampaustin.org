@@ -1,5 +1,5 @@
 <?php
-// $Id: site_verify.module,v 1.10 2010/01/27 01:24:27 davereid Exp $
+// $Id: site_verify.module,v 1.10.2.1 2011/02/20 22:38:43 davereid Exp $
 
 /**
  * Implements hook_menu().
@@ -33,16 +33,16 @@ function site_verify_menu() {
     'file' => 'site_verify.admin.inc',
     'type' => MENU_CALLBACK,
   );
-  $items['admin/build/site-verify/edit/%site_verify'] = array(
+  $items['admin/build/site-verify/%site_verify/edit'] = array(
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('site_verify_edit_form', 4),
+    'page arguments' => array('site_verify_edit_form', 3),
     'access arguments' => array('administer site configuration'),
     'file' => 'site_verify.admin.inc',
     'type' => MENU_CALLBACK,
   );
-  $items['admin/build/site-verify/delete/%site_verify'] = array(
+  $items['admin/build/site-verify/%site_verify/delete'] = array(
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('site_verify_delete_form', 4),
+    'page arguments' => array('site_verify_delete_form', 3),
     'access arguments' => array('administer site configuration'),
     'file' => 'site_verify.admin.inc',
     'type' => MENU_CALLBACK,

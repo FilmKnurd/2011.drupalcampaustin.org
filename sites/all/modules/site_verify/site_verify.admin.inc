@@ -1,5 +1,5 @@
 <?php
-// $Id: site_verify.admin.inc,v 1.14 2010/01/27 01:24:27 davereid Exp $
+// $Id: site_verify.admin.inc,v 1.14.2.3 2011/02/20 22:38:43 davereid Exp $
 
 function site_verify_list() {
   $engines = site_verify_get_engines();
@@ -19,8 +19,8 @@ function site_verify_list() {
       $engines[$record->engine]['name'],
       $record->meta ? '<span title="' . check_plain(truncate_utf8($record->meta, 48)) . '">' . t('Yes') . '</spam>' : t('No'),
       $record->file ? l($record->file, $record->file) : t('None'),
-      l(t('Edit'), 'admin/build/site-verify/edit/' . $record->svid),
-      l(t('Delete'), 'admin/build/site-verify/delete/' . $record->svid),
+      l(t('Edit'), "admin/build/site-verify/{$record->svid}/edit"),
+      l(t('Delete'), "admin/build/site-verify/{$record->svid}/delete"),
     );
   }
   ksort($rows);
@@ -102,6 +102,7 @@ function site_verify_edit_form(&$form_state, $record = array(), $engine = NULL) 
         '#description' => t('This is the full meta tag provided for verification. Note that this meta tag will only be visible in the source code of your <a href="@frontpage">front page</a>.', array('@front-page' => url('<front>'))),
         '#element_validate' => $record['engine']['meta_validate'],
         '#access' => $record['engine']['meta'],
+        '#maxlength' => NULL,
       );
 
       $form['file_upload'] = array(
@@ -201,12 +202,16 @@ function site_verify_edit_form_submit(&$form, &$form_state) {
       drupal_write_record('site_verify', $form_state['values']);
     }
 
-    drupal_set_message(t('Site verification saved.'));
+    drupal_set_message(t('Verification saved.'));
     $form_state['storage'] = $form_state['rebuild'] = FALSE;
     $form_state['redirect'] = 'admin/build/site-verify';
 
     // The menu needs to be rebuilt if the page URL has changed or reset.
     variable_set('menu_rebuild_needed', TRUE);
+
+    // Also clear front page caches.
+    cache_clear_all(url('<front>', array('absolute' => TRUE)), 'cache_page');
+    cache_clear_all(url(variable_get('site_frontpage', 'node'), array('absolute' => TRUE)), 'cache_page');
   }
 }
 

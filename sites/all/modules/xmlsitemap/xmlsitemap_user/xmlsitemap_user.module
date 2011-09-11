@@ -1,5 +1,4 @@
 <?php
-// $Id: xmlsitemap_user.module,v 1.12.2.16.2.26 2010/08/29 21:23:41 davereid Exp $
 
 /**
  * Implements hook_xmlsitemap_link_info().
@@ -129,6 +128,7 @@ function xmlsitemap_user_form_user_profile_form_alter(&$form, $form_state) {
 function xmlsitemap_user_form_user_admin_settings_alter(&$form, $form_state) {
   module_load_include('inc', 'xmlsitemap', 'xmlsitemap.admin');
   xmlsitemap_add_link_bundle_settings($form, $form_state, 'user', 'user');
+  $form['buttons'] += array('#weight' => 100);
 }
 
 /**

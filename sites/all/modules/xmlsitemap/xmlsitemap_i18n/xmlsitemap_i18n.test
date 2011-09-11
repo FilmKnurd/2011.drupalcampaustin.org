@@ -1,5 +1,4 @@
 <?php
-// $Id: xmlsitemap_i18n.test,v 1.1.2.14 2010/08/30 05:31:39 davereid Exp $
 
 /**
  * @file
@@ -15,11 +14,13 @@ class XMLSitemapI18nWebTestCase extends XMLSitemapTestHelper {
   /**
    * Set up an administrative user account and testing keys.
    */
-  function setUp() {
+  function setUp($modules = array()) {
     // Call parent::setUp() allowing test cases to pass further modules.
-    $modules = func_get_args();
-    $modules = array_merge(array('locale', 'translation', 'i18n', 'xmlsitemap_i18n'), $modules);
-    call_user_func_array(array($this, 'parent::setUp'), $modules);
+    $modules[] = 'locale';
+    $modules[] = 'translation';
+    $modules[] = 'i18n';
+    $modules[] = 'xmlsitemap_i18n';
+    parent::setUp($modules);
 
     // Add predefined language and reset the locale cache.
     require_once './includes/locale.inc';
@@ -36,7 +37,7 @@ class XMLSitemapI18nWebTestCase extends XMLSitemapTestHelper {
     $sitemap->context['language'] = 'en';
     xmlsitemap_sitemap_save($sitemap);
     $sitemap = new stdClass();
-    $sitemap->context['langauge'] = 'fr';
+    $sitemap->context['language'] = 'fr';
     xmlsitemap_sitemap_save($sitemap);
   }
 }
@@ -118,8 +119,9 @@ class XMLSitemapI18nNodeTest extends XMLSitemapI18nWebTestCase {
     );
   }
 
-  function setUp() {
-    parent::setUp('xmlsitemap_node');
+  function setUp($modules = array()) {
+    $modules[] = 'xmlsitemap_node';
+    parent::setUp($modules);
 
     variable_set('language_content_type_page', 1);
     $this->admin_user = $this->drupalCreateUser(array('administer nodes'));

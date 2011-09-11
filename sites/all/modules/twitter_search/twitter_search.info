@@ -1,13 +1,12 @@
-; $Id: twitter_search.info,v 1.1 2009/11/09 02:01:34 dragonwize Exp $
 name = Twitter search
 description = Adds search functionality to the Twitter module.
 php = 5.2
 core = 6.x
 dependencies[] = twitter
 
-; Information added by drupal.org packaging script on 2010-07-11
+; Information added by drupal.org packaging script on 2011-02-25
 version = "6.x-1.x-dev"
 core = "6.x"
 project = "twitter_search"
-datestamp = "1278836047"
+datestamp = "1298620464"
 

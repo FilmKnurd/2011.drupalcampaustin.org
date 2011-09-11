@@ -1,5 +1,4 @@
 <?php
-// $Id: xmlsitemap_engines.test,v 1.1.2.11 2010/10/07 08:06:57 davereid Exp $
 
 /**
  * @file
@@ -17,8 +16,11 @@ class XMLSitemapEnginesFunctionalTest extends XMLSitemapTestHelper {
     );
   }
 
-  function setUp() {
-    parent::setUp(array('xmlsitemap_engines', 'xmlsitemap_engines_test'));
+  function setUp($modules = array()) {
+    $modules[] = 'xmlsitemap_engines';
+    $modules[] = 'xmlsitemap_engines_test';
+    parent::setUp($modules);
+
     $this->admin_user = $this->drupalCreateUser(array('access content', 'administer xmlsitemap'));
     $this->drupalLogin($this->admin_user);
     $this->submit_url = url('ping', array('absolute' => TRUE, 'query' => array('sitemap' => ''))) . '[sitemap]';

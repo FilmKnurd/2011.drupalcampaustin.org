@@ -1,43 +1,3 @@
-# -------------------------------------------------------------------------
-# DrupalCamp Austin redirects
-# -------------------------------------------------------------------------
-
-RewriteEngine on
-RewriteCond %{HTTP_HOST} ^(www\.)?(austincamp|austindrupalcamp)\.(org|com|net)$ [NC]
-RewriteRule ^(.*)$ http://drupalcampaustin.org/ [L,R=301]
-RewriteCond %{HTTP_HOST} ^(www\.)?drupalcampaustin\.com$ [NC]
-RewriteRule ^(.*)$ http://drupalcampaustin.org/ [L,R=301]
-RewriteCond %{HTTP_HOST} ^www.drupalcampaustin.org$ [NC]
-RewriteRule ^(.*)$ http://drupalcampaustin.org/$1 [L,R=301]
-RewriteEngine off
-
-# -------------------------------------------------------------------------
-# Authenticate the dev site
-# -------------------------------------------------------------------------
-
-# Set PRODUCTION_SITE for production sites.
-SetEnvIfNoCase Host .+ PRODUCTION_SITE
-SetEnvIfNoCase Host fkbuild\.com$ !PRODUCTION_SITE
-
-# Configure basic authentication.
-AuthUserFile /home/fk/domains/fkbuild.com/public_html/.htpasswd
-AuthGroupFile /dev/null
-AuthType Basic
-AuthName "Development instance authentication"
-Require valid-user
-
-# Allow access for either the production site or an HTTP authenticated user.
-Order Deny,Allow
-Deny from all
-Allow from env=PRODUCTION_SITE
-
-# Allow either user authentication or production site access
-Satisfy Any
-
-# -------------------------------------------------------------------------
-# END CUSTOM RULES. What follows is Drupal's default .htaccess
-# -------------------------------------------------------------------------
-
 #
 # Apache/PHP/Drupal settings:
 #
@@ -144,7 +104,7 @@ DirectoryIndex index.php
   #
   # If your site is running in a VirtualDocumentRoot at http://example.com/,
   # uncomment the following line:
-  # RewriteBase /
+  RewriteBase /
 
   # Rewrite URLs of the form 'x' to the form 'index.php?q=x'.
   RewriteCond %{REQUEST_FILENAME} !-f
@@ -153,4 +113,4 @@ DirectoryIndex index.php
   RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
 </IfModule>
 
-# $Id: .htaccess,v 1.90.2.5 2010/02/02 07:25:22 dries Exp $
+# $Id$

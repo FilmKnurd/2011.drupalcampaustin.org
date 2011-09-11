@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_views_marketing.views_default.inc,v 1.1.2.1 2009/06/30 08:54:24 madsph Exp $
+// $Id: uc_views_marketing.views_default.inc,v 1.1.2.1.2.1 2010/11/18 14:20:40 longwave Exp $
 
 /**
  * @file
@@ -18,7 +18,7 @@ function uc_views_marketing_views_default_views() {
   $view->base_table = 'node';
   $view->is_cacheable = FALSE;
   $view->api_version = 2;
-  $view->disabled = TRUE; /* Edit this to false to make a default view enabled initially */
+  $view->disabled = TRUE; /* Edit this to true to make a default view disabled initially */
   $handler = $view->new_display('default', 'Defaults', 'default');
   $handler->override_option('fields', array(
     'field_image_cache_fid' => array(
@@ -226,20 +226,12 @@ function uc_views_marketing_views_default_views() {
   $handler->override_option('access', array(
     'type' => 'none',
   ));
+  $handler->override_option('cache', array(
+    'type' => 'none',
+  ));
   $handler->override_option('title', 'Have you tried');
-  $handler->override_option('style_plugin', 'slideshow');
   $handler->override_option('style_options', array(
     'grouping' => '',
-    'type' => 'ul',
-    'mode' => 'single_frame',
-    'hover_breakout' => 'teaser',
-    'teasers_last' => 1,
-    'hover' => 'hover',
-    'timer_delay' => '5000',
-    'sort' => '0',
-    'fade' => 1,
-    'fade_speed' => 'slow',
-    'fade_value' => '0.25',
   ));
   $handler = $view->new_display('block', 'Block', 'block_1');
   $handler->override_option('block_description', 'New Products');
@@ -254,7 +246,7 @@ function uc_views_marketing_views_default_views() {
   $view->base_table = 'node';
   $view->is_cacheable = FALSE;
   $view->api_version = 2;
-  $view->disabled = TRUE; /* Edit this to false to make a default view enabled initially */
+  $view->disabled = TRUE; /* Edit this to true to make a default view disabled initially */
   $handler = $view->new_display('default', 'Defaults', 'default');
   $handler->override_option('fields', array(
     'field_image_cache_fid' => array(
@@ -463,24 +455,15 @@ function uc_views_marketing_views_default_views() {
   $handler->override_option('access', array(
     'type' => 'none',
   ));
-  $handler->override_option('style_plugin', 'slideshow');
+  $handler->override_option('cache', array(
+    'type' => 'none',
+  ));
   $handler->override_option('style_options', array(
     'grouping' => '',
-    'type' => 'ul',
-    'mode' => 'single_frame',
-    'hover_breakout' => 'teaser',
-    'teasers_last' => 1,
-    'hover' => 'hover',
-    'timer_delay' => '5000',
-    'sort' => '1',
-    'fade' => 1,
-    'fade_speed' => 'slow',
-    'fade_value' => '0.25',
   ));
   $handler = $view->new_display('block', 'Block', 'block_1');
   $handler->override_option('block_description', 'Popular products');
   $handler->override_option('block_caching', -1);
-
   $views[$view->name] = $view;
 
   $view = new view;

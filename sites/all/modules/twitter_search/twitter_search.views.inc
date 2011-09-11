@@ -1,5 +1,4 @@
 <?php
-// $Id: twitter_search.views.inc,v 1.1.2.1 2010/03/01 00:27:45 dragonwize Exp $
 /**
  * @file
  *  Provide views data and handlers.

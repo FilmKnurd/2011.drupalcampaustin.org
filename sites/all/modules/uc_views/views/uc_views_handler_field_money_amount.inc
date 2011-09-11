@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_views_handler_field_money_amount.inc,v 1.1.2.2 2009/12/03 13:22:49 hanoii Exp $
+// $Id: uc_views_handler_field_money_amount.inc,v 1.1.2.3 2009/12/17 21:01:15 hanoii Exp $
 
 /**
  * @file
@@ -22,16 +22,16 @@ class uc_views_handler_field_money_amount extends uc_product_handler_field_price
     }
 
     if ($this->options['format'] == 'uc_price') {
-    $context = array(
-        'revision' => $this->options['revision'],
-        'type' => 'amount',
-        'class' => array(
-          $this->field,
-      ),
-        'field' => $this->real_field,
-    );
+      $context = array(
+          'revision' => $this->options['revision'],
+          'type' => 'amount',
+          'class' => array(
+            $this->field,
+        ),
+          'field' => $this->real_field,
+      );
 
-    return uc_price($values->{$this->field_alias}, $context);
+      return uc_price($values->{$this->field_alias}, $context);
+    }
   }
-}
 }

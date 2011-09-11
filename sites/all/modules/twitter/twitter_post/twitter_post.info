@@ -1,0 +1,11 @@
+name = Twitter Post
+description = Enables posting to twitter
+core = 6.x
+dependencies[] = twitter
+dependencies[] = oauth_common
+; Information added by drupal.org packaging script on 2011-09-05
+version = "6.x-3.0-beta5"
+core = "6.x"
+project = "twitter"
+datestamp = "1315231633"
+

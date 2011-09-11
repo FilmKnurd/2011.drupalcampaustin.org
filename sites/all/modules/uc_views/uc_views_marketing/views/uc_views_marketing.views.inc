@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_views_marketing.views.inc,v 1.1.4.2 2009/10/19 11:36:58 madsph Exp $
+// $Id: uc_views_marketing.views.inc,v 1.1.4.3 2010/02/27 00:14:24 hanoii Exp $
 /**
  * @file
  * Views 2 hooks and callback registries.
@@ -11,7 +11,7 @@
 function uc_views_marketing_views_data() {
 
   //Make the uc_order_products_qty_vw view visible for Views module
-  $data['uc_order_products_qty_vw']['table']['group'] = t('Order product');
+  $data['uc_order_products_qty_vw']['table']['group'] = t('Ubercart order product');
   $data['uc_order_products_qty_vw']['table']['join']['node'] = array(
       'left_field' => 'nid',
       'field' => 'nid',
@@ -96,7 +96,7 @@ function uc_views_marketing_views_data() {
 
 
   //Make the uc_order_products_user_vw view visible for Views module
-  $data['uc_order_products_user_vw']['table']['group'] = t('Order product');
+  $data['uc_order_products_user_vw']['table']['group'] = t('Ubercart order product');
   $data['uc_order_products_user_vw']['table']['join']['node'] = array(
       'left_field' => 'nid',
       'field' => 'nid',
@@ -206,7 +206,7 @@ function uc_views_marketing_views_data() {
 
 
   //Make the uc_order_products_pair_vw view visible for Views module
-  $data['uc_order_products_pair_vw']['table']['group'] = t('Order product');
+  $data['uc_order_products_pair_vw']['table']['group'] = t('Ubercart order product');
   $data['uc_order_products_pair_vw']['table']['join']['node'] = array(
       'left_field' => 'nid',
       'field' => 'pair_nid',

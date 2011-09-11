@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_views.module,v 1.1.4.1 2009/06/30 07:10:38 madsph Exp $
+// $Id: uc_views.module,v 1.1.4.1.2.2 2010/11/18 20:49:52 longwave Exp $
 
 /**
  * Implementation of hook_views_api().
@@ -12,16 +12,14 @@ function uc_views_views_api() {
 }
 
 /**
+ * Implementation of hook_date_api_tables().
+ */
+function uc_views_date_api_tables() {
+  return array('uc_orders', 'uc_cart_products');
+}
+
+/**
  * Implementation of hook_date_api_fields().
- * on behalf of core fields.
- *
- * All modules that create custom fields that use the
- * 'views_handler_field_date' handler can provide
- * additional information here about the type of
- * date they create so the date can be used by
- * the Date API views date argument and date filter.
- *
- * Thank you justindodge for this! 
  */
 function uc_views_date_api_fields($field) {
   $values = array(
@@ -39,7 +37,11 @@ function uc_views_date_api_fields($field) {
     // Granularity of this date field's db data.
     'granularity' => array('year', 'month', 'day', 'hour', 'minute', 'second'),
   );
-  return $values;
-}
 
-?>
+  switch ($field) {
+    case 'uc_orders.created':
+    case 'uc_orders.modified':
+    case 'uc_cart_products.changed':
+      return $values;
+  }
+}

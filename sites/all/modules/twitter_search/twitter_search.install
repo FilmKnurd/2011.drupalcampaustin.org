@@ -1,5 +1,4 @@
 <?php
-// $Id: twitter_search.install,v 1.1.2.3 2010/03/07 19:25:08 dragonwize Exp $
 
 /**
  * Implementation of hook_schema().

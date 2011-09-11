@@ -1,5 +1,5 @@
 <?php
-// $Id: uc_views_addresses.module,v 1.1.2.1 2009/10/07 11:43:21 madsph Exp $
+// $Id: uc_views_addresses.module,v 1.1.2.3 2010/11/18 20:56:15 longwave Exp $
 
 /**
  * @file
@@ -17,15 +17,14 @@ function uc_views_addresses_views_api() {
 }
 
 /**
+ * Implementation of hook_date_api_tables().
+ */
+function uc_views_addresses_date_api_tables() {
+  return array('uc_addresses');
+}
+
+/**
  * Implementation of hook_date_api_fields().
- * on behalf of core fields.
- *
- * All modules that create custom fields that use the
- * 'views_handler_field_date' handler can provide
- * additional information here about the type of
- * date they create so the date can be used by
- * the Date API views date argument and date filter.
- *
  */
 function uc_views_addresses_date_api_fields($field) {
   $values = array(
@@ -43,7 +42,10 @@ function uc_views_addresses_date_api_fields($field) {
     // Granularity of this date field's db data.
     'granularity' => array('year', 'month', 'day', 'hour', 'minute', 'second'),
   );
-  return $values;
-}
 
-?>
+  switch ($field) {
+    case 'uc_addresses.created':
+    case 'uc_addresses.modified':
+      return $values;
+  }
+}
