@@ -1,0 +1,106 @@
+/* Main Style Sheet
+ * Author: Zachattack @fourkitchens 2011
+ * ==|== Boilerplate resets not included in normalize =======================
+ */
+
+::-moz-selection { background: #fe57a1; color: #fff; text-shadow: none; }
+::selection { background: #fe57a1; color: #fff; text-shadow: none; }
+td { vertical-align: top; }
+hr { display: block; height: 1px; border: 0; border-top: 1px solid #ccc; margin: 1em 0; padding: 0; }
+ins { background: #ff9; color: #000; text-decoration: none; }
+label { cursor: pointer; }
+input:valid, textarea:valid {  }
+input:invalid, textarea:invalid { background-color: #f0dddd; }
+
+
+/* ==|== Block elements ===================================================== */
+
+
+body {  
+  background-color: #142835;
+  color: #ffffff;
+  font-size: 13px; 
+  line-height: 1.231;
+}
+
+header {}
+
+nav {}
+
+section {}
+
+footer {
+  background-color: #283946; 
+  border-top: 1px solid #4f5e68;
+}
+
+#main .block { 
+  background-color: #283946; 
+  border: 1px solid #4f5e68;
+  padding: 10px 15px;
+  margin-bottom: 20px;
+  }
+
+
+/* ==|== Typography ========================================================= */
+
+/* webfonts */
+.gloriola { font-family: gloriola-web,sans-serif; }
+.kulturista { font-family: kulturista-web,serif; }
+
+/*
+font-family: kulturista-web,serif;
+font-style: normal;
+font-weight: 600;
+*/
+
+a { color: #ed9310; text-decoration: none; }
+a:visited { color: #ed9310; }
+a:hover { color: #d24813; text-decoration: underline; }
+a:focus { outline: thin dotted; }
+a:hover, a:active { outline: 0; }
+
+h1, 
+h2, 
+h3, 
+h4, 
+h5, 
+h6 {
+  font-family: gloriola-web,sans-serif;
+}
+
+h1 { font-family: gloriola-web,sans-serif; font-size: 2.2em; }
+
+h2 { font-family: gloriola-web,sans-serif; }
+
+h3 {}
+
+h4 {}
+
+h5 {}
+
+h6 {}
+
+p {}
+
+ul, ol, dl {}
+
+ul {}
+
+ol {}
+
+dl {}
+
+/* ==|== Buttons ========================================================= */
+
+
+/* ==|== Non-semantic helper classes ======================================== */
+.ir { display: block; border: 0; text-indent: -999em; overflow: hidden; background-color: transparent; background-repeat: no-repeat; text-align: left; direction: ltr; }
+.ir br { display: none; }
+.hidden { display: none !important; visibility: hidden; }
+.visuallyhidden { border: 0; clip: rect(0 0 0 0); height: 1px; margin: -1px; overflow: hidden; padding: 0; position: absolute; width: 1px; }
+.visuallyhidden.focusable:active, .visuallyhidden.focusable:focus { clip: auto; height: auto; margin: 0; overflow: visible; position: static; width: auto; }
+.invisible { visibility: hidden; }
+.clearfix:before, .clearfix:after { content: ""; display: table; }
+.clearfix:after { clear: both; }
+.clearfix { zoom: 1; }

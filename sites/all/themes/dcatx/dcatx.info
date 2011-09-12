@@ -1,0 +1,43 @@
+name        = DrupalCamp Austin
+description = Custom theme for DrupalCamp Austin 2011
+screenshot  = images/dcatx-preview.png
+core        = 6.x
+engine      = phptemplate
+
+; Remove core and contrib stylesheets
+stylesheets[all][] = user.css
+stylesheets[all][] = content_profile.css
+
+; Stylesheets
+stylesheets[all][] = styles/normalize.css
+stylesheets[all][] = styles/960.css
+stylesheets[all][] = styles/styles.css
+stylesheets[all][] = styles/responsive.css
+stylesheets[all][] = styles/user.css
+
+; Scripts
+scripts[] = js/script.js
+
+; Regions
+regions[sidebar]       = "Sidebar"
+regions[sponsors]      = "Sponsors"
+regions[content]       = "Content"
+regions[user_menu]     = "User Menu"
+regions[header]        = "Header"
+regions[footer]        = "Footer"
+
+; Features (enabled)
+features[] = name
+features[] = slogan
+features[] = favicon
+features[] = primary_links
+
+; Features (disabled)
+; features[] = breadcrumb
+; features[] = search
+; features[] = node_user_picture
+; features[] = comment_user_picture
+; features[] = secondary_links
+
+; Set directory where custom Panels layouts are located
+plugins[panels][layouts] = panels_layouts
