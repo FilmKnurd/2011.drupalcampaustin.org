@@ -1,0 +1,14 @@
+contrib
+patched
+libraries
+files
+*.sql
+*.tar.gz
+settings.php
+omega
+tao
+rubik
+suncapfinancial.tmproj
+*.DS_Store
+default.settings.php
+example.sites.php
