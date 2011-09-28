@@ -1,3 +1,7 @@
+/* @override 
+	http://local.drupalcamp.org/sites/all/themes/dcatx/styles/styles.css?t
+*/
+
 /* Main Style Sheet
  * Author: Zachattack @fourkitchens 2011
  * ==|== Boilerplate resets not included in normalize =======================
@@ -12,9 +16,147 @@ label { cursor: pointer; }
 input:valid, textarea:valid {  }
 input:invalid, textarea:invalid { background-color: #f0dddd; }
 
+/* @group Header */
 
-/* ==|== Block elements ===================================================== */
+#super-header {
+	height: 45px;
+	background: url(../images/bg-navigation.png) no-repeat -1px 0;
+	position: relative;
+	z-index: 1;
+}
 
+#twitter {
+	float: left;
+	background: url(../images/icon-twitter.gif) no-repeat 0;
+	padding-left: 32px;
+	color: #fff;
+	margin: 7px 0 0 13px;
+	font-weight: bold;
+}
+
+.user-links {
+	float: right;
+	margin: 7px 13px 0 0;
+}
+
+.user-links li {
+	float: left;
+	color: #c64514;
+	text-transform: uppercase;
+	padding: 0 7px;
+	font-weight: bold;
+}
+
+.user-links a {
+	color: #c64514;	
+}
+
+#logo {
+	position: relative;
+	z-index: 1;
+	top: -30px;
+	float: left;
+}
+
+#primary-menu {
+	font-size: 18px;
+	color: #fff;
+	font-weight: bold;
+	text-align: right;
+	position: relative;
+	top: -15px;
+}
+
+#primary-menu li {
+	float: left;
+}
+
+#primary-menu a {
+	display: block;
+	padding: 30px 10px 15px 10px;
+	color: #fff;
+	text-shadow: 1px 1px 2px #333;
+	text-decoration: none;
+	
+	/* CSS3 */
+	-webkit-border-radius: 0 0 4px 4px;
+	-moz-border-radius: 0 0 4px 4px;
+	border-radius: 0 0 4px 4px;
+}
+
+#primary-menu a.active {
+	background: #b53e10;
+}
+
+#primary-menu a:hover {
+	background: #95c241;
+}
+
+#header-message {
+	position: relative;
+	float: left;
+	margin: 15px 10px 15px 20px;
+}
+
+#bubble-arrow {
+	position: absolute;
+	top: 30px;
+	left: -45px;
+	float: left;
+}
+
+#header-message h2 {
+	margin: 0;
+	font-size: 25px;
+	color: #d24813;
+}
+
+#header-message .content {
+	width: 340px;
+	padding: 17px;
+	float: left;
+	background: #ebf6fa;
+	color: #666;
+	font-weight: bold;
+	font-size: 18px;
+	border: 5px solid #abcddc;
+	
+	/* CSS3 */
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+
+#reg-links {
+	float: right;
+	padding: 0;
+	margin: 0;
+}
+
+#reg-links label {
+	margin-left: 20px;
+}
+
+#reg-links li {
+	list-style: none;
+}
+
+#reg-links a {
+	display: block;
+	text-indent: -9999px;
+	background: url(../images/sprite-cta-btns.png) no-repeat;
+	width: 265px;
+	height: 75px;
+}
+
+#reg-links a#btn-tr {
+	width: 275px;
+	background-position: 0 -80px;
+}
+
+/* @end */
+
+/* @group Block Elements */
 
 body {  
   background-color: #142835;
@@ -29,9 +171,24 @@ nav {}
 
 section {}
 
-footer {
-  background-color: #283946; 
+#pre-footer {
+	margin-top: 50px;
+	background: #142835 url(../images/bg-prefooter.jpg) 0 0;
+	border-top: 2px solid #283946;
+}
+
+#credits {
+  position: relative;
+  background-color: #283946;
   border-top: 1px solid #4f5e68;
+}
+
+#sidebar {
+	clear: left;
+}
+
+#main {
+	clear: right;
 }
 
 #main .block { 
@@ -41,8 +198,9 @@ footer {
   margin-bottom: 20px;
   }
 
+/* @end */
 
-/* ==|== Typography ========================================================= */
+/* @group Typography */
 
 /* webfonts */
 .gloriola { font-family: gloriola-web,sans-serif; }
@@ -91,6 +249,14 @@ ol {}
 
 dl {}
 
+/* @end */
+
+/* @group Footer */
+
+
+
+/* @end */
+
 /* ==|== Buttons ========================================================= */
 
 
@@ -104,3 +270,38 @@ dl {}
 .clearfix:before, .clearfix:after { content: ""; display: table; }
 .clearfix:after { clear: both; }
 .clearfix { zoom: 1; }
+
+/* @group Blocks */
+
+.block {
+	position: relative;
+}
+
+.block .content {
+	border: 1px solid #4f5e68;
+	border-bottom: 0;
+	overflow: hidden;
+	
+	background-color: #283946;
+	background: -moz-linear-gradient(top, #324858 0%, #283946 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#324858), color-stop(100%,#283946)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #324858 0%,#283946 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #324858 0%,#283946 100%); /* Opera11.10+ */
+	background: -ms-linear-gradient(top, #324858 0%,#283946 100%); /* IE10+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#324858', endColorstr='#283946',GradientType=0 ); /* IE6-9 */
+	background: linear-gradient(top, #324858 0%,#283946 100%); /* W3C */
+}
+
+#pattern {
+	background: url(../images/pattern-arrow.png) repeat-x 0 100%;
+	height: 9px;
+	left: 0;
+	bottom: -3px;
+	width: 100%;
+	position: absolute;
+	overflow: hidden;
+}
+
+
+
+/* @end */

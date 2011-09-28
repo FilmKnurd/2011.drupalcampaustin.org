@@ -30,15 +30,16 @@
 </head>
 
 <body class="<?php print $body_classes; ?>">
-
-  <div id="skip-link">
-    <a href="#<?php print $jump_link_target; ?>" class="element-invisible element-focusable"><?php print t('Jump to Navigation'); ?></a>
-  </div>
-
+  
+  <div class="container-12">
+    <section id="super-header" class="grid-12">
+	  <a href="#" id="twitter">Twitter</a>
+    </section>
+  
     <?php if ($logo): ?>
-    <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" title="DrupalCamp Austin" rel="home nofollow" id="logo">
-    <figure class="logo"><script>document.write(getImageTag());</script></figure></a>
-    <?php endif; ?>    
+      <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" title="DrupalCamp Austin" rel="home nofollow" id="logo">
+      <figure class="logo"><script>document.write(getImageTag());</script></figure></a>
+    <?php endif; ?>
 
     <?php if ($primary_links): ?>
       <nav id="primary-menu">
@@ -49,7 +50,7 @@
       <div id="user-menu">
         <?php print $user_menu; ?>
       </div> <!-- /#user-menu -->
-    <?php endif; ?>    
+    <?php endif; ?>
 
     <header>
       <?php print $header; ?>
@@ -84,8 +85,9 @@
         <?php print $sidebar; ?>
       </section> <!-- /#sidebar-left -->
     <?php endif; ?>
+  </div><!-- /.container-12 -->
 
-  <footer>
+  <footer class="container-12">
 
     <?php if ($footer): ?>
       <?php print $footer; ?>
