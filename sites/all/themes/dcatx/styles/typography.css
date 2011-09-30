@@ -1,0 +1,63 @@
+/* @override http://local.drupalcamp.org/sites/all/themes/dcatx/styles/typography.css?a */
+
+/* webfonts */
+.gloriola { font-family: gloriola-web,sans-serif; }
+.kulturista { font-family: kulturista-web,serif; }
+
+/*
+font-family: kulturista-web,serif;
+font-style: normal;
+font-weight: 600;
+*/
+
+a { color: #ed9310; text-decoration: none; }
+a:visited { color: #ed9310; }
+a:hover { color: #d24813; text-decoration: underline; }
+a:focus { outline: thin dotted; }
+a:hover, a:active { outline: 0; }
+
+h1, 
+h2, 
+h3, 
+h4, 
+h5, 
+h6 {
+  font-family: gloriola-web,sans-serif;
+}
+
+h1 { font-family: gloriola-web,sans-serif; font-size: 2.2em; }
+
+h2 { font-family: gloriola-web,sans-serif; }
+
+.pane-title {
+	font-size: 2.5em;
+	margin: 0 0 15px;
+}
+
+.node-teaser h2 {
+	margin: 0 0 .3em;
+}
+
+.node-teaser h2 a {
+	color: #96c441;
+	font-size: 1em;
+}
+
+h3 {}
+
+h4 {}
+
+h5 {}
+
+h6 {}
+
+p {}
+
+ul, ol, dl {}
+
+ul {}
+
+ol {}
+
+dl {}
+

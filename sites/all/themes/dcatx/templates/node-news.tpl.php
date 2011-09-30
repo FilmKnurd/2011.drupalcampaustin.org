@@ -21,7 +21,7 @@
     <?php print $content; ?>
   <?php endif; ?>
 
-  <?php if ($links): ?>
+  <?php if ($links && !$teaser): ?>
     <div class="links">
       <?php print $links; ?>
     </div>

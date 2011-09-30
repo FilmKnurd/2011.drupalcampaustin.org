@@ -8,11 +8,11 @@
   <div class="panel panel-row clearfix container-12">
     <div class="inside"><?php print $content['top']; ?></div>
   
-    <div class="panel panel-col-first">
+    <div class="panel panel-col-first grid-5">
       <div class="inside"><?php print $content['left']; ?></div>
     </div>
   
-    <div class="panel panel-col-last">
+    <div class="panel panel-col-last grid-7">
       <div class="inside"><?php print $content['right']; ?></div>
     </div>
   
