@@ -1,8 +1,4 @@
-/* @override 
-	http://local.drupalcamp.org/sites/all/themes/dcatx/styles/styles.css?b
-	http://local.drupalcamp.org/sites/all/themes/dcatx/styles/styles.css?x
-	http://local.drupalcamp.org/sites/all/themes/dcatx/styles/styles.css?V
-*/
+/* @override http://local.drupalcamp.org/sites/all/themes/dcatx/styles/styles.css?X */
 
 /* Main Style Sheet
  * Author: Zachattack @fourkitchens 2011
@@ -18,6 +14,19 @@ label { cursor: pointer; }
 input:valid, textarea:valid {  }
 input:invalid, textarea:invalid { background-color: #f0dddd; }
 
+/* @group Main Container */
+
+#main {
+	background: #fff;
+	color: #000;
+	margin-top: -8em;
+}
+
+.inner {
+	padding: 1.2em;
+}
+
+/* @end */
 
 /* @group Block Elements */
 
@@ -35,6 +44,7 @@ body {
 header {}
 
 nav {}
+
 .menu a {color: #ed9310;}
 
 section {}
@@ -52,10 +62,17 @@ footer {
 /* @group Header */
 
 #super-header {
-	height: 3.1em;
-	background: url(../images/bg-navigation.png) no-repeat -1px 0;
+	height: 2.8em;
 	position: relative;
 	z-index: 1;
+	border-width: 5px;
+	border-top-width: 0;
+	border-bottom-width: 20px;
+	
+	-webkit-border-image: url(../images/header-pattern.png) 0 5 20 5 repeat repeat;
+	-moz-border-image: url(../images/header-pattern.png) 0 5 20 5 repeat repeat;
+	border-image: url(../images/header-pattern.png) 0 5 20 5 repeat repeat;
+
 }
 
 
@@ -90,6 +107,7 @@ footer {
 	position: relative;
 	z-index: 1;
 	top: -30px;
+	left: 1em;
 	float: left;
 }
 
@@ -99,16 +117,17 @@ footer {
 	font-weight: bold;
 	text-align: right;
 	position: relative;
-	margin: -.9em 0 1.2em 0;
+	margin: -1.2em 0 1.2em 0;
 }
 
 #primary-menu li {
 	float: left;
+	padding: 0 7px;
 }
 
 #primary-menu a {
 	display: block;
-	padding: 2em 1em 1em 1em;
+	padding: 1.2em .3em 1em .3em;
 	color: #fff;
 	text-shadow: 1px 1px 2px #333;
 	text-decoration: none;
@@ -119,13 +138,16 @@ footer {
 	border-radius: 0 0 4px 4px;
 }
 
-#primary-menu a.active {
-	background: #b53e10;
-}
-
 #primary-menu a:hover {
-	background: #1c8fc7;
-}
+background: rgb(192,66,18); /* Old browsers */
+background: -moz-linear-gradient(top, rgba(192,66,18,1) 0%, rgba(169,58,15,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(192,66,18,1)), color-stop(100%,rgba(169,58,15,1))); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, rgba(192,66,18,1) 0%,rgba(169,58,15,1) 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, rgba(192,66,18,1) 0%,rgba(169,58,15,1) 100%); /* Opera11.10+ */
+background: -ms-linear-gradient(top, rgba(192,66,18,1) 0%,rgba(169,58,15,1) 100%); /* IE10+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c04212', endColorstr='#a93a0f',GradientType=0 ); /* IE6-9 */
+background: linear-gradient(top, rgba(192,66,18,1) 0%,rgba(169,58,15,1) 100%); /* W3C */}
+
 
 #block-menu-primary-links li {
 	float: left;
@@ -149,17 +171,21 @@ footer {
 	color: #666;
 	font-weight: bold;
 	font-size: 1.2em;
-	padding: 1.5em 1.5em 3em 1.5em;
-	width: 20.5em;
-	margin: 0 1.5em 0 3.5em;
+	padding: .7em 1.5em;
+	width: 17.5em;
+	margin: 0 1.5em 0 5.9em;
 	
 	-webkit-border-radius: 15px;
 	-moz-border-radius: 15px;
 	border-radius: 15px;
 }
 
-#druplicon-bubble h2 {
+#druplicon-bubble p {
 	margin: 0;
+}
+
+#druplicon-bubble h2 {
+	margin: 0 0 .5em ;
 	color: #d24813;
 }
 
@@ -200,32 +226,90 @@ header label {
 	background-position: 0 -80px;
 }
 
+#reg-links #btn-bt {
+	margin-top: 2em;
+	background-position: 0 -160px;
+}
+
 /* @end */
 
 /* @group Blocks */
 
-/* Blocks with border pattern */
+/* @group Featured Speakers */
 
+.speaker .name {
+	margin: 0;
+}
+
+/* @end */
+
+/* Blocks with border pattern */
 .block-emph {
 	border-width: 1px;
 	border-bottom-width: 10px;
-	-webkit-border-image: url(../images/border-pattern.png) 2 1 10 1 repeat repeat;
+	-webkit-border-image: url(../images/border-pattern-webkit.png) 2 1 10 1 repeat repeat;
 	-moz-border-image: url(../images/border-pattern.png) 2 1 10 1 repeat repeat;
 	border-image: url(../images/border-pattern.png) 2 1 10 1 repeat repeat;
 }
 
 .block-emph .view-content {
-background: rgb(50,72,88); /* Old browsers */
-background: -moz-linear-gradient(top, rgba(50,72,88,1) 0%, rgba(40,57,70,1) 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(50,72,88,1)), color-stop(100%,rgba(40,57,70,1))); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(top, rgba(50,72,88,1) 0%,rgba(40,57,70,1) 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(top, rgba(50,72,88,1) 0%,rgba(40,57,70,1) 100%); /* Opera11.10+ */
-background: -ms-linear-gradient(top, rgba(50,72,88,1) 0%,rgba(40,57,70,1) 100%); /* IE10+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#324858', endColorstr='#283946',GradientType=0 ); /* IE6-9 */
-background: linear-gradient(top, rgba(50,72,88,1) 0%,rgba(40,57,70,1) 100%); /* W3C */
-padding: 10px;
-margin: 1px 1px 0 1px;
+	padding: 10px;
+	overflow: hidden;
+	margin: 1px 1px 0 1px;
+	background: rgb(50,72,88); /* Old browsers */
+	background: -moz-linear-gradient(top, rgba(50,72,88,1) 0%, rgba(40,57,70,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(50,72,88,1)), color-stop(100%,rgba(40,57,70,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, rgba(50,72,88,1) 0%,rgba(40,57,70,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, rgba(50,72,88,1) 0%,rgba(40,57,70,1) 100%); /* Opera11.10+ */
+	background: -ms-linear-gradient(top, rgba(50,72,88,1) 0%,rgba(40,57,70,1) 100%); /* IE10+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#324858', endColorstr='#283946',GradientType=0 ); /* IE6-9 */
+	background: linear-gradient(top, rgba(50,72,88,1) 0%,rgba(40,57,70,1) 100%); /* W3C */
+
 }
+
+.bluebtn {
+	background: #197bc4 url(../images/icon-pointer.png) no-repeat 15px 5px;
+	color: #fff;
+	padding: 5px 10px;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	padding-left: 60px;
+	font-weight: bold;
+	text-shadow: 2px 2px 2px #104f81;
+	position: absolute;
+	right: -10px;
+}
+
+.btn-container {
+	min-height: 30px;
+	padding: 20px 0;
+	clear: both;
+	position: relative;
+}
+
+.bluebtn:hover {
+	text-decoration: none;
+	color: #fff;
+}
+
+/* @group News */
+
+.view-news ul {
+	padding: 0;
+}
+
+.view-news ul li {
+	list-style: none;
+}
+
+.view-news .submitted a {
+	color: #fff;
+	text-decoration: underline;
+}
+
+/* @end */
+
 
 
 /* @end */
@@ -251,7 +335,7 @@ margin: 1px 1px 0 1px;
 /* @group Sponsors */
 
 #sponsors {
-	background: #142835 url(../images/bg-prefooter.jpg) 0 0;
+	background: #142835 url(../images/bg-prefooter.jpg) repeat-x 0 0;
 	border-top: 2px solid #283946;
 }
 
@@ -264,7 +348,7 @@ margin: 1px 1px 0 1px;
 	font-size: 2.5em;
 }
 
-#sponsors h2 {
+.logos h2 {
 	background: #283946 url(../images/sprite-icons-sponsors.png) no-repeat;
 	padding: .3em .2em .3em 3em;
 	-webkit-border-radius: 10px;
@@ -276,29 +360,43 @@ margin: 1px 1px 0 1px;
 	clear: left;
 }
 
-#sponsors #lonestars {
+/* Remove background on sub pages */
+#sidebar .logos h2 {
+	background-color: transparent;
+	text-align: left;
+}
+
+#sidebar .logos {
+	text-align: center;
+}
+
+#sidebar .logos img {
+	padding-bottom: 1.5em;
+}
+
+.logos #lonestars {
 	background-position: 5px 3px;
 	color: #ec9210;
 }
 
-#sponsors #longhorns {
+.logos #longhorns {
 	background-position: 5px -24px;
 	color: #96c441;
 }
 
-#sponsors #armadillos {
+.logos #armadillos {
 	background-position: 5px -49px;
 	padding-left: 55px;
 	color: #d24813;
 }
 
-#sponsors #bats {
+.logos #bats {
 	color: #166cac;
 	background-position: 9px -74px;
 	padding-left: 60px;
 }
 
-#sponsors #volunteers {
+.logos #volunteers {
 	background-image: none;
 	padding-left: 1em;
 }
@@ -306,6 +404,11 @@ margin: 1px 1px 0 1px;
 .logos img {
 	float: left;
 	margin-right: 4em;
+}
+
+#sidebar .logos img {
+	float: none;
+	margin: 0;
 }
 
 .logos a {
