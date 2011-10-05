@@ -1,7 +1,6 @@
-/* @override http://local.drupalcamp.org/sites/all/themes/dcatx/styles/styles.css?X */
-
 /* Main Style Sheet
  * Author: Zachattack @fourkitchens 2011
+ * Contributor: Nick @astonishdesigns 2011
  * ==|== Boilerplate resets not included in normalize =======================
  */
 
@@ -15,7 +14,10 @@ input:valid, textarea:valid {  }
 input:invalid, textarea:invalid { background-color: #f0dddd; }
 
 /* @group Main Container */
-
+/* ====================================================================
+ * Main Container
+ * ====================================================================
+ */
 #main {
 	background: #fff;
 	color: #000;
@@ -34,7 +36,7 @@ body {
   background-color: #142835;
   color: #ffffff;
   font-size: 13px; 
-  line-height: 1.231;
+  line-height: 1.231; /*Bug? This is missing units */
 }
 
 .panel {
@@ -60,7 +62,28 @@ footer {
 /* @end */
 
 /* @group Header */
+header .block {
+	float: left;
+}
 
+header label {
+	margin-left: 2em;
+}
+
+/* heads up - using pixels */
+#logo {
+	position: relative;
+	z-index: 1;
+	top: -30px;
+	left: 1em;
+	float: left;
+}
+
+/* @group Super Header */
+/* ====================================================================
+ * Super Header
+ * ====================================================================
+ */
 #super-header {
 	height: 2.8em;
 	position: relative;
@@ -69,6 +92,7 @@ footer {
 	border-top-width: 0;
 	border-bottom-width: 20px;
 	
+	/* Note the jagged edge had to be resized so that it was evenly divisable by column widths */
 	-webkit-border-image: url(../images/header-pattern.png) 0 5 20 5 repeat repeat;
 	-moz-border-image: url(../images/header-pattern.png) 0 5 20 5 repeat repeat;
 	border-image: url(../images/header-pattern.png) 0 5 20 5 repeat repeat;
@@ -101,16 +125,13 @@ footer {
 #super-header a {
 	color: #c64514;
 }
+/* @end */
 
-/* heads up - using pixels */
-#logo {
-	position: relative;
-	z-index: 1;
-	top: -30px;
-	left: 1em;
-	float: left;
-}
-
+/* @group Primary Navigation*/
+/* ====================================================================
+ * Primary Navigation
+ * ====================================================================
+ */
 #primary-menu {
 	font-size: 1.3em;
 	color: #fff;
@@ -139,30 +160,22 @@ footer {
 }
 
 #primary-menu a:hover {
-background: rgb(192,66,18); /* Old browsers */
-background: -moz-linear-gradient(top, rgba(192,66,18,1) 0%, rgba(169,58,15,1) 100%); /* FF3.6+ */
-background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(192,66,18,1)), color-stop(100%,rgba(169,58,15,1))); /* Chrome,Safari4+ */
-background: -webkit-linear-gradient(top, rgba(192,66,18,1) 0%,rgba(169,58,15,1) 100%); /* Chrome10+,Safari5.1+ */
-background: -o-linear-gradient(top, rgba(192,66,18,1) 0%,rgba(169,58,15,1) 100%); /* Opera11.10+ */
-background: -ms-linear-gradient(top, rgba(192,66,18,1) 0%,rgba(169,58,15,1) 100%); /* IE10+ */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c04212', endColorstr='#a93a0f',GradientType=0 ); /* IE6-9 */
-background: linear-gradient(top, rgba(192,66,18,1) 0%,rgba(169,58,15,1) 100%); /* W3C */}
-
-
-#block-menu-primary-links li {
-	float: left;
-	padding: 0;
-	margin: 0 1.5em 0 0;
-	font-size: 1.1em;
-	list-style: none;
+	background: rgb(192,66,18); /* Old browsers */
+	background: -moz-linear-gradient(top, rgba(192,66,18,1) 0%, rgba(169,58,15,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(192,66,18,1)), color-stop(100%,rgba(169,58,15,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, rgba(192,66,18,1) 0%,rgba(169,58,15,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, rgba(192,66,18,1) 0%,rgba(169,58,15,1) 100%); /* Opera11.10+ */
+	background: -ms-linear-gradient(top, rgba(192,66,18,1) 0%,rgba(169,58,15,1) 100%); /* IE10+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c04212', endColorstr='#a93a0f',GradientType=0 ); /* IE6-9 */
+	background: linear-gradient(top, rgba(192,66,18,1) 0%,rgba(169,58,15,1) 100%); /* W3C */
 }
+/* @end */
 
-#block-menu-primary-links .menu {
-	float: left;
-	padding: 0;
-	margin: 0;
-}
-
+/* @group Druplicon Bubble */
+/* ====================================================================
+ * Druplicon Bubble
+ * ====================================================================
+ */
 #druplicon-bubble {
 	position: relative;
 	border: 5px solid #abcddc;
@@ -194,15 +207,13 @@ background: linear-gradient(top, rgba(192,66,18,1) 0%,rgba(169,58,15,1) 100%); /
 	top: 1.5em;
 	left: -3.25em;
 }
+/* @end */
 
-header .block {
-	float: left;
-}
-
-header label {
-	margin-left: 2em;
-}
-
+/* @group Registration Links */
+/* ====================================================================
+ * Registration Links
+ * ====================================================================
+ */
 #reg-links {
 	width: 20.5em;
 }
@@ -230,11 +241,16 @@ header label {
 	margin-top: 2em;
 	background-position: 0 -160px;
 }
+/* @end */
 
 /* @end */
 
 /* @group Blocks */
-
+/* ====================================================================
+ * Blocks
+ * ====================================================================
+ */
+ 
 /* @group Featured Speakers */
 
 .speaker .name {
@@ -247,6 +263,8 @@ header label {
 .block-emph {
 	border-width: 1px;
 	border-bottom-width: 10px;
+	
+	/* Note the jagged edge had to be resized so that it was evenly divisable by column widths */
 	-webkit-border-image: url(../images/border-pattern-webkit.png) 2 1 10 1 repeat repeat;
 	-moz-border-image: url(../images/border-pattern.png) 2 1 10 1 repeat repeat;
 	border-image: url(../images/border-pattern.png) 2 1 10 1 repeat repeat;
@@ -349,7 +367,7 @@ header label {
 }
 
 .logos h2 {
-	background: #283946 url(../images/sprite-icons-sponsors.png) no-repeat;
+	background: url(../images/sprite-icons-sponsors.png) no-repeat;
 	padding: .3em .2em .3em 3em;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
@@ -437,6 +455,23 @@ header label {
 /* @end */
 
 /* @group Footer */
+/* ====================================================================
+ * Footer
+ * ====================================================================
+ */
+#block-menu-primary-links li {
+	float: left;
+	padding: 0;
+	margin: 0 1.5em 0 0;
+	font-size: 1.1em;
+	list-style: none;
+}
+
+#block-menu-primary-links .menu {
+	float: left;
+	padding: 0;
+	margin: 0;
+}
 
 #footer-event-location {
 	float: left;
