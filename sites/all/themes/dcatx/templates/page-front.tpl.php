@@ -58,36 +58,27 @@
       <?php print $header; ?>
     </header> <!-- /#header -->
 
-    <?php print $messages; ?>
+	<?php print $messages; ?>
+	<?php if ($secondary_links): ?>
+        <div id="secondary" >
+          <?php print theme('links', $secondary_links, array('class' => 'links secondary-links clearfix')); ?>
+        </div> <!-- /#secondary -->
+      <?php endif; ?>
 
-    <section id="main" class="<?php print $sidebar ? 'push-4 ' : ''; ?><?php print ns('grid-12',$sidebar,4); ?>">
-	  <div class="inner">
+    <section id="main-front">
+      <?php if ($title): ?>
+        <h2 class="title" id="page-title"><?php print $title; ?></h2>
+      <?php endif; ?>
   
-	      <?php if ($title): ?>
-	        <h2 class="title" id="page-title"><?php print $title; ?></h2>
-	      <?php endif; ?>
-	
-	      <?php if ($secondary_links): ?>
-	        <div id="secondary" >
-	          <?php print theme('links', $secondary_links, array('class' => 'links secondary-links clearfix')); ?>
-	        </div> <!-- /#secondary -->
-	      <?php endif; ?>
+      <?php if ($tabs): ?>
+        <div class="tabs"><?php print $tabs; ?></div>
+      <?php endif; ?>
   
-	      <?php if ($tabs): ?>
-	        <div class="tabs"><?php print $tabs; ?></div>
-	      <?php endif; ?>
+      <?php print $help; ?>
   
-	      <?php print $help; ?>
-  
-	      <?php print $content; ?>
-	  </div>
+      <?php print $content; ?>
     </section> <!-- /#main -->
 
-    <?php if ($sidebar): ?>
-      <section id="sidebar" class="grid-4 pull-8">
-        <?php print $sidebar; ?>
-      </section> <!-- /#sidebar-left -->
-    <?php endif; ?>
   </section><!-- /#page-container -->
   
   <?php if ($sponsors): ?>

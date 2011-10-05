@@ -15,7 +15,6 @@
     <div class="panel panel-col-last grid-7">
       <div class="inside"><?php print $content['right']; ?></div>
     </div>
-  
   </div>
   
   <div class="panel panel-row clearfix">

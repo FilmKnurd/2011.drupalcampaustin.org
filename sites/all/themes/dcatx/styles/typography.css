@@ -1,4 +1,4 @@
-/* @override http://local.drupalcamp.org/sites/all/themes/dcatx/styles/typography.css?a */
+/* @override http://local.drupalcamp.org/sites/all/themes/dcatx/styles/typography.css?X */
 
 /* webfonts */
 .gloriola { font-family: gloriola-web,sans-serif; }
@@ -21,25 +21,54 @@ h2,
 h3, 
 h4, 
 h5, 
-h6 {
-  font-family: gloriola-web,sans-serif;
-}
-
+h6 { font-family: gloriola-web,sans-serif; }
 h1 { font-family: gloriola-web,sans-serif; font-size: 2.2em; }
-
-h2 { font-family: gloriola-web,sans-serif; }
+h2 { font-family: gloriola-web,sans-serif; color: #166cac;}
 
 .pane-title {
 	font-size: 2.5em;
-	margin: 0 0 15px;
+	margin: 0 0 10px;
+	padding-left: 10px;
+	color: #fff;
 }
 
-.node-teaser h2 {
-	margin: 0 0 .3em;
+.block-title {
+	font-size: 1.6em;
+	margin: 0 0 .4em .7em;
+	color: #fff;
 }
 
-.node-teaser h2 a {
-	color: #96c441;
+#page-title {
+	color: #fff;
+	font-size: 2em;
+	margin-bottom: .7em;
+	padding: .7em;
+	margin: -25px;
+	text-shadow: 3px 3px 1px #9e370e;
+	margin-bottom: 0;
+	margin-right: 0;
+	border-width: 9px;
+	border-top-width: 10px;
+	border-right-width: 11px;
+	border-left-width: 6px;
+	-webkit-border-image: 
+	url(../images/title-pattern.png) 10 11 9 4 repeat repeat;
+	-moz-border-image: 
+	url(../images/title-pattern.png) 10 11 9 4 repeat repeat;
+	border-image: 
+	url(../images/title-pattern.png) 10 11 9 4 repeat repeat;
+}
+
+.views-field-title a, h2 a {
+	color: #96c440;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+.node-teaser h2 { margin: 0 0 .3em; }
+
+#main h2 a {
+	color: #166cac;
 	font-size: 1em;
 }
 
