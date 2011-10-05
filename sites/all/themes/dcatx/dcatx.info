@@ -12,6 +12,7 @@ stylesheets[all][] = content_profile.css
 stylesheets[all][] = styles/normalize.css
 stylesheets[all][] = styles/960.css
 stylesheets[all][] = styles/styles.css
+stylesheets[all][] = styles/typography.css
 stylesheets[all][] = styles/responsive.css
 stylesheets[all][] = styles/user.css
 
@@ -23,6 +24,7 @@ regions[sidebar]       = "Sidebar"
 regions[sponsors]      = "Sponsors"
 regions[content]       = "Content"
 regions[user_menu]     = "User Menu"
+regions[super_header]  = "Super Header"
 regions[header]        = "Header"
 regions[footer]        = "Footer"
 

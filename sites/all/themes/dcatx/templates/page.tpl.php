@@ -31,33 +31,35 @@
 
 <body class="<?php print $body_classes; ?>">
   
-  <div class="container-12">
-    <section id="super-header" class="grid-12">
-	  <a href="#" id="twitter">Twitter</a>
-    </section>
-  
-    <?php if ($logo): ?>
-      <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" title="DrupalCamp Austin" rel="home nofollow" id="logo">
-      <figure class="logo"><script>document.write(getImageTag());</script></figure></a>
-    <?php endif; ?>
+  <section id="page-container" class="container-12">
+    <nav id="super-header" class="grid-12">
+	  <?php if ($super_header): ?>
+		<?php print $super_header; ?>
+	  <?php endif; ?>
+    </nav>
 
-    <?php if ($primary_links): ?>
-      <nav id="primary-menu">
-         <?php print theme('links', $primary_links); ?>
-      </nav><!-- /#primary-menu -->
-    <?php endif; ?>
-    <?php if ($user_menu): ?>
-      <div id="user-menu">
-        <?php print $user_menu; ?>
-      </div> <!-- /#user-menu -->
-    <?php endif; ?>
+    <header class="grid-12">
+	  <?php if ($logo): ?>
+        <a href="<?php print $front_page; ?>" title="<?php print t('Home'); ?>" title="DrupalCamp Austin" rel="home nofollow" id="logo">
+	    <figure class="logo"><script>document.write(getImageTag());</script></figure></a>
+	  <?php endif; ?>
+	
+	  <?php if ($primary_links): ?>
+        <nav id="primary-menu" class="grid-9">
+           <?php print theme('links', $primary_links); ?>
+        </nav><!-- /#primary-menu -->
+      <?php endif; ?>
+      <?php if ($user_menu): ?>
+        <div id="user-menu">
+          <?php print $user_menu; ?>
+        </div> <!-- /#user-menu -->
+      <?php endif; ?>
 
-    <header>
       <?php print $header; ?>
     </header> <!-- /#header -->
         
 
-    <section id="main">
+    <section id="main" class="grid-8">
 
       <?php if ($secondary_links): ?>
         <div id="secondary" >
@@ -81,24 +83,33 @@
     </section> <!-- /#main -->
 
     <?php if ($sidebar): ?>
-      <section id="sidebar">
+      <section id="sidebar" class="grid-4">
         <?php print $sidebar; ?>
       </section> <!-- /#sidebar-left -->
     <?php endif; ?>
-  </div><!-- /.container-12 -->
+  </section><!-- /#page-container -->
+  
+  <?php if ($sponsors): ?>
+    <footer id="sponsors">
+	  <div class="inner container-12">
+        <?php print $sponsors; ?>
+	  </div>
+    </footer>
+  <?php endif; ?>
 
-  <footer class="container-12">
-
+  <footer>
+	
     <?php if ($footer): ?>
-      <?php print $footer; ?>
-    <?php endif; ?>
+	  <div class="container-12">
+        <?php print $footer; ?>
+	    <?php if ($footer_message): ?>
+	      <div id="footer-message">
+			<?php print $footer_message; ?>
+		  </div>
+	    <?php endif; ?>
 
-    <?php if ($footer_message): ?>
-      <div id="footer-message">
-        <?php print $footer_message; ?>
-      </div> <!-- /# footer-message -->
+	  </div>
     <?php endif; ?>
-
   </footer> <!-- /footer -->
   
   <?php print $scripts; ?>
